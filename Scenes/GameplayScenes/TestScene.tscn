@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4l1u8787h8gs"]
+
+[ext_resource type="PackedScene" uid="uid://qol1hse0xq66" path="res://Scenes/PlayerScenes/Player.tscn" id="1_xvbl5"]
+[ext_resource type="PackedScene" uid="uid://b8wuhehsksnih" path="res://Scenes/BulletScenes/BulletPea.tscn" id="2_h1tug"]
+
+[node name="TestScene" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_xvbl5")]
+position = Vector2(235, 295)
+
+[node name="BulletPea" parent="." instance=ExtResource("2_h1tug")]
+position = Vector2(1078, 333)
+
+[node name="BulletPea2" parent="." instance=ExtResource("2_h1tug")]
+position = Vector2(829, 512)
+rotation = 1.5708
+
+[node name="BulletPea3" parent="." instance=ExtResource("2_h1tug")]
+position = Vector2(648, 341)
+rotation = 3.14159
+
+[node name="BulletPea4" parent="." instance=ExtResource("2_h1tug")]
+position = Vector2(831, 162)
+rotation = 4.71239
+
+[node name="BulletPea5" parent="." instance=ExtResource("2_h1tug")]
+position = Vector2(143, 534)
+rotation = 2.03505
