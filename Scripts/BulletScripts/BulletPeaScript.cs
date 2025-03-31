@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Text.RegularExpressions;
 
 public partial class BulletPeaScript : Node2D
 {
@@ -13,7 +14,6 @@ public partial class BulletPeaScript : Node2D
 		bulletBody = GetChild<CharacterBody2D>(0);
 		bulletBody.Velocity = new Vector2((float)Math.Cos(Rotation), (float)Math.Sin(Rotation));
 		bulletBody.Velocity = bulletBody.Velocity.Normalized() * speedStat;
-		
     }
 
 	public override void _PhysicsProcess(double delta)

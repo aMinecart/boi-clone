@@ -16,7 +16,7 @@ script = ExtResource("1_ux8wq")
 rotation = 1.5708
 texture = ExtResource("1_6uf28")
 
-[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
+[node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["enemy"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
 shape = SubResource("CircleShape2D_s7kpb")
