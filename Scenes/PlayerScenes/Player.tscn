@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://qol1hse0xq66"]
+
+[ext_resource type="Script" uid="uid://c1dns0l2ikqax" path="res://Scripts/PlayerScripts/PlayerMovement.cs" id="1_svqju"]
+[ext_resource type="Texture2D" uid="uid://bbrpq8jbu4kct" path="res://icon.svg" id="2_ohkvt"]
+[ext_resource type="Script" uid="uid://8wh3aoowbidm" path="res://Scripts/PlayerScripts/HealthLabel.cs" id="3_8b6wy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7fxeg"]
+radius = 62.6498
+
+[node name="Player" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("1_svqju")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("2_ohkvt")
+
+[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+shape = SubResource("CircleShape2D_7fxeg")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CharacterBody2D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -27.0
+offset_top = -60.0
+offset_right = -16.0
+offset_bottom = -38.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(5, 5)
+text = "4"
+scroll_active = false
+script = ExtResource("3_8b6wy")
+
+[connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_area_entered"]
