@@ -4,7 +4,7 @@ Owen Colley
 
 Requires:
 Folder paths to be updated for room and hallway scenes
-Marker2Ds to be places and labeled (like "leftDoor") at every door
+Marker2Ds to be places and labeled ("leftDoor", "rightDoor", "topDoor", "bottomDoor") at every door
 Rooms and hallways need collisionShapes to see if they're overlapping
 
 TODO:
