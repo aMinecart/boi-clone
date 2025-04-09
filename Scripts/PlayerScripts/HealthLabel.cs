@@ -8,5 +8,4 @@ public partial class HealthLabel : RichTextLabel
         base._Process(delta);
         Text = PlayerVars.Instance.Health.ToString();
     }
-
 }

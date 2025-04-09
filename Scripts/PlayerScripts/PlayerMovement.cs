@@ -6,9 +6,9 @@ public partial class PlayerMovement : CharacterBody2D
     private Vector2 InputDirection;
 
 	[Export]
-	private int Speed { get; set; } = 400;
+	private float Speed { get; set; } = 400.0f;
+	
 	private int Health = 4; 
-	private Vector2 inputDirection;
 
     private float Acceleration = 5.0f;
 
@@ -100,6 +100,9 @@ public partial class PlayerMovement : CharacterBody2D
 
 	private void _on_area_2d_area_entered(Node2D area)
 	{
-		if(area.IsInGroup("enemy"))Health--;
+		if (area.IsInGroup("enemy"))
+		{
+			Health--;
+		}
 	}
 }
