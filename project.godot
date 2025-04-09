@@ -11,17 +11,20 @@ config_version=5
 [application]
 
 config/name="boi-clone"
-run/main_scene="uid://qol1hse0xq66"
+run/main_scene="uid://d4l1u8787h8gs"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
-PlayerVars="*res://PlayerScripts/PlayerVars.cs"
+PlayerVars="*res://Scripts/PlayerScripts/PlayerVars.cs"
 
 [display]
 
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 window/size/resizable=false
+window/stretch/mode="viewport"
 
 [dotnet]
 
