@@ -6,6 +6,9 @@
 export.cfg
 export_credentials.cfg
 
+# Visual Studio ignores
+.vs/
+
 # Imported translations (automatically generated from CSV files)
 *.translation
 
