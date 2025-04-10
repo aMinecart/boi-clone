@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://ca6r6sehet8ry"]
+
+[ext_resource type="Script" uid="uid://b523d0lov3wf0" path="res://Scripts/DungeonScripts/Door.cs" id="1_er1oe"]
+[ext_resource type="Texture2D" uid="uid://bbrpq8jbu4kct" path="res://Images/icon.svg" id="2_exv3q"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3tqwk"]
+radius = 112.285
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3tqwk"]
+size = Vector2(43, 140)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j444h"]
+size = Vector2(44, 163.5)
+
+[node name="door_1" type="Node2D"]
+position = Vector2(474, 25)
+rotation = 1.57353
+script = ExtResource("1_er1oe")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-1, 0)
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(178, 178)
+shape = SubResource("CircleShape2D_3tqwk")
+
+[node name="topDoor" type="Marker2D" parent="."]
+position = Vector2(153, 178)
+
+[node name="bottomDoor" type="Marker2D" parent="."]
+position = Vector2(197, 177)
+
+[node name="rightDoor" type="CharacterBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="rightDoor"]
+position = Vector2(176.922, 104.572)
+scale = Vector2(0.340841, 1.09177)
+texture = ExtResource("2_exv3q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="rightDoor"]
+position = Vector2(177.5, 105)
+shape = SubResource("RectangleShape2D_3tqwk")
+
+[node name="leftDoor" type="CharacterBody2D" parent="."]
+position = Vector2(3, -40)
+
+[node name="Sprite2D" type="Sprite2D" parent="leftDoor"]
+position = Vector2(172, 298)
+scale = Vector2(0.345072, 1.27737)
+texture = ExtResource("2_exv3q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="leftDoor"]
+position = Vector2(172, 298)
+shape = SubResource("RectangleShape2D_j444h")

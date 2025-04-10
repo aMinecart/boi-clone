@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bl0vbkd23texf"]
+
+[ext_resource type="Texture2D" uid="uid://j31hfus0xeih" path="res://Images/room_6.png" id="1_nyc2w"]
+
+[node name="room_6" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 1)
+texture = ExtResource("1_nyc2w")
+
+[node name="topDoor" type="Marker2D" parent="."]
+position = Vector2(0, -79)

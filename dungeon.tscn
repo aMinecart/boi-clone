@@ -1,0 +1,54 @@
+[gd_scene load_steps=14 format=3 uid="uid://caj7fh7yuw3pe"]
+
+[ext_resource type="Script" uid="uid://cqavj7rlnoufp" path="res://Scripts/DungeonScripts/Dungeon.cs" id="1_8814h"]
+[ext_resource type="PackedScene" uid="uid://datrc6i3k5yyd" path="res://Scenes/DungeonScenes/Hallways/hallway_1.tscn" id="2_vhgbg"]
+[ext_resource type="PackedScene" uid="uid://d2ib5w36k1fwh" path="res://Scenes/DungeonScenes/Hallways/hallway_2.tscn" id="3_afx4b"]
+[ext_resource type="PackedScene" uid="uid://v308rr7p17rc" path="res://Scenes/DungeonScenes/Hallways/hallway_3.tscn" id="4_ndtsi"]
+[ext_resource type="PackedScene" uid="uid://cotf1w0lunygg" path="res://Scenes/DungeonScenes/ignore cuz 1 door/room_1.tscn" id="5_pylku"]
+[ext_resource type="PackedScene" uid="uid://c580ykcic4ie2" path="res://Scenes/DungeonScenes/ignore cuz 1 door/room_2.tscn" id="6_d1vug"]
+[ext_resource type="PackedScene" uid="uid://cvkxqs8771r5r" path="res://Scenes/DungeonScenes/ignore cuz 1 door/room_3.tscn" id="7_d2oma"]
+[ext_resource type="PackedScene" uid="uid://cmos12bd4npsj" path="res://Scenes/DungeonScenes/ignore cuz 1 door/room_4.tscn" id="8_i8swh"]
+[ext_resource type="PackedScene" uid="uid://q3tme2bnfrfn" path="res://Scenes/DungeonScenes/Rooms/room_5.tscn" id="9_3wqic"]
+[ext_resource type="PackedScene" uid="uid://bl0vbkd23texf" path="res://Scenes/DungeonScenes/ignore cuz 1 door/room_6.tscn" id="10_313ec"]
+[ext_resource type="PackedScene" uid="uid://b6u4nkm87x1o5" path="res://Scenes/DungeonScenes/Rooms/room_7.tscn" id="11_avnjp"]
+[ext_resource type="PackedScene" uid="uid://desw738st50us" path="res://Scenes/DungeonScenes/Rooms/room_8.tscn" id="12_6nfgx"]
+[ext_resource type="PackedScene" uid="uid://bftric0kpwjk1" path="res://Scenes/DungeonScenes/Rooms/room_9.tscn" id="13_tnwls"]
+
+[node name="Dungeon" type="Node2D"]
+script = ExtResource("1_8814h")
+
+[node name="hallway_1" parent="." instance=ExtResource("2_vhgbg")]
+position = Vector2(-864, -653)
+
+[node name="hallway_2" parent="." instance=ExtResource("3_afx4b")]
+position = Vector2(-599, -656)
+
+[node name="hallway_3" parent="." instance=ExtResource("4_ndtsi")]
+position = Vector2(-342, -690)
+
+[node name="room_1" parent="." instance=ExtResource("5_pylku")]
+position = Vector2(-1262, -385)
+
+[node name="room_2" parent="." instance=ExtResource("6_d1vug")]
+position = Vector2(-1040, -367)
+
+[node name="room_3" parent="." instance=ExtResource("7_d2oma")]
+position = Vector2(-806, -357)
+
+[node name="room_4" parent="." instance=ExtResource("8_i8swh")]
+position = Vector2(-571, -360)
+
+[node name="room_5" parent="." instance=ExtResource("9_3wqic")]
+position = Vector2(-306, -375)
+
+[node name="room_6" parent="." instance=ExtResource("10_313ec")]
+position = Vector2(-1253, -169)
+
+[node name="room_7" parent="." instance=ExtResource("11_avnjp")]
+position = Vector2(-1029, -161)
+
+[node name="room_8" parent="." instance=ExtResource("12_6nfgx")]
+position = Vector2(-816, -133)
+
+[node name="room_9" parent="." instance=ExtResource("13_tnwls")]
+position = Vector2(-553, -140)

@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://desw738st50us"]
+
+[ext_resource type="Texture2D" uid="uid://dvg4tytb3g611" path="res://Images/room_8.png" id="1_j3ecm"]
+
+[node name="room_8" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 1)
+texture = ExtResource("1_j3ecm")
+
+[node name="topDoor" type="Marker2D" parent="."]
+position = Vector2(0, -79)
+
+[node name="leftDoor" type="Marker2D" parent="."]
+position = Vector2(-81, 0)

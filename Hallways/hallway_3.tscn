@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://v308rr7p17rc"]
+
+[ext_resource type="Texture2D" uid="uid://bbrpq8jbu4kct" path="res://Images/icon.svg" id="1_x30cp"]
+
+[node name="hallway_3" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(121, 123)
+scale = Vector2(0.293786, 0.47047)
+texture = ExtResource("1_x30cp")
+
+[node name="leftDoor" type="Marker2D" parent="."]
+position = Vector2(100, 127)
+
+[node name="bottomDoor" type="Marker2D" parent="."]
+position = Vector2(121, 153)

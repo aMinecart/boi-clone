@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmos12bd4npsj"]
+
+[ext_resource type="Texture2D" uid="uid://b5dpk1w1ypxuw" path="res://Images/room_4.png" id="1_vymj0"]
+
+[node name="room_4" type="Node2D"]
+
+[node name="bottomDoor" type="Marker2D" parent="."]
+position = Vector2(0, 81)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_vymj0")
+
+[node name="rightDoor" type="Marker2D" parent="."]
+position = Vector2(81, 0)
