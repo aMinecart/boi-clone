@@ -1,23 +1,43 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 
 public partial class PlayerMovement : CharacterBody2D
 {
-    private Vector2 InputDirection;
+    private Vector2 InputDirection { get; set; }
 
 	[Export]
 	private float Speed { get; set; } = 400.0f;
 	
-	private int Health = 4; 
+	private int Health { get; set; } = 4; 
 
-    private float Acceleration = 5.0f;
+    private float Acceleration { get; set; } = 5.0f;
 
-    private float friction = 40 * 4.0f; // amount the player slows down by each second (doubled when the player's desired move direction is equal to Vector2.zero) 
+    private float Friction { get; set; } = 40 * 4.0f; // amount the player slows down by each second (doubled when the player's desired move direction is equal to Vector2.zero) 
+
+
+	private List<float> speeds = [];
+
+	private int dashLenience = 5;
+	private float dashStrength = 1.5f;
 
 	private float calcRampup(float f)
 	{
 		return 2 * f / (f * f + 1);
 	}
+
+    private float findAvg(List<float> nums)
+    {
+        float avg = 0.0f;
+
+        foreach (float num in nums)
+        {
+            avg += num;
+        }
+
+        avg /= nums.Count;
+        return avg;
+    }
 
     private Vector2 accelerate(Vector2 currVel, Vector2 accelDir, float accelRate, float maxVel, float fixedDeltaTime)
 	{
@@ -50,7 +70,16 @@ public partial class PlayerMovement : CharacterBody2D
 		return currVel + new Vector2(accelX, accelY);
 	}
 
-	private Vector2 applyFriction(Vector2 currVel, Vector2 accelDir, float friction, float fixedDeltaTime)
+    private Vector2 dash(Vector2 currVel, Vector2 accelDir, float avgSpeed, float strength)
+    {
+        float dashSpeed = Mathf.Max(currVel.Length(), avgSpeed);
+
+        // print(dashSpeed);
+
+        return accelDir != Vector2.Zero ? accelDir * dashSpeed * strength : currVel.Normalized() * dashSpeed * strength;
+    }
+
+    private Vector2 applyFriction(Vector2 currVel, Vector2 accelDir, float friction, float fixedDeltaTime)
 	{
 		// add scaling based on changes to maximum speed (maxSpeed is currently the max speed in the X or Y direction, not both)
 
@@ -61,7 +90,7 @@ public partial class PlayerMovement : CharacterBody2D
 
         Vector2 newVel = currVel;
 
-		float speed = currVel.Length();
+		// float speed = currVel.Length();
         float angle = currVel.Angle();
 
 		float reduction = friction * fixedDeltaTime;
@@ -77,7 +106,17 @@ public partial class PlayerMovement : CharacterBody2D
         return newVel;
 	}
 
-	public void GetInput()
+    private void storeCurrSpeed()
+    {
+        speeds.Add(Velocity.Length());
+
+        if (speeds.Count > dashLenience)
+        {
+            speeds.RemoveAt(0);
+        }
+    }
+
+    public void GetInput()
 	{
         InputDirection = Input.GetVector("left", "right", "up", "down");
 	}
@@ -90,8 +129,14 @@ public partial class PlayerMovement : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-        Velocity = applyFriction(Velocity, InputDirection, friction, (float)delta);
+        Velocity = applyFriction(Velocity, InputDirection, Friction, (float)delta);
         Velocity = accelerate(Velocity, InputDirection, Acceleration, Speed, (float)delta);
+
+		bool dashing = true;
+		if (dashing)
+		{
+			Velocity = dash(Velocity, InputDirection, findAvg(speeds), dashStrength);
+		}
 
 		GetInput();
 		MoveAndSlide();
