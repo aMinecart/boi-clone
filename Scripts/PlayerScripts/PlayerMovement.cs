@@ -170,7 +170,9 @@ public partial class PlayerMovement : CharacterBody2D
 		HandleTimers();
 		StoreCurrSpeed();
 
-		if (!dashing)
+        GetInput();
+
+        if (!dashing)
 		{
             Velocity = ApplyFriction(Velocity, InputDirection, Friction, (float)delta);
             Velocity = ApplyAcceleration(Velocity, InputDirection, Acceleration, Speed, (float)delta);
@@ -183,12 +185,12 @@ public partial class PlayerMovement : CharacterBody2D
 			dashing = true;
 		}
 
-		GetInput();
+		
 		MoveAndSlide();
 		UpdateGlobalVars();
 	}
 
-	private void _on_area_2d_area_entered(Node2D area)
+    private void _on_area_2d_area_entered(Node2D area)
 	{
 		if (area.IsInGroup("enemy"))
 		{
