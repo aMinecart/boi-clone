@@ -1,24 +1,71 @@
-[gd_scene load_steps=5 format=3 uid="uid://qol1hse0xq66"]
+[gd_scene load_steps=12 format=3 uid="uid://qol1hse0xq66"]
 
 [ext_resource type="Script" uid="uid://c1dns0l2ikqax" path="res://Scripts/PlayerScripts/PlayerMovement.cs" id="1_svqju"]
-[ext_resource type="Texture2D" uid="uid://bbrpq8jbu4kct" path="res://icon.svg" id="2_ohkvt"]
+[ext_resource type="Texture2D" uid="uid://g73htj2fyw43" path="res://ronnie sprite sheet.png" id="3_3r7wx"]
 [ext_resource type="Script" uid="uid://8wh3aoowbidm" path="res://Scripts/PlayerScripts/HealthLabel.cs" id="3_8b6wy"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_7fxeg"]
-radius = 62.6498
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o4r8k"]
+size = Vector2(64, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ovxj"]
+atlas = ExtResource("3_3r7wx")
+region = Rect2(0, 0, 64, 143)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apb8t"]
+atlas = ExtResource("3_3r7wx")
+region = Rect2(0, 163, 64, 143)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1lylr"]
+atlas = ExtResource("3_3r7wx")
+region = Rect2(0, 326, 64, 143)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbssh"]
+atlas = ExtResource("3_3r7wx")
+region = Rect2(0, 489, 64, 143)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uvgt2"]
+atlas = ExtResource("3_3r7wx")
+region = Rect2(0, 652, 64, 143)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5mlpa"]
+atlas = ExtResource("3_3r7wx")
+region = Rect2(0, 815, 64, 143)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x7oe6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ovxj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apb8t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1lylr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mbssh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uvgt2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5mlpa")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Player" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 script = ExtResource("1_svqju")
 
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-texture = ExtResource("2_ohkvt")
-
 [node name="Area2D" type="Area2D" parent="CharacterBody2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
-shape = SubResource("CircleShape2D_7fxeg")
+shape = SubResource("RectangleShape2D_o4r8k")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CharacterBody2D"]
 anchors_preset = 8
@@ -36,5 +83,8 @@ scale = Vector2(5, 5)
 text = "4"
 scroll_active = false
 script = ExtResource("3_8b6wy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+sprite_frames = SubResource("SpriteFrames_x7oe6")
 
 [connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_area_2d_area_entered"]
