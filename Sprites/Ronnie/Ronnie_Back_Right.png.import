@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://g73htj2fyw43"
-path="res://.godot/imported/ronnie sprite sheet.png-500de38200290dc79af13d80210bb27f.ctex"
+uid="uid://bwnqmp0t5yvxt"
+path="res://.godot/imported/Ronnie_Back_Right.png-b13aa897b575170510aedafd0204043b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ronnie sprite sheet.png"
-dest_files=["res://.godot/imported/ronnie sprite sheet.png-500de38200290dc79af13d80210bb27f.ctex"]
+source_file="res://Sprites/Ronnie/Ronnie_Back_Right.png"
+dest_files=["res://.godot/imported/Ronnie_Back_Right.png-b13aa897b575170510aedafd0204043b.ctex"]
 
 [params]
 

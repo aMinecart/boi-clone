@@ -6,6 +6,9 @@ public partial class PlayerMovement : CharacterBody2D
 	// player's maximum velocity (in either the X or Y direction) (units per second)
 	private float Speed { get; set; } = 700.0f;
 
+	// player's minimum speed, calling applyFriction below this speed will set the speed equal to 0
+	private float StopSpeed { get; set; } = 10.0f;
+
 	// player's acceleration value (units per second squared)
     private float Acceleration { get; set; } = 1500.0f;
 
@@ -41,6 +44,17 @@ public partial class PlayerMovement : CharacterBody2D
 	private int dashLength = 20;
 	private int dashCooldown = 120;
 
+
+	private CollisionShape2D collisionShape;
+
+	private bool phasing = false;
+
+    // time remaining (in physics frames) until the player can phase again
+    private int timeToPhase { get; set; } = 0;
+
+    private int phaseLength = 30;
+    private int phaseCooldown = 120;
+
     private static float FindAvg(List<float> nums)
     {
         float avg = 0.0f;
@@ -59,7 +73,7 @@ public partial class PlayerMovement : CharacterBody2D
         return 2 * f / (f * f + 1);
     }
 
-    private Vector2 ApplyAcceleration(Vector2 vel, Vector2 accelDir, float accelRate, float maxVel, float fixedDeltaTime)
+    private static Vector2 ApplyAcceleration(Vector2 vel, Vector2 accelDir, float accelRate, float maxVel, float fixedDeltaTime)
 	{
 		if (accelDir == Vector2.Zero)
 		{
@@ -89,20 +103,20 @@ public partial class PlayerMovement : CharacterBody2D
 		return vel + new Vector2(accelX, accelY);
 	}
 
-    private Vector2 ApplyDash(Vector2 vel, Vector2 accelDir, float avgSpeed, float strength)
+    private static Vector2 ApplyDash(Vector2 vel, Vector2 accelDir, float avgSpeed, float strength)
     {
         float dashSpeed = Mathf.Max(vel.Length(), avgSpeed);
 
         return accelDir != Vector2.Zero ? accelDir * dashSpeed * strength : vel.Normalized() * dashSpeed * strength;
     }
 
-    private Vector2 ApplyFriction(Vector2 vel, Vector2 accelDir, float friction, float fixedDeltaTime)
+    private static Vector2 ApplyFriction(Vector2 vel, Vector2 accelDir, float friction, float stopSpeed, float fixedDeltaTime)
 	{
 		// add scaling based on changes to maximum speed (Speed is currently the max speed in the X or Y direction, not both)
 
-		if (vel.Length() == 0)
+		if (vel.Length() < stopSpeed)
 		{
-			return vel;
+			return Vector2.Zero;
 		}
 
 		float accelX, accelY;
@@ -123,6 +137,16 @@ public partial class PlayerMovement : CharacterBody2D
         return vel - new Vector2(accelX, accelY);
 	}
 
+    private void ApplyPhase()
+    {
+        collisionShape.Disabled = true;
+    }
+
+    private void StopPhase()
+    {
+        collisionShape.Disabled = false;
+    }
+
     private void StoreCurrSpeed()
     {
         speeds.Add(Velocity.Length());
@@ -140,6 +164,11 @@ public partial class PlayerMovement : CharacterBody2D
 			timeToDash--;
 		}
 
+		if (timeToPhase > 0)
+		{
+			timeToPhase--;
+		}
+
         if (dashing && timeToDash < dashCooldown - dashLength)
         {
             dashing = false;
@@ -148,9 +177,15 @@ public partial class PlayerMovement : CharacterBody2D
             if (phasingInDash)
             {
                 phasingInDash = false;
-                unphase(capCollider, capTrigger);
+                StopPhase();
             }
 			*/
+        }
+
+        if (phasing && timeToPhase < phaseCooldown - phaseLength)
+        {
+			StopPhase();
+            phasing = false;
         }
     }
 
@@ -165,7 +200,13 @@ public partial class PlayerMovement : CharacterBody2D
 		PlayerVars.Instance.Health = Health;
 	}
 
-	public override void _PhysicsProcess(double delta)
+
+    public override void _Ready()
+    {
+		collisionShape = GetNode<Area2D>("Area2D").GetNode<CollisionShape2D>("CollisionShape2D");
+    }
+
+    public override void _PhysicsProcess(double delta)
 	{
 		HandleTimers();
 		StoreCurrSpeed();
@@ -174,7 +215,7 @@ public partial class PlayerMovement : CharacterBody2D
 
         if (!dashing)
 		{
-            Velocity = ApplyFriction(Velocity, InputDirection, Friction, (float)delta);
+            Velocity = ApplyFriction(Velocity, InputDirection, Friction, StopSpeed, (float)delta);
             Velocity = ApplyAcceleration(Velocity, InputDirection, Acceleration, Speed, (float)delta);
         }
 
@@ -185,12 +226,20 @@ public partial class PlayerMovement : CharacterBody2D
 			dashing = true;
 		}
 
+        if (Input.IsActionJustPressed("phase") && timeToPhase <= 0)
+        {
+			ApplyPhase();
+			timeToPhase = phaseCooldown;
+			phasing = true;
+		}
+
+		GD.Print("Time to phase: ", timeToPhase, ", phasing: ", phasing);
 		
 		MoveAndSlide();
 		UpdateGlobalVars();
 	}
 
-    private void _on_area_2d_area_entered(Node2D area)
+    private void OnArea2DAreaEntered(Node2D area)
 	{
 		if (area.IsInGroup("enemy"))
 		{
