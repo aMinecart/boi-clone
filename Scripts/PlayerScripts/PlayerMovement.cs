@@ -3,24 +3,24 @@ using System.Collections.Generic;
 
 public partial class PlayerMovement : CharacterBody2D
 {
-  // player's maximum velocity (in either the X or Y direction) (units per second)
-	private float Speed { get; set; } = 700.0f;
+	// player's maximum velocity (in either the X or Y direction) (units per second)
+	[Export] private float Speed { get; set; } = 400.0f;
 
-	// player's minimum speed, calling applyFriction below this speed will set the speed equal to 0
-	private float StopSpeed { get; set; } = 10.0f;
+    // player's minimum speed, calling applyFriction below this speed will set the speed equal to 0
+    [Export] private float StopSpeed { get; set; } = 10.0f;
 
-	// player's acceleration value (units per second squared)
-    private float Acceleration { get; set; } = 1500.0f;
+    // player's acceleration value (units per second squared)
+    [Export] private float Acceleration { get; set; } = 2000.0f;
 
     // amount the player slows down by each second
-	// multiplied by 6 when the player's desired move direction is not equal to the direction the player is moving in
-    private float Friction { get; set; } = 160.0f;
+    // multiplied by 6 when the player's desired move direction is not equal to the direction the player is moving in
+    [Export] private float Friction { get; set; } = 160.0f;
 
-	// the player's current HP
-    private int Health { get; set; } = 4;
+    // the player's current HP
+    [Export] private int Health { get; set; } = 4;
 
 	// the direction the user currently wants to move the player in
-    private Vector2 InputDirection;
+    private Vector2 InputDirection { get; set; }
 
 
 	/***********************************************************************************************************************/
@@ -45,7 +45,7 @@ public partial class PlayerMovement : CharacterBody2D
 	private int dashCooldown = 120;
 
 
-	private CollisionShape2D collisionShape;
+	private CollisionShape2D hitbox;
 
 	private bool phasing = false;
 
@@ -118,14 +118,12 @@ public partial class PlayerMovement : CharacterBody2D
 		{
 			return Vector2.Zero;
 		}
-
-		float accelX, accelY;
 		
         float angle = vel.Angle();
 		float reduction = friction * fixedDeltaTime;
 		
-		accelX = (Mathf.Sign(vel.X) != Mathf.Sign(accelDir.X) ? 6 : 1) * reduction * Mathf.Cos(angle);
-        accelY = (Mathf.Sign(vel.Y) != Mathf.Sign(accelDir.Y) ? 6 : 1) * reduction * Mathf.Sin(angle);
+		float accelX = (Mathf.Sign(vel.X) != Mathf.Sign(accelDir.X) ? 2 * 6 : 1) * reduction * Mathf.Cos(angle);
+        float accelY = (Mathf.Sign(vel.Y) != Mathf.Sign(accelDir.Y) ? 2 * 6 : 1) * reduction * Mathf.Sin(angle);
 
         /* 
 		 * multiply current velocity by new speed and divide by current speed to set magnitude equal to the new value (cannot subtract from the vector's magnitude) 
@@ -137,14 +135,14 @@ public partial class PlayerMovement : CharacterBody2D
         return vel - new Vector2(accelX, accelY);
 	}
 
-    private void ApplyPhase()
+    private static void ApplyPhase(CollisionShape2D collisionShape2D)
     {
-        collisionShape.Disabled = true;
+        collisionShape2D.Disabled = true;
     }
 
-    private void StopPhase()
+    private static void StopPhase(CollisionShape2D collisionShape2D)
     {
-        collisionShape.Disabled = false;
+        collisionShape2D.Disabled = false;
     }
 
     private void StoreCurrSpeed()
@@ -184,9 +182,28 @@ public partial class PlayerMovement : CharacterBody2D
 
         if (phasing && timeToPhase < phaseCooldown - phaseLength)
         {
-			StopPhase();
-            phasing = false;
+            Unphase();
         }
+    }
+
+    private void Dash()
+    {
+        Velocity = ApplyDash(Velocity, InputDirection, FindAvg(speeds), dashStrength);
+        timeToDash = dashCooldown; // reset dash timer to prevent infinite dashing
+        dashing = true;
+    }
+
+    private void Phase()
+    {
+        ApplyPhase(hitbox);
+        timeToPhase = phaseCooldown; // reset phase timer to prevent infinite phasing
+        phasing = true;
+    }
+
+    private void Unphase()
+    {
+        StopPhase(hitbox);
+        phasing = false;
     }
 
     public void GetInput()
@@ -203,7 +220,7 @@ public partial class PlayerMovement : CharacterBody2D
 
     public override void _Ready()
     {
-		collisionShape = GetNode<Area2D>("Area2D").GetNode<CollisionShape2D>("CollisionShape2D");
+        hitbox = GetNode<Area2D>("Area2D").GetNode<CollisionShape2D>("CollisionShape2D");
     }
 
     public override void _PhysicsProcess(double delta)
@@ -219,21 +236,24 @@ public partial class PlayerMovement : CharacterBody2D
             Velocity = ApplyAcceleration(Velocity, InputDirection, Acceleration, Speed, (float)delta);
         }
 
-		if (Input.IsActionJustPressed("dash") && timeToDash <= 0)
-		{
-			Velocity = ApplyDash(Velocity, InputDirection, FindAvg(speeds), dashStrength);
-			timeToDash = dashCooldown; // reset dash timer to prevent infinite dashing
-			dashing = true;
-		}
-
-        if (Input.IsActionJustPressed("phase") && timeToPhase <= 0)
+        if (Input.IsActionJustPressed("phase_dash") && timeToDash <= 0 && timeToPhase <= 0)
         {
-			ApplyPhase();
-			timeToPhase = phaseCooldown;
-			phasing = true;
+            Dash();
+            Phase();
+        }
+        else if (Input.IsActionJustPressed("dash") && timeToDash <= 0)
+		{
+            Dash();
 		}
+        /*
+        else if(Input.IsActionJustPressed("phase") && timeToPhase <= 0)
+        {
+            Phase();			
+		}
+        */
 
-		GD.Print("Time to phase: ", timeToPhase, ", phasing: ", phasing);
+        GD.Print("Time to dash: ", timeToDash, ", dashing: ", dashing);
+        GD.Print("Time to phase: ", timeToPhase, ", phasing: ", phasing);
 		
 		MoveAndSlide();
 		UpdateGlobalVars();
