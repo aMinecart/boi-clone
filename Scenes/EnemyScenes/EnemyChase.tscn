@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bs26v0vn03dqb"]
+
+[ext_resource type="Script" uid="uid://yjxdi7wf3erc" path="res://Scripts/EnemyScripts/EnemyChaseScript.cs" id="1_y2v7p"]
+[ext_resource type="Texture2D" uid="uid://cu7847yxj5qd3" path="res://Sprites/EnemySprites/EnemyChaserSprite.png" id="2_y2v7p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1bxdk"]
+radius = 64.0
+
+[node name="EnemyChase" type="Node2D"]
+script = ExtResource("1_y2v7p")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+rotation = 1.5708
+texture = ExtResource("2_y2v7p")
+hframes = 2
+
+[node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["enemy"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+shape = SubResource("CircleShape2D_1bxdk")

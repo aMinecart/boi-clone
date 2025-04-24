@@ -20,4 +20,9 @@ public partial class BulletPeaScript : Node2D
 	{
 		bulletBody.MoveAndSlide();
 	}
+
+	private void _on_area_2d_area_entered(Node2D area)
+	{
+		if(area.IsInGroup("player"))CallDeferred("free");
+	}
 }
