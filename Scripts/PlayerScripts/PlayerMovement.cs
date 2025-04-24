@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public partial class PlayerMovement : CharacterBody2D
 {
-	// player's maximum velocity (in either the X or Y direction) (units per second)
+  // player's maximum velocity (in either the X or Y direction) (units per second)
 	private float Speed { get; set; } = 700.0f;
 
 	// player's minimum speed, calling applyFriction below this speed will set the speed equal to 0

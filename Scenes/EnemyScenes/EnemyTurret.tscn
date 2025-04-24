@@ -1,21 +1,38 @@
-[gd_scene load_steps=5 format=3 uid="uid://6bteb3tb4ukm"]
+[gd_scene load_steps=9 format=3 uid="uid://6bteb3tb4ukm"]
 
-[ext_resource type="Texture2D" uid="uid://bbrpq8jbu4kct" path="res://icon.svg" id="1_do26x"]
 [ext_resource type="Script" uid="uid://dc2whj8m1snmd" path="res://Scripts/EnemyScripts/EnemyTurretScript.cs" id="1_vph2m"]
 [ext_resource type="PackedScene" uid="uid://b8wuhehsksnih" path="res://Scenes/BulletScenes/BulletPea.tscn" id="2_ot47j"]
+[ext_resource type="Texture2D" uid="uid://b40l7fgsun7rb" path="res://Sprites/EnemySprites/EnemyTurretBaseSprite.png" id="3_bclcf"]
+[ext_resource type="Texture2D" uid="uid://dhwvs230otwgy" path="res://Sprites/EnemySprites/EnemyTurretHeadIdleSprite.png" id="4_xe17u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vph2m"]
 radius = 64.0
+
+[sub_resource type="AnimationRootNode" id="AnimationRootNode_bclcf"]
+
+[sub_resource type="Animation" id="Animation_xe17u"]
+resource_name = "EnemyTurretIdleAnimation"
+loop_mode = 1
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cwbnw"]
+_data = {
+&"EnemyTurretIdleAnimation": SubResource("Animation_xe17u")
+}
 
 [node name="EnemyTurret" type="Node2D"]
 script = ExtResource("1_vph2m")
 BulletScene = ExtResource("2_ot47j")
 
+[node name="SpriteBase" type="Sprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("3_bclcf")
+
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-rotation = 1.5708
-texture = ExtResource("1_do26x")
+[node name="SpriteHead" type="Sprite2D" parent="CharacterBody2D"]
+rotation = 4.71239
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("4_xe17u")
 
 [node name="Area2D" type="Area2D" parent="CharacterBody2D"]
 
@@ -23,7 +40,16 @@ texture = ExtResource("1_do26x")
 shape = SubResource("CircleShape2D_vph2m")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 3.0
 autostart = true
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationRootNode_bclcf")
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_cwbnw")
+}
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

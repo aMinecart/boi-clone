@@ -1,0 +1,76 @@
+[gd_scene load_steps=9 format=3 uid="uid://cxbwufansu6vw"]
+
+[ext_resource type="Script" uid="uid://de1hkn1tnjbie" path="res://Scripts/BossScripts/BossSprayerScript.cs" id="1_ewqls"]
+[ext_resource type="PackedScene" uid="uid://b8wuhehsksnih" path="res://Scenes/BulletScenes/BulletPea.tscn" id="2_0wpst"]
+[ext_resource type="Texture2D" uid="uid://dpkt8405njax4" path="res://Sprites/BossSprites/BossSprayerBodySprite.png" id="3_peng0"]
+[ext_resource type="Texture2D" uid="uid://hgvc131jv57x" path="res://Sprites/BossSprites/BossSprayerSubTurretSprite.png" id="4_q7wju"]
+[ext_resource type="Texture2D" uid="uid://dr8rne6kiiqru" path="res://Sprites/BossSprites/BossSprayerMainTurretSprite.png" id="5_5cmbk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i0chq"]
+radius = 128.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0wpst"]
+radius = 429.094
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y6p1h"]
+radius = 705.0
+
+[node name="BossSprayer" type="Node2D"]
+script = ExtResource("1_ewqls")
+BulletScene = ExtResource("2_0wpst")
+
+[node name="EnemyBody" type="CharacterBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="EnemyBody"]
+rotation = 3.14159
+scale = Vector2(2, 2)
+texture = ExtResource("3_peng0")
+
+[node name="BossBody" type="Area2D" parent="EnemyBody"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyBody/BossBody"]
+shape = SubResource("CircleShape2D_i0chq")
+
+[node name="LeftGunBody" type="CharacterBody2D" parent="EnemyBody"]
+position = Vector2(181, 35)
+
+[node name="LeftGunSprite" type="Sprite2D" parent="EnemyBody/LeftGunBody"]
+rotation = 3.14159
+scale = Vector2(2, 2)
+texture = ExtResource("4_q7wju")
+
+[node name="RightGunBody" type="CharacterBody2D" parent="EnemyBody"]
+
+[node name="RightGunSprite" type="Sprite2D" parent="EnemyBody/RightGunBody"]
+rotation = 3.14159
+scale = Vector2(2, 2)
+texture = ExtResource("5_5cmbk")
+
+[node name="ExclusionZone" type="Area2D" parent="EnemyBody"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyBody/ExclusionZone"]
+shape = SubResource("CircleShape2D_0wpst")
+
+[node name="InclusionZone" type="Area2D" parent="EnemyBody"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyBody/InclusionZone"]
+shape = SubResource("CircleShape2D_y6p1h")
+
+[node name="ShotTimer" type="Timer" parent="."]
+wait_time = 0.65
+autostart = true
+
+[node name="ZoneTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="OverrideTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="area_entered" from="EnemyBody/ExclusionZone" to="." method="_on_exclusion_zone_area_entered"]
+[connection signal="area_exited" from="EnemyBody/ExclusionZone" to="." method="_on_exclusion_zone_area_exited"]
+[connection signal="area_entered" from="EnemyBody/InclusionZone" to="." method="_on_inclusion_zone_area_entered"]
+[connection signal="area_exited" from="EnemyBody/InclusionZone" to="." method="_on_inclusion_zone_area_exited"]
+[connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
+[connection signal="timeout" from="ZoneTimer" to="." method="_on_zone_timer_timeout"]
+[connection signal="timeout" from="OverrideTimer" to="." method="_on_override_timer_timeout"]

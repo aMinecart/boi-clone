@@ -317,7 +317,7 @@ size = Vector2(64, 144)
 
 [node name="Player" type="Node2D"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
 script = ExtResource("1_svqju")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
@@ -327,7 +327,7 @@ autoplay = "IdleSoutheast"
 frame_progress = 0.011772
 script = ExtResource("4_3r7wx")
 
-[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
+[node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["player"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
 shape = SubResource("RectangleShape2D_o4r8k")
@@ -348,5 +348,9 @@ scale = Vector2(5, 5)
 text = "4"
 scroll_active = false
 script = ExtResource("3_8b6wy")
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+zoom = Vector2(0.4, 0.4)
+position_smoothing_enabled = true
 
 [connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="OnArea2DAreaEntered"]

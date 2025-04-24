@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b8wuhehsksnih"]
 
-[ext_resource type="Texture2D" uid="uid://bbrpq8jbu4kct" path="res://icon.svg" id="1_6uf28"]
 [ext_resource type="Script" uid="uid://b676bmxl4uu2f" path="res://Scripts/BulletScripts/BulletPeaScript.cs" id="1_ux8wq"]
+[ext_resource type="Texture2D" uid="uid://b4tv3mv3mybhb" path="res://Sprites/BulletSprites/BulletPeaSprite.png" id="2_8p8ju"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s7kpb"]
 radius = 64.1249
@@ -9,14 +9,25 @@ radius = 64.1249
 [node name="BulletPea" type="Node2D"]
 scale = Vector2(0.25, 0.25)
 script = ExtResource("1_ux8wq")
+speedStat = 400
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-rotation = 1.5708
-texture = ExtResource("1_6uf28")
+position = Vector2(-80, 44)
+rotation = 3.14159
+scale = Vector2(10, 10)
+texture = ExtResource("2_8p8ju")
+
+[node name="Sprite2D2" type="Sprite2D" parent="CharacterBody2D"]
+position = Vector2(-80, -44)
+rotation = 3.14159
+scale = Vector2(10, 10)
+texture = ExtResource("2_8p8ju")
 
 [node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["enemy"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
 shape = SubResource("CircleShape2D_s7kpb")
+
+[connection signal="area_entered" from="CharacterBody2D/Area2D" to="." method="_on_area_2d_area_entered"]
