@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkhry3pt6anjo"]
+
+[ext_resource type="Script" uid="uid://bymelt8hbwoet" path="res://scripts/Dungeon.cs" id="1_utjhn"]
+[ext_resource type="Script" uid="uid://bxjr3suwayld4" path="res://scripts/CameraScript.gd" id="2_k4q25"]
+
+[node name="Dungeon" type="Node2D"]
+script = ExtResource("1_utjhn")
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("2_k4q25")
