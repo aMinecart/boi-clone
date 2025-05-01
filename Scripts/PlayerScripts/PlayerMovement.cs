@@ -224,7 +224,6 @@ public partial class PlayerMovement : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
 	{
-		HandleTimers();
 		StoreCurrSpeed();
 
         GetInput();
@@ -255,7 +254,9 @@ public partial class PlayerMovement : CharacterBody2D
         */
 
         MoveAndSlide();
-		UpdateGlobalVars();
+
+        HandleTimers();
+        UpdateGlobalVars();
 	}
 
     private void _OnArea2DAreaEntered(Node2D area)
