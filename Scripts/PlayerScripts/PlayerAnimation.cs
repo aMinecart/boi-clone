@@ -32,8 +32,6 @@ public partial class PlayerAnimation : AnimatedSprite2D
 
     public override void _Process(double delta)
     {
-        mousePos = GetLocalMousePosition();
-
         if (player.Velocity.Length() > 0)
         {
             playerState = Action.Running;

@@ -22,7 +22,7 @@ public partial class EnemyTurretScript : Node2D
 		enemyBody.LookAt(PlayerVars.Instance.Position);
 	}
 
-	private void _on_timer_timeout()
+	private void _OnTimerTimeout()
 	{
 		Shoot();
 	}

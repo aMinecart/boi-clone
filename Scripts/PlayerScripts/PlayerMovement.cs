@@ -33,27 +33,34 @@ public partial class PlayerMovement : CharacterBody2D
     private List<float> speeds = [];
 
 	// whether the player is dashing or not
-	// note: friction and player acceleration disabled during dash
+	// note: friction and user acceleration disabled for the player during dash
     private bool dashing = false;
 
 	// time remaining (in physics frames) until the player can dash again
-    private int timeToDash { get; set; } = 0;
+    private int TimeToDash { get; set; } = 0;
 
     // dashing parameters
-    private float dashStrength = 1.5f;
+    private float dashStrength = 2.5f;
 	private int dashLength = 20;
 	private int dashCooldown = 120;
 
 
-	private CollisionShape2D hitbox;
+    /***********************************************************************************************************************/
 
+
+    // player collison shape used for detecting collisons and taking damage
+    private CollisionShape2D hurtbox;
+
+    // whether the player is phasing or not
+    // note: player hurtbox is disabled for the player during phase
 	private bool phasing = false;
 
     // time remaining (in physics frames) until the player can phase again
-    private int timeToPhase { get; set; } = 0;
+    private int TimeToPhase { get; set; } = 0;
 
+    // phasing parameters
     private int phaseLength = 30;
-    private int phaseCooldown = 120;
+    private int phaseCooldown = 300;
 
     private static float FindAvg(List<float> nums)
     {
@@ -157,30 +164,22 @@ public partial class PlayerMovement : CharacterBody2D
 
 	private void HandleTimers()
 	{
-		if (timeToDash > 0)
+		if (TimeToDash > 0)
 		{
-			timeToDash--;
+			TimeToDash--;
 		}
 
-		if (timeToPhase > 0)
+		if (TimeToPhase > 0)
 		{
-			timeToPhase--;
+			TimeToPhase--;
 		}
 
-        if (dashing && timeToDash < dashCooldown - dashLength)
+        if (dashing && TimeToDash < dashCooldown - dashLength)
         {
             dashing = false;
-
-			/*
-            if (phasingInDash)
-            {
-                phasingInDash = false;
-                StopPhase();
-            }
-			*/
         }
 
-        if (phasing && timeToPhase < phaseCooldown - phaseLength)
+        if (phasing && TimeToPhase < phaseCooldown - phaseLength)
         {
             Unphase();
         }
@@ -189,20 +188,20 @@ public partial class PlayerMovement : CharacterBody2D
     private void Dash()
     {
         Velocity = ApplyDash(Velocity, InputDirection, FindAvg(speeds), dashStrength);
-        timeToDash = dashCooldown; // reset dash timer to prevent infinite dashing
+        TimeToDash = dashCooldown; // reset dash timer to prevent infinite dashing
         dashing = true;
     }
 
     private void Phase()
     {
-        ApplyPhase(hitbox);
-        timeToPhase = phaseCooldown; // reset phase timer to prevent infinite phasing
+        ApplyPhase(hurtbox);
+        TimeToPhase = phaseCooldown; // reset phase timer to prevent infinite phasing
         phasing = true;
     }
 
     private void Unphase()
     {
-        StopPhase(hitbox);
+        StopPhase(hurtbox);
         phasing = false;
     }
 
@@ -220,7 +219,7 @@ public partial class PlayerMovement : CharacterBody2D
 
     public override void _Ready()
     {
-        hitbox = GetNode<Area2D>("Area2D").GetNode<CollisionShape2D>("CollisionShape2D");
+        hurtbox = GetNode<Area2D>("Area2D").GetNode<CollisionShape2D>("CollisionShape2D");
     }
 
     public override void _PhysicsProcess(double delta)
@@ -236,30 +235,30 @@ public partial class PlayerMovement : CharacterBody2D
             Velocity = ApplyAcceleration(Velocity, InputDirection, Acceleration, Speed, (float)delta);
         }
 
-        if (Input.IsActionJustPressed("phase_dash") && timeToDash <= 0 && timeToPhase <= 0)
+        if (Input.IsActionJustPressed("phase_dash") && TimeToDash <= 0 && TimeToPhase <= 0)
         {
             Dash();
             Phase();
         }
-        else if (Input.IsActionJustPressed("dash") && timeToDash <= 0)
+        else if (Input.IsActionJustPressed("dash") && TimeToDash <= 0)
 		{
             Dash();
 		}
         /*
-        else if(Input.IsActionJustPressed("phase") && timeToPhase <= 0)
+        else if(Input.IsActionJustPressed("phase") && TimeToPhase <= 0)
         {
             Phase();			
 		}
+
+        GD.Print("Time to dash: ", TimeToDash, ", dashing: ", dashing);
+        GD.Print("Time to phase: ", TimeToPhase, ", phasing: ", phasing);
         */
 
-        GD.Print("Time to dash: ", timeToDash, ", dashing: ", dashing);
-        GD.Print("Time to phase: ", timeToPhase, ", phasing: ", phasing);
-		
-		MoveAndSlide();
+        MoveAndSlide();
 		UpdateGlobalVars();
 	}
 
-    private void OnArea2DAreaEntered(Node2D area)
+    private void _OnArea2DAreaEntered(Node2D area)
 	{
 		if (area.IsInGroup("enemy"))
 		{

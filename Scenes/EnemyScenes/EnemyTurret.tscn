@@ -52,4 +52,4 @@ libraries = {
 &"": SubResource("AnimationLibrary_cwbnw")
 }
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_OnTimerTimeout"]

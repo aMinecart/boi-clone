@@ -1,5 +1,6 @@
-[gd_scene load_steps=47 format=3 uid="uid://qol1hse0xq66"]
+[gd_scene load_steps=49 format=3 uid="uid://qol1hse0xq66"]
 
+[ext_resource type="Script" uid="uid://bvuyeiiwusote" path="res://Scripts/PlayerScripts/PlayerAbilities.cs" id="1_5mlpa"]
 [ext_resource type="Script" uid="uid://c1dns0l2ikqax" path="res://Scripts/PlayerScripts/PlayerMovement.cs" id="1_svqju"]
 [ext_resource type="Texture2D" uid="uid://g73htj2fyw43" path="res://Sprites/Ronnie/ronnie sprite sheet.png" id="3_3r7wx"]
 [ext_resource type="Script" uid="uid://8wh3aoowbidm" path="res://Scripts/PlayerScripts/HealthLabel.cs" id="3_8b6wy"]
@@ -10,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://c34jpo4w34e3t" path="res://Sprites/Ronnie/Ronnie_front_facing walk.png" id="7_5c7ln"]
 [ext_resource type="Texture2D" uid="uid://chx53c5wqhpjp" path="res://Sprites/Ronnie/Ronnie_Front_Right walk.png" id="8_8acbg"]
 [ext_resource type="Texture2D" uid="uid://byjst7afj67x4" path="res://Sprites/Ronnie/Ronnie_Front_left walk.png" id="9_f4f65"]
+[ext_resource type="PackedScene" uid="uid://c2w7oca7bnd8b" path="res://Scenes/PlayerScenes/SlashBox.tscn" id="12_x7oe6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o4r8k"]
 atlas = ExtResource("3_3r7wx")
@@ -316,6 +318,11 @@ animations = [{
 size = Vector2(64, 144)
 
 [node name="Player" type="Node2D"]
+script = ExtResource("1_5mlpa")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.4, 0.4)
+position_smoothing_enabled = true
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
 script = ExtResource("1_svqju")
@@ -349,8 +356,6 @@ text = "4"
 scroll_active = false
 script = ExtResource("3_8b6wy")
 
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-zoom = Vector2(0.4, 0.4)
-position_smoothing_enabled = true
+[node name="SlashBox" parent="CharacterBody2D" instance=ExtResource("12_x7oe6")]
 
-[connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="OnArea2DAreaEntered"]
+[connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_OnArea2DAreaEntered"]

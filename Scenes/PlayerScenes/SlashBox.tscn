@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2w7oca7bnd8b"]
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_wc6qt"]
+points = PackedVector2Array(-50, -50, 50, -50, 50, 50, -50, 50)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_wc6qt"]
+
+[node name="SlashBox" type="Node2D"]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("ConvexPolygonShape2D_wc6qt")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D/CollisionShape2D"]
+scale = Vector2(100.5, 100.5)
+texture = SubResource("CanvasTexture_wc6qt")

@@ -9,7 +9,6 @@ radius = 64.1249
 [node name="BulletPea" type="Node2D"]
 scale = Vector2(0.25, 0.25)
 script = ExtResource("1_ux8wq")
-speedStat = 400
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 
@@ -30,4 +29,4 @@ texture = ExtResource("2_8p8ju")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
 shape = SubResource("CircleShape2D_s7kpb")
 
-[connection signal="area_entered" from="CharacterBody2D/Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_entered" from="CharacterBody2D/Area2D" to="." method="_OnArea2DAreaEntered"]
