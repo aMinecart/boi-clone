@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://hgvc131jv57x" path="res://Sprites/BossSprites/BossSprayerSubTurretSprite.png" id="4_q7wju"]
 [ext_resource type="Texture2D" uid="uid://dr8rne6kiiqru" path="res://Sprites/BossSprites/BossSprayerMainTurretSprite.png" id="5_5cmbk"]
 
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_i0chq"]
 radius = 128.0
 

@@ -18,8 +18,11 @@ public enum Mode
 
 public partial class PlayerAbilities : Node2D
 {
+    [Export] public PackedScene BulletScene { get; set; }
+
     private Node2D Prop { get; set; }
     private CollisionShape2D Hitbox { get; set; }
+    private AnimatedSprite2D Item { get; set; }
 
     private Mode playerMode = Mode.Melee;
 
@@ -67,6 +70,65 @@ public partial class PlayerAbilities : Node2D
 
         return hits;
     }
+
+    /*private bool IsAttacking()
+    {
+        if (modeTypesDict[playerMode] == AbilityType.Fixed)
+        {
+            return TimeToAbility <= 0;
+        }
+        else
+        {
+            return TimeToAbility >= abilityCooldown;
+        }
+    }*/
+
+    private void FireRanged()
+    {
+        PhysicsDirectSpaceState2D spaceState = GetWorld2D().DirectSpaceState;
+
+        /*
+        var query = PhysicsRayQueryParameters2D.Create(GlobalPosition, GetGlobalMousePosition());
+        query.CollideWithAreas = true;
+
+        var collisionInfo = spaceState.IntersectRay(query);
+        if (collisionInfo == null)
+        {
+            break;
+        }
+
+        Node2D collision = (Node2D)collisionInfo["collider"];
+        if (collision.GetParent() == null)
+        {
+            break;
+        }
+
+        collision.GetParent().CallDeferred(MethodName.Free);
+        */
+
+        PhysicsRayQueryParameters2D query = PhysicsRayQueryParameters2D.Create(GlobalPosition, GetGlobalMousePosition(), collisionMask: 2);
+        query.CollideWithAreas = true;
+
+        var collisions = IntersectRays(query, spaceState);
+        foreach (var collision in collisions)
+        {
+            // GD.Print((Node2D)collision["collider"]);
+            Node2D collider = (Node2D)collision["collider"];
+
+            collider.GetParent()?.GetParent()?.Free();
+        }
+
+        GD.Print("Hitscan fired");
+    }
+
+    private void FireProjectile()
+    {
+        Node2D bullet = (Node2D)BulletScene.Instantiate();
+        bullet.GlobalPosition = Prop.GlobalPosition;
+        bullet.Rotation = Prop.GlobalRotation;
+
+        GetTree().GetRoot().GetNode("TestScene/EnemyBulletParent").AddChild(bullet);
+    }
     
     private void StartAbility(Mode abilityType)
     {
@@ -87,16 +149,19 @@ public partial class PlayerAbilities : Node2D
         switch (abilityType)
         {
             case Mode.Melee:
-                
                 // enable hitbox for abilityCooldown frames
                 Hitbox.Disabled = false;
+                Item.Animation = "MeleeFire";
                 break;
 
             case Mode.Ranged:
+                Item.Animation = "RangedFire";
                 break;
 
             case Mode.Projectile:
                 // spawn child projectile
+                GD.Print("IT WORKS");
+                Item.Animation = "ProjectileFire";
                 break;
         }
     }
@@ -114,43 +179,19 @@ public partial class PlayerAbilities : Node2D
             case Mode.Melee:
                 // disable hitbox
                 Hitbox.Disabled = true;
+                Item.Animation = "MeleeIdle";
                 break;
+
             case Mode.Ranged:
                 // use raycast to create attack
-                PhysicsDirectSpaceState2D spaceState = GetWorld2D().DirectSpaceState;
+                FireRanged();
+                Item.Animation = "RangedIdle";
+                break;
 
-                /*
-                var query = PhysicsRayQueryParameters2D.Create(GlobalPosition, GetGlobalMousePosition());
-                query.CollideWithAreas = true;
-
-                var collisionInfo = spaceState.IntersectRay(query);
-                if (collisionInfo == null)
-                {
-                    break;
-                }
-
-                Node2D collision = (Node2D)collisionInfo["collider"];
-                if (collision.GetParent() == null)
-                {
-                    break;
-                }
-
-                collision.GetParent().CallDeferred(MethodName.Free);
-                */
-
-                PhysicsRayQueryParameters2D query = PhysicsRayQueryParameters2D.Create(GlobalPosition, GetGlobalMousePosition(), collisionMask: 2);
-                query.CollideWithAreas = true;
-
-                var collisions = IntersectRays(query, spaceState);
-                foreach (var collision in collisions)
-                {
-                    // GD.Print((Node2D)collision["collider"]);
-                    Node2D collider = (Node2D)collision["collider"];
-
-                    collider.GetParent()?.GetParent()?.Free();
-                }
-
-                GD.Print("Hitscan fired");
+            case Mode.Projectile:
+                // spawn bullet pea
+                FireProjectile();
+                Item.Animation = "ProjectileIdle";
                 break;
         }
     }
@@ -200,12 +241,28 @@ public partial class PlayerAbilities : Node2D
     {
         Prop = GetNode<Node2D>("SlashBox");
         Hitbox = GetNode<CollisionShape2D>("SlashBox/Area2D/CollisionShape2D");
+        Item = GetNode<AnimatedSprite2D>("SlashBox/AnimatedSprite2D");
     }
 
     public override void _PhysicsProcess(double delta)
     {
+        /* Item.Animation = playerMode.ToString() + (IsAttacking() ? "Idle" : "Fire");*/
+
         // change position of prop
-        Prop.Position = GetLocalMousePosition().Normalized() * 100;
+        // Prop.Position = GetLocalMousePosition().Normalized() * 100;
+
+        // change rotation of prop
+        Prop.Rotation = GetLocalMousePosition().Angle();
+
+        if (Mathf.Abs(Mathf.RadToDeg(Prop.Rotation)) > 90)
+        {
+            Prop.Scale = new Vector2(0.9f, -0.9f);
+        }
+        else
+        {
+            Prop.Scale = new Vector2(0.9f, 0.9f);
+        }
+
         // check for mode switch
         if (Input.IsActionJustPressed("switch_mode"))
         {
