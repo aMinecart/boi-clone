@@ -15,6 +15,9 @@ position = Vector2(417, 749)
 [node name="BossSprayer" parent="." instance=ExtResource("2_xvbl5")]
 position = Vector2(1805, 724)
 
+[node name="BossSprayer2" parent="." instance=ExtResource("2_xvbl5")]
+position = Vector2(1165, 728)
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -1
 position = Vector2(1133.25, 837.75)

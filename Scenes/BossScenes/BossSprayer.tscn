@@ -27,6 +27,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("3_peng0")
 
 [node name="BossBody" type="Area2D" parent="EnemyBody"]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyBody/BossBody"]
 shape = SubResource("CircleShape2D_i0chq")
