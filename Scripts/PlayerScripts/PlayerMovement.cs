@@ -19,8 +19,12 @@ public partial class PlayerMovement : CharacterBody2D
 	// the player's current HP
     private int Health { get; set; } = 4;
 
+	private bool Vulnerable = true;
+
 	// the direction the user currently wants to move the player in
-    private Vector2 InputDirection;
+	private Vector2 InputDirection { get; set; }
+    private AnimatedSprite2D sprite;
+	private Timer timer;
 
 
 	/***********************************************************************************************************************/
@@ -200,17 +204,23 @@ public partial class PlayerMovement : CharacterBody2D
 		PlayerVars.Instance.Health = Health;
 	}
 
+	public void IFramesFlash()
+	{
+		if(!Vulnerable)sprite.Visible = !sprite.Visible;
+		else if(Vulnerable && !sprite.Visible)sprite.Visible = true;
+	}
 
     public override void _Ready()
     {
 		collisionShape = GetNode<Area2D>("Area2D").GetNode<CollisionShape2D>("CollisionShape2D");
+		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		timer = GetNode<Timer>("Timer");
     }
 
     public override void _PhysicsProcess(double delta)
 	{
 		HandleTimers();
 		StoreCurrSpeed();
-
         GetInput();
 
         if (!dashing)
@@ -237,13 +247,29 @@ public partial class PlayerMovement : CharacterBody2D
 		
 		MoveAndSlide();
 		UpdateGlobalVars();
+		IFramesFlash();
 	}
 
     private void OnArea2DAreaEntered(Node2D area)
 	{
-		if (area.IsInGroup("enemy"))
+		if (area.IsInGroup("enemy") && Vulnerable)
 		{
 			Health--;
+			if(Health <= 0)
+			{
+				CallDeferred("free");
+				SceneManager.instance.ChangeScene(eSceneNames.GameOver);
+			}
+			else
+			{
+				timer.Start(1);
+				Vulnerable = false;
+			}
 		}
+	}
+
+	private void _on_timer_timeout()
+	{
+		Vulnerable = true;
 	}
 }

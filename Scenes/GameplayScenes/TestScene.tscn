@@ -1,14 +1,27 @@
-[gd_scene load_steps=3 format=3 uid="uid://d4l1u8787h8gs"]
+[gd_scene load_steps=6 format=3 uid="uid://d4l1u8787h8gs"]
 
+[ext_resource type="Texture2D" uid="uid://bt825qqkidyp2" path="res://john-cena.JPG" id="1_h1tug"]
+[ext_resource type="PackedScene" uid="uid://6wheexgiwe4o" path="res://Scenes/GameplayScenes/SceneManager.tscn" id="1_hj7nb"]
 [ext_resource type="PackedScene" uid="uid://qol1hse0xq66" path="res://Scenes/PlayerScenes/Player.tscn" id="1_xvbl5"]
-[ext_resource type="PackedScene" uid="uid://cxbwufansu6vw" path="res://Scenes/BossScenes/BossSprayer.tscn" id="2_xvbl5"]
+[ext_resource type="PackedScene" uid="uid://cxbwufansu6vw" path="res://Scenes/BossScenes/BossSprayer.tscn" id="3_h1tug"]
+[ext_resource type="PackedScene" uid="uid://bs26v0vn03dqb" path="res://Scenes/EnemyScenes/EnemyChase.tscn" id="4_sjc8k"]
 
 [node name="TestScene" type="Node2D"]
+
+[node name="SceneManager" parent="." instance=ExtResource("1_hj7nb")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(10, 10)
+texture = ExtResource("1_h1tug")
 
 [node name="Player" parent="." instance=ExtResource("1_xvbl5")]
 position = Vector2(417, 749)
 
 [node name="EnemyBulletParent" type="Node2D" parent="."]
+z_index = 2
 
-[node name="BossSprayer" parent="." instance=ExtResource("2_xvbl5")]
-position = Vector2(1805, 724)
+[node name="BossSprayer3" parent="." instance=ExtResource("3_h1tug")]
+position = Vector2(1242, 765)
+
+[node name="EnemyChase" parent="." instance=ExtResource("4_sjc8k")]
+position = Vector2(-1768, 252)

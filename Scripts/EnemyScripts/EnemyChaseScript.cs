@@ -5,7 +5,7 @@ using System.Numerics;
 public partial class EnemyChaseScript : Node2D
 {
     private CharacterBody2D enemyBody;
-    [Export] private int speedStat = 200;
+    [Export] private int speedStat = 500;
 
     public override void _Ready()
     {

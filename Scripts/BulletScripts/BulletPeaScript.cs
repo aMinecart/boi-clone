@@ -25,4 +25,9 @@ public partial class BulletPeaScript : Node2D
 	{
 		if(area.IsInGroup("player"))CallDeferred("free");
 	}
+
+	private void _on_timer_timeout()
+	{
+		CallDeferred("free");
+	}
 }
