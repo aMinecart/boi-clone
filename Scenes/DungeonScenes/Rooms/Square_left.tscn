@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://bip61bntvcndd"]
+
+[ext_resource type="Texture2D" uid="uid://hsesdnt4vn0t" path="res://img/rooms/square/square-left.png" id="1_rrh82"]
+
+[node name="Square_left" type="Node2D"]
+
+[node name="leftDoor" type="Marker2D" parent="."]
+position = Vector2(0, 256)
+
+[node name="room" type="Sprite2D" parent="."]
+position = Vector2(256, 256)
+texture = ExtResource("1_rrh82")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 512, 0, 512, 512, 0, 512, 0, 304, 16, 304, 16, 496, 480, 496, 480, 32, 16, 32, 16, 208, 0, 208)

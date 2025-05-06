@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://cp83lpkyyqkx1"]
+
+[ext_resource type="Texture2D" uid="uid://cnyn0rbhgres8" path="res://img/rooms/rectangle-l/rectangle-l-bottom.png" id="1_f2two"]
+
+[node name="RectL_bottom" type="Node2D"]
+
+[node name="bottomDoor" type="Marker2D" parent="."]
+position = Vector2(256, 896)
+
+[node name="room" type="Sprite2D" parent="."]
+position = Vector2(256, 448)
+texture = ExtResource("1_f2two")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 512, 0, 512, 896, 304, 896, 304, 880, 480, 880, 480, 32, 16, 32, 16, 880, 208, 880, 208, 896, 0, 896)

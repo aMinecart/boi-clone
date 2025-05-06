@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjc4ohamfo0xv"]
+
+[ext_resource type="Texture2D" uid="uid://bnk6esfisdabj" path="res://img/rooms/square/square-topbottom.png" id="1_lp44o"]
+
+[node name="Square_topbottom" type="Node2D"]
+
+[node name="bottomDoor" type="Marker2D" parent="."]
+position = Vector2(256, 512)
+
+[node name="topDoor" type="Marker2D" parent="."]
+position = Vector2(256, 0)
+
+[node name="room" type="Sprite2D" parent="."]
+position = Vector2(256, 256)
+texture = ExtResource("1_lp44o")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 208, 0, 208, 32, 16, 32, 16, 496, 208, 496, 208, 512, 0, 512)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(304, 0, 304, 32, 480, 32, 480, 496, 304, 496, 304, 512, 512, 512, 512, 0)

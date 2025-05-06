@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://brtbdy80qnp75"]
+
+[ext_resource type="Texture2D" uid="uid://bj32bb6tyvec6" path="res://img/rooms/rectangle-l/rectangle-l-leftright.png" id="1_gyp7c"]
+
+[node name="RectL_leftright" type="Node2D"]
+
+[node name="leftDoor" type="Marker2D" parent="."]
+position = Vector2(0, 448)
+
+[node name="rightDoor" type="Marker2D" parent="."]
+position = Vector2(512, 448)
+
+[node name="room" type="Sprite2D" parent="."]
+position = Vector2(256, 448)
+texture = ExtResource("1_gyp7c")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 512, 0, 512, 400, 480, 400, 480, 32, 16, 32, 16, 400, 0, 400)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 496, 16, 496, 16, 880, 480, 880, 480, 496, 512, 496, 512, 896, 0, 896)

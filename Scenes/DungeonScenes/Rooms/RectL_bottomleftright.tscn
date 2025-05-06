@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://qjmfnautdg7t"]
+
+[ext_resource type="Texture2D" uid="uid://riaaa1k2pb4r" path="res://img/rooms/rectangle-l/rectangle-l-rightbottomleft.png" id="1_0hdk2"]
+
+[node name="RectL_bottomleftright" type="Node2D"]
+
+[node name="leftDoor" type="Marker2D" parent="."]
+position = Vector2(0, 448)
+
+[node name="rightDoor" type="Marker2D" parent="."]
+position = Vector2(512, 448)
+
+[node name="bottomDoor" type="Marker2D" parent="."]
+position = Vector2(256, 896)
+
+[node name="room" type="Sprite2D" parent="."]
+position = Vector2(256, 448)
+texture = ExtResource("1_0hdk2")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 512, 0, 512, 400, 480, 400, 480, 32, 16, 32, 16, 400, 0, 400)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 496, 16, 496, 16, 880, 208, 880, 208, 896, 0, 896)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(480, 496, 512, 496, 512, 896, 304, 896, 304, 880, 480, 880)
