@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cax88b5ram45d"]
+[gd_scene load_steps=4 format=3 uid="uid://cax88b5ram45d"]
 
 [ext_resource type="Texture2D" uid="uid://da7mfndbik8oj" path="res://img/rooms/rectangle-w/rectangle-w-all.png" id="1_kgepv"]
+[ext_resource type="PackedScene" uid="uid://bs26v0vn03dqb" path="res://Scenes/EnemyScenes/EnemyChase.tscn" id="2_v3i3p"]
+[ext_resource type="PackedScene" uid="uid://6bteb3tb4ukm" path="res://Scenes/EnemyScenes/EnemyTurret.tscn" id="3_gd6xv"]
 
 [node name="RectW_all" type="Node2D"]
 
@@ -20,14 +22,36 @@ position = Vector2(448, 0)
 position = Vector2(448, 256)
 texture = ExtResource("1_kgepv")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="StaticBody2D"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
 polygon = PackedVector2Array(0, 0, 400, 0, 400, 32, 16, 32, 16, 208, 0, 208)
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
 polygon = PackedVector2Array(0, 304, 16, 304, 16, 496, 400, 496, 400, 512, 0, 512)
 
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="."]
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
 polygon = PackedVector2Array(496, 0, 496, 32, 864, 32, 864, 208, 896, 208, 896, 0)
 
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="."]
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
 polygon = PackedVector2Array(864, 304, 896, 304, 896, 512, 496, 512, 496, 496, 864, 496)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(0, 0, 400, 0, 400, 32, 16, 32, 16, 208, 0, 208)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(0, 304, 16, 304, 16, 496, 400, 496, 400, 512, 0, 512)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(496, 0, 496, 32, 864, 32, 864, 208, 896, 208, 896, 0)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(864, 304, 896, 304, 896, 512, 496, 512, 496, 496, 864, 496)
+
+[node name="EnemyChase" parent="." instance=ExtResource("2_v3i3p")]
+position = Vector2(224, 270)
+
+[node name="EnemyTurret" parent="." instance=ExtResource("3_gd6xv")]
+position = Vector2(656, 256)

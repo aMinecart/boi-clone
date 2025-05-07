@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://clir0rgbtve7t"]
+
+[ext_resource type="Texture2D" uid="uid://6obb1vtslaje" path="res://img/rooms/hallways/hallway-topbottom.png" id="1_5v2ft"]
+
+[node name="HallwayV_topbottom" type="Node2D"]
+
+[node name="topDoor" type="Marker2D" parent="."]
+position = Vector2(96, 0)
+
+[node name="bottomDoor" type="Marker2D" parent="."]
+position = Vector2(96, 512)
+
+[node name="room" type="Sprite2D" parent="."]
+position = Vector2(96, 256)
+texture = ExtResource("1_5v2ft")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="StaticBody2D"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
+polygon = PackedVector2Array(0, 0, 48, 0, 48, 32, 16, 32, 16, 496, 48, 496, 48, 512, 0, 512)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
+polygon = PackedVector2Array(144, 0, 144, 32, 160, 32, 160, 496, 144, 496, 144, 512, 192, 512, 192, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(0, 0, 48, 0, 48, 32, 16, 32, 16, 496, 48, 496, 48, 512, 0, 512)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(144, 0, 144, 32, 160, 32, 160, 496, 144, 496, 144, 512, 192, 512, 192, 0)

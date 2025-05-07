@@ -11,5 +11,12 @@ position = Vector2(0, 256)
 position = Vector2(448, 256)
 texture = ExtResource("1_jggyw")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="StaticBody2D"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
+polygon = PackedVector2Array(0, 0, 0, 208, 16, 208, 16, 32, 864, 32, 864, 496, 16, 496, 16, 304, 0, 304, 0, 512, 896, 512, 896, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(0, 0, 0, 208, 16, 208, 16, 32, 864, 32, 864, 496, 16, 496, 16, 304, 0, 304, 0, 512, 896, 512, 896, 0)

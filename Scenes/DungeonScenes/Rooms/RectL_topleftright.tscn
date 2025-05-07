@@ -17,11 +17,24 @@ position = Vector2(256, 0)
 position = Vector2(256, 448)
 texture = ExtResource("1_dty2p")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="StaticBody2D"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
 polygon = PackedVector2Array(0, 0, 208, 0, 208, 32, 16, 32, 16, 400, 0, 400)
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
 polygon = PackedVector2Array(304, 0, 304, 32, 480, 32, 480, 400, 512, 400, 512, 0)
 
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="."]
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
+polygon = PackedVector2Array(0, 496, 0, 896, 512, 896, 512, 496, 480, 496, 480, 880, 16, 880, 16, 496)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(0, 0, 208, 0, 208, 32, 16, 32, 16, 400, 0, 400)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(304, 0, 304, 32, 480, 32, 480, 400, 512, 400, 512, 0)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(0, 496, 0, 896, 512, 896, 512, 496, 480, 496, 480, 880, 16, 880, 16, 496)

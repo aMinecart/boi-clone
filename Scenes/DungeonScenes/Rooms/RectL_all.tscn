@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dics2ahwbrhlr"]
+[gd_scene load_steps=4 format=3 uid="uid://dics2ahwbrhlr"]
 
 [ext_resource type="Texture2D" uid="uid://bcnisasgq7wmb" path="res://img/rooms/rectangle-l/rectangle-l-all.png" id="1_a8b64"]
+[ext_resource type="PackedScene" uid="uid://bs26v0vn03dqb" path="res://Scenes/EnemyScenes/EnemyChase.tscn" id="2_fsipy"]
+[ext_resource type="PackedScene" uid="uid://6bteb3tb4ukm" path="res://Scenes/EnemyScenes/EnemyTurret.tscn" id="3_0pode"]
 
 [node name="RectL_all" type="Node2D"]
 
@@ -24,6 +26,21 @@ texture = ExtResource("1_a8b64")
 
 [node name="Area2D" type="Area2D" parent="StaticBody2D"]
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
+polygon = PackedVector2Array(208, 0, 208, 32, 16, 32, 16, 32, 16, 400, 0, 400, 0, 0)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
+position = Vector2(192, 80)
+polygon = PackedVector2Array(320, -80, 320, 320, 288, 320, 288, -48, 112, -48, 112, -80)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
+position = Vector2(-72, 392)
+polygon = PackedVector2Array(88, 488, 280, 488, 280, 504, 72, 504, 72, 104, 88, 104)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
+position = Vector2(320, 480)
+polygon = PackedVector2Array(192, 416, -16, 416, -16, 400, 160, 400, 160, 16, 192, 16)
+
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(208, 0, 208, 32, 16, 32, 16, 32, 16, 400, 0, 400, 0, 0)
 
@@ -38,3 +55,9 @@ polygon = PackedVector2Array(88, 488, 280, 488, 280, 504, 72, 504, 72, 104, 88, 
 [node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D"]
 position = Vector2(320, 480)
 polygon = PackedVector2Array(192, 416, -16, 416, -16, 400, 160, 400, 160, 16, 192, 16)
+
+[node name="EnemyChase" parent="." instance=ExtResource("2_fsipy")]
+position = Vector2(264, 272)
+
+[node name="EnemyTurret" parent="." instance=ExtResource("3_0pode")]
+position = Vector2(256, 680)
