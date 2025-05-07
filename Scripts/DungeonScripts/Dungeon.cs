@@ -33,7 +33,7 @@ namespace boiclone.Scripts.DungeonScripts
 
 			SetScenesFromFolder("res://Scenes/DungeonScenes/Rooms/", _loadedRooms);
 
-            BeginGrowDungeon(position: Vector2.Zero, depthC: 10, scale: new Vector2(2.5f, 2.5f),
+            BeginGrowDungeon(position: Vector2.Zero, depthC: 15, scale: new Vector2(3.5f, 3.5f),
 				roomName: "Square_all");
 			SwapDeadEndRooms();
 		}
@@ -198,15 +198,15 @@ namespace boiclone.Scripts.DungeonScripts
 			float otherTop = room2.Position.Y;
 			float otherBottom = room2.Position.Y + sprite2.Texture.GetHeight() * room2.Scale.Y;
 
-			const int padding = 20;
+			const int padding = 5;
 
 			bool crash = !(myBottom - padding < otherTop || myTop + padding > otherBottom
 				|| myRight - padding < otherLeft || myLeft + padding > otherRight);
 			return crash;
 		}
 
-		/// <summary>swap out rooms with dead end markers with one that doesn't use those sides</summary>
-		private void SwapDeadEndRooms()
+        /// <summary>swap out rooms with dead end markers with one that doesn't use those sides</summary>
+        private void SwapDeadEndRooms()
 		{
 			Node RoomParent = GetNode<Node>("RoomParent");
             List<Room> roomsToSwap = [.. RoomParent.GetChildren().OfType<Room>()];
@@ -266,12 +266,10 @@ namespace boiclone.Scripts.DungeonScripts
             string pathEnd = string.Join("", activeDoors.Select(name => name.Replace("Door", "")));
 			string path = pathStart + pathEnd + ".tscn";
 
-			GD.Print("path" + path);
-
 			PackedScene roomPacked = GD.Load<PackedScene>(path);
 			if (roomPacked == null) {
 				GD.PrintErr($"Room swap not found for path: {path}");
-				return null;
+                return null;
 			}
 
             return roomPacked.Instantiate<Room>();
