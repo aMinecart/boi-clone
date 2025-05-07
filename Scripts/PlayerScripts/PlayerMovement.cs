@@ -228,7 +228,6 @@ public partial class PlayerMovement : CharacterBody2D
 
     public override void _Ready()
     {
-		collisionShape = GetNode<Area2D>("Area2D").GetNode<CollisionShape2D>("CollisionShape2D");
 		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		timer = GetNode<Timer>("Timer");
         hurtbox = GetNode<Area2D>("Area2D").GetNode<CollisionShape2D>("CollisionShape2D");
@@ -276,7 +275,7 @@ public partial class PlayerMovement : CharacterBody2D
 		if (area.IsInGroup("enemy") && Vulnerable)
 		{
 			Health--;
-			if(Health <= 0)
+			if (Health <= 0)
 			{
 				CallDeferred("free");
 				SceneManager.instance.ChangeScene(eSceneNames.GameOver);
@@ -289,7 +288,7 @@ public partial class PlayerMovement : CharacterBody2D
 		}
 	}
 
-	private void _on_timer_timeout()
+	private void _OnTimerTimeout()
 	{
 		Vulnerable = true;
 	}

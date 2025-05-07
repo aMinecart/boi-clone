@@ -7,10 +7,10 @@
 radius = 64.1249
 
 [node name="BulletPea" type="Node2D"]
-scale = Vector2(0.25, 0.25)
 script = ExtResource("1_dalph")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+scale = Vector2(0.25, 0.25)
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 position = Vector2(-80, 0)
