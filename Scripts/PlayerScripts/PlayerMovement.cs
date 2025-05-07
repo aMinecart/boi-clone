@@ -27,7 +27,6 @@ public partial class PlayerMovement : CharacterBody2D
 	private Timer timer;
 
 
-
 	/***********************************************************************************************************************/
 
 
@@ -264,8 +263,10 @@ public partial class PlayerMovement : CharacterBody2D
         GD.Print("Time to dash: ", TimeToDash, ", dashing: ", dashing);
         GD.Print("Time to phase: ", TimeToPhase, ", phasing: ", phasing);
         */
+
         IFramesFlash();
         MoveAndSlide();
+
         HandleTimers();
         UpdateGlobalVars();
 	}

@@ -330,12 +330,19 @@ z_index = 1
 zoom = Vector2(0.4, 0.4)
 position_smoothing_enabled = true
 
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.4, 0.4)
+position_smoothing_enabled = true
+
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
 script = ExtResource("1_svqju")
 
+<<<<<<< HEAD
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("CapsuleShape2D_5mlpa")
 
+=======
+>>>>>>> refs/remotes/origin/main
 [node name="AbilityController" type="Node2D" parent="CharacterBody2D"]
 script = ExtResource("1_5mlpa")
 BulletScene = ExtResource("3_5c7ln")
@@ -371,6 +378,7 @@ text = "4"
 scroll_active = false
 script = ExtResource("3_8b6wy")
 
+<<<<<<< HEAD
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
 zoom = Vector2(0.4, 0.4)
 position_smoothing_enabled = true
@@ -383,3 +391,6 @@ one_shot = true
 [connection signal="timeout" from="CharacterBody2D/Timer" to="CharacterBody2D" method="_on_timer_timeout"]
 
 
+=======
+[connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_OnArea2DAreaEntered"]
+>>>>>>> refs/remotes/origin/main
