@@ -28,12 +28,12 @@ rotation = 3.14159
 scale = Vector2(2, 2)
 texture = ExtResource("3_peng0")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyBody"]
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_peng0")
-
 [node name="BossBody" type="Area2D" parent="EnemyBody" groups=["enemy"]]
 collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyBody/BossBody"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_peng0")
 
 [node name="LeftGunBody" type="CharacterBody2D" parent="EnemyBody"]
 position = Vector2(181, 35)
