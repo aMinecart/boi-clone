@@ -12,11 +12,13 @@ public partial class EnemyTurretScript : Node2D
 		bullet.Rotation = enemyBody.Rotation;
 		GetTree().GetRoot().GetNode("TestScene/EnemyBulletParent").AddChild(bullet);
 	}
+
     public override void _Ready()
     {
         base._Ready();
 		enemyBody = GetNode<CharacterBody2D>("CharacterBody2D");
     }
+
 	public override void _PhysicsProcess(double delta)
 	{
 		enemyBody.LookAt(PlayerVars.Instance.Position);
@@ -26,4 +28,12 @@ public partial class EnemyTurretScript : Node2D
 	{
 		Shoot();
 	}
+
+	private void _OnArea2DAreaEntered(Node2D area)
+    {
+        if (area.IsInGroup("playerAttack"))
+        {
+            CallDeferred(MethodName.Free);
+        }
+    }
 }

@@ -1,13 +1,14 @@
-[gd_scene load_steps=25 format=3 uid="uid://c2w7oca7bnd8b"]
+[gd_scene load_steps=26 format=3 uid="uid://c2w7oca7bnd8b"]
 
 [ext_resource type="Script" uid="uid://m4d7ugwpv7ni" path="res://Scripts/PlayerScripts/Hitbox.cs" id="1_wbmef"]
 [ext_resource type="Texture2D" uid="uid://c4wbilhs6wfb8" path="res://Sprites/WeaponSprites/gun_fire.png" id="2_f4b3s"]
+[ext_resource type="Texture2D" uid="uid://bywqq3yvwqv2y" path="res://Sprites/WeaponSprites/pipeoff.png" id="2_qsd53"]
 [ext_resource type="Texture2D" uid="uid://dw46vjs86p7m2" path="res://Sprites/WeaponSprites/gun_idle.png" id="3_3tdku"]
 [ext_resource type="Texture2D" uid="uid://cpnoywavm8ts3" path="res://Sprites/WeaponSprites/laxer_rile_fire.png" id="4_j8ffn"]
 [ext_resource type="Texture2D" uid="uid://dxx6xfknynt4h" path="res://Sprites/WeaponSprites/lazer_rifle.png" id="5_qsd53"]
 
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_wc6qt"]
-points = PackedVector2Array(-50, -50, 50, -50, 50, 50, -50, 50)
+points = PackedVector2Array(30, -65, 70, -65, 70, 65, 30, 65)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j8ffn"]
 atlas = ExtResource("2_f4b3s")
@@ -79,12 +80,18 @@ region = Rect2(1840, 0, 184, 96)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wbmef"]
 animations = [{
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qsd53")
+}],
 "loop": true,
 "name": &"MeleeFire",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qsd53")
+}],
 "loop": true,
 "name": &"MeleeIdle",
 "speed": 5.0
@@ -110,7 +117,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"ProjectileFire",
-"speed": 10.0
+"speed": 30.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -154,9 +161,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_o63gi")
 }],
-"loop": true,
+"loop": false,
 "name": &"RangedFire",
-"speed": 5.0
+"speed": 1.6
 }, {
 "frames": [{
 "duration": 1.0,
@@ -164,12 +171,13 @@ animations = [{
 }],
 "loop": true,
 "name": &"RangedIdle",
-"speed": 5.0
+"speed": 1.6
 }]
 
 [node name="SlashBox" type="Node2D"]
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
 script = ExtResource("1_wbmef")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
@@ -181,7 +189,7 @@ z_index = 2
 position = Vector2(50, 0)
 scale = Vector2(0.9, 0.9)
 sprite_frames = SubResource("SpriteFrames_wbmef")
-animation = &"ProjectileIdle"
+animation = &"MeleeIdle"
 autoplay = "MeleeIdle"
 
 [connection signal="area_entered" from="Area2D" to="Area2D" method="_OnArea2DAreaEntered"]

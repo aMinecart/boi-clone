@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c4ktudnqh62bt"]
 
-[ext_resource type="Script" uid="uid://b676bmxl4uu2f" path="res://Scripts/BulletScripts/BulletPeaScript.cs" id="1_dalph"]
+[ext_resource type="Script" uid="uid://b00bhgbjbxlen" path="res://Scripts/BulletScripts/PlayerBulletPeaScript.cs" id="1_dalph"]
 [ext_resource type="Texture2D" uid="uid://b4tv3mv3mybhb" path="res://Sprites/BulletSprites/BulletPeaSprite.png" id="2_flfu7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s7kpb"]
@@ -19,6 +19,7 @@ scale = Vector2(10, 10)
 texture = ExtResource("2_flfu7")
 
 [node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["playerAttack"]]
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
 shape = SubResource("CircleShape2D_s7kpb")

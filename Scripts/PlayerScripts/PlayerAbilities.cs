@@ -46,7 +46,7 @@ public partial class PlayerAbilities : Node2D
     private readonly Dictionary<Mode, int> modeCooldownsDict = new() {
         { Mode.Melee, 90 },
         { Mode.Ranged, 300 },
-        { Mode.Projectile, 120 }
+        { Mode.Projectile, 36 }
     };
 
     private static Godot.Collections.Array<Godot.Collections.Dictionary> IntersectRays(PhysicsRayQueryParameters2D query, PhysicsDirectSpaceState2D spaceState, int maxIterations = 25)
@@ -118,7 +118,7 @@ public partial class PlayerAbilities : Node2D
             collider.GetParent()?.GetParent()?.Free();
         }
 
-        GD.Print("Hitscan fired");
+        // GD.Print("Hitscan fired");
     }
 
     private void FireProjectile()
@@ -159,8 +159,9 @@ public partial class PlayerAbilities : Node2D
                 break;
 
             case Mode.Projectile:
-                // spawn child projectile
-                GD.Print("IT WORKS");
+                // spawn bullet pea / child projectile
+                FireProjectile();
+                // GD.Print("IT WORKS");
                 Item.Animation = "ProjectileFire";
                 break;
         }
@@ -171,6 +172,7 @@ public partial class PlayerAbilities : Node2D
         if (modeTypesDict[playerMode] == AbilityType.Charge && TimeToAbility < abilityCooldown)
         {
             TimeToAbility = 0;
+            Item.Animation = "RangedIdle";
             return;
         }
 
@@ -189,8 +191,6 @@ public partial class PlayerAbilities : Node2D
                 break;
 
             case Mode.Projectile:
-                // spawn bullet pea
-                FireProjectile();
                 Item.Animation = "ProjectileIdle";
                 break;
         }
@@ -218,6 +218,21 @@ public partial class PlayerAbilities : Node2D
         else /* if (modeTypesDict[updatedMode] == AbilityType.Charge || modeTypesDict[updatedMode] == AbilityType.Variable) */
         {
             TimeToAbility = 0;
+        }
+
+        switch (updatedMode)
+        {
+            case Mode.Melee:
+                Item.Animation = "MeleeIdle";
+                break;
+
+            case Mode.Ranged:
+                Item.Animation = "RangedIdle";
+                break;
+
+            case Mode.Projectile:
+                Item.Animation = "ProjectileIdle";
+                break;
         }
 
         playerMode = updatedMode;
@@ -251,7 +266,7 @@ public partial class PlayerAbilities : Node2D
         // change position of prop
         // Prop.Position = GetLocalMousePosition().Normalized() * 100;
 
-        // change rotation of prop
+        // change rotation of prop to follow the player's mouse
         Prop.Rotation = GetLocalMousePosition().Angle();
 
         if (Mathf.Abs(Mathf.RadToDeg(Prop.Rotation)) > 90)
@@ -284,14 +299,18 @@ public partial class PlayerAbilities : Node2D
         
         HandleTimers();
 
-        GD.Print(TimeToAbility);
+        // GD.Print(TimeToAbility);
+        // GD.Print(Item.Animation);
+        // GD.Print(Item.Frame);
         // GD.Print(!Hitbox.Disabled);
     }
 }
+
 /*
 public class Ability
 {
     public Mode Type {  get; set; }
     public bool ChargeRequired { get; set; }
     public int Cooldown { get; set; }
-}*/
+}
+*/

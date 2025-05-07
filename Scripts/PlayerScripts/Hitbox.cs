@@ -3,9 +3,9 @@ using System;
 
 public partial class Hitbox : Area2D
 {
-    public void _OnArea2DAreaEntered(Area2D area)
+    private void _OnArea2DAreaEntered(Area2D area)
     {
-        if (area.CollisionLayer == 2)
+        if (area.IsInGroup("enemy"))
         {
             area.GetParent()?.GetParent()?.Free();
         }
