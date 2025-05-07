@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkhry3pt6anjo"]
+
+[sub_resource type="GDScript" id="GDScript_fl0l7"]
+script/source = "using Godot;
+
+public partial class CameraScript : Node2D
+{
+	private Camera2D _camera;
+
+	public override void _Ready()
+	{
+		_camera = GetViewport().GetCamera2D();
+
+		if (_camera != null)
+		{
+			GD.Print($\"Found active camera: {_camera.Name}\");
+			// Now you can interact with _camera
+			// _camera.Zoom = new Vector2(2f, 2f); // Example: Zoom out
+		}
+		else
+		{
+			GD.Print(\"No active Camera2D found in the current viewport.\");
+		}
+	}
+
+	// Example function to zoom the camera:
+	public void ZoomCameraOut(float zoomFactor)
+	{
+		if (_camera != null)
+		{
+			_camera.Zoom *= new Vector2(zoomFactor, zoomFactor);
+		}
+	}
+}
+"
+
+[node name="Dungeon" type="Node2D"]
+script = SubResource("GDScript_fl0l7")

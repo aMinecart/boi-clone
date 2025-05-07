@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Numerics;
 
 public partial class EnemyChaseScript : Node2D
 {
@@ -30,4 +29,12 @@ public partial class EnemyChaseScript : Node2D
         SetVelocity();
         enemyBody.MoveAndSlide();
 	}
+
+    private void _OnArea2DAreaEntered(Node2D area)
+    {
+        if (area.IsInGroup("playerAttack"))
+        {
+            CallDeferred(MethodName.Free);
+        }
+    }
 }

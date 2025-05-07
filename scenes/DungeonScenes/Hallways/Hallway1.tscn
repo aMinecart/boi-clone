@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://02twcxcsfyq0"]
+
+[ext_resource type="Texture2D" uid="uid://dwei2j11siy3d" path="res://img/rooms/hallways/hallway-topbottomright.png" id="1_s0h4b"]
+
+[node name="Room1" type="Node2D"]
+
+[node name="rightDoor" type="Marker2D" parent="."]
+position = Vector2(192, 256)
+
+[node name="bottomDoor" type="Marker2D" parent="."]
+position = Vector2(96, 512)
+
+[node name="topDoor" type="Marker2D" parent="."]
+position = Vector2(96, 0)
+
+[node name="room" type="Sprite2D" parent="."]
+position = Vector2(96, 256)
+texture = ExtResource("1_s0h4b")

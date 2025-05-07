@@ -1,10 +1,9 @@
 using Godot;
 using System;
-using System.Text.RegularExpressions;
 
 public partial class BulletPeaScript : Node2D
 {
-	[Export] private int speedStat { get; set; } = 200;
+	[Export] private int SpeedStat { get; set; } = 200;
 
 	private CharacterBody2D bulletBody;
 
@@ -12,8 +11,8 @@ public partial class BulletPeaScript : Node2D
     {
         base._Ready();
 		bulletBody = GetChild<CharacterBody2D>(0);
-		bulletBody.Velocity = new Vector2((float)Math.Cos(Rotation), (float)Math.Sin(Rotation));
-		bulletBody.Velocity = bulletBody.Velocity.Normalized() * speedStat;
+		bulletBody.Velocity = new Vector2(Mathf.Cos(Rotation), Mathf.Sin(Rotation));
+		bulletBody.Velocity = bulletBody.Velocity.Normalized() * SpeedStat;
     }
 
 	public override void _PhysicsProcess(double delta)
@@ -21,9 +20,12 @@ public partial class BulletPeaScript : Node2D
 		bulletBody.MoveAndSlide();
 	}
 
-	private void _on_area_2d_area_entered(Node2D area)
+	private void _OnArea2DAreaEntered(Node2D area)
 	{
-		if(area.IsInGroup("player"))CallDeferred("free");
+		if (area.IsInGroup("player"))
+		{
+            CallDeferred(MethodName.Free);
+        }
 	}
 
 	private void _on_timer_timeout()

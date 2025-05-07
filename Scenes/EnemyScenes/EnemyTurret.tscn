@@ -40,7 +40,8 @@ rotation = 4.71239
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("4_xe17u")
 
-[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
+[node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["enemy"]]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
 shape = SubResource("CircleShape2D_vph2m")
@@ -61,4 +62,5 @@ libraries = {
 &"": SubResource("AnimationLibrary_cwbnw")
 }
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="CharacterBody2D/Area2D" to="." method="_OnArea2DAreaEntered"]
+[connection signal="timeout" from="Timer" to="." method="_OnTimerTimeout"]
