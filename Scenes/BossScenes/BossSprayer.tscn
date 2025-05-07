@@ -26,7 +26,8 @@ rotation = 3.14159
 scale = Vector2(2, 2)
 texture = ExtResource("3_peng0")
 
-[node name="BossBody" type="Area2D" parent="EnemyBody"]
+[node name="BossBody" type="Area2D" parent="EnemyBody" groups=["enemy"]]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyBody/BossBody"]
 shape = SubResource("CircleShape2D_i0chq")
@@ -67,6 +68,7 @@ autostart = true
 wait_time = 5.0
 autostart = true
 
+[connection signal="area_entered" from="EnemyBody/BossBody" to="." method="_OnBossBodyAreaEntered"]
 [connection signal="area_entered" from="EnemyBody/ExclusionZone" to="." method="_on_exclusion_zone_area_entered"]
 [connection signal="area_exited" from="EnemyBody/ExclusionZone" to="." method="_on_exclusion_zone_area_exited"]
 [connection signal="area_entered" from="EnemyBody/InclusionZone" to="." method="_on_inclusion_zone_area_entered"]

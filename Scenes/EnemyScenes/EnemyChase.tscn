@@ -17,6 +17,9 @@ texture = ExtResource("2_y2v7p")
 hframes = 2
 
 [node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["enemy"]]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
 shape = SubResource("CircleShape2D_1bxdk")
+
+[connection signal="area_entered" from="CharacterBody2D/Area2D" to="." method="_OnArea2DAreaEntered"]
