@@ -24,12 +24,16 @@ public partial class PlayerAbilities : Node2D
     private CollisionShape2D Hitbox { get; set; }
     private AnimatedSprite2D Item { get; set; }
 
+    private Timer ReloadTimer { get; set; }
+
     private Mode playerMode = Mode.Melee;
 
     private int TimeToAbility { get; set; } = 0;
 
-    private int abilityCooldown = 90; // match to modeCooldownsDict value for playerMode variable
+    private int abilityCooldown = 30; // match to modeCooldownsDict value for playerMode variable
     private int abilityLength = 12;
+
+    private float abilityAmmo = Mathf.Inf;
 
     /*
     private int meleeCooldown = 180;
@@ -44,9 +48,21 @@ public partial class PlayerAbilities : Node2D
     };
 
     private readonly Dictionary<Mode, int> modeCooldownsDict = new() {
-        { Mode.Melee, 90 },
-        { Mode.Ranged, 300 },
-        { Mode.Projectile, 36 }
+        { Mode.Melee, 30 },
+        { Mode.Ranged, 120 },
+        { Mode.Projectile, 15 }
+    };
+
+    private readonly Dictionary<Mode, float> modeReloadTimesDict = new() {
+        { Mode.Melee, 0 },
+        { Mode.Ranged, 3 },
+        { Mode.Projectile, 1.5f }
+    };
+
+    private readonly Dictionary<Mode, float> modeAmmoCountsDict = new() {
+        { Mode.Melee, Mathf.Inf },
+        { Mode.Ranged, 5 },
+        { Mode.Projectile, 7 }
     };
 
     private static Godot.Collections.Array<Godot.Collections.Dictionary> IntersectRays(PhysicsRayQueryParameters2D query, PhysicsDirectSpaceState2D spaceState, int maxIterations = 25)
@@ -82,6 +98,12 @@ public partial class PlayerAbilities : Node2D
             return TimeToAbility >= abilityCooldown;
         }
     }*/
+
+    private void StartReload()
+    {
+        ReloadTimer.Start(modeReloadTimesDict[playerMode]);
+        //reloading = true;
+    }
 
     private void FireRanged()
     {
@@ -155,14 +177,21 @@ public partial class PlayerAbilities : Node2D
                 break;
 
             case Mode.Ranged:
-                Item.Animation = "RangedFire";
+                if (abilityAmmo > 0)
+                {
+                    Item.Animation = "RangedFire";
+                }
                 break;
 
             case Mode.Projectile:
                 // spawn bullet pea / child projectile
-                FireProjectile();
-                // GD.Print("IT WORKS");
-                Item.Animation = "ProjectileFire";
+                if (abilityAmmo > 0)
+                {
+                    FireProjectile();
+                    abilityAmmo--;
+
+                    Item.Animation = "ProjectileFire";
+                }
                 break;
         }
     }
@@ -186,7 +215,12 @@ public partial class PlayerAbilities : Node2D
 
             case Mode.Ranged:
                 // use raycast to create attack
-                FireRanged();
+                if (abilityAmmo > 0)
+                {
+                    FireRanged();
+                    abilityAmmo--;
+                }
+
                 Item.Animation = "RangedIdle";
                 break;
 
@@ -196,20 +230,64 @@ public partial class PlayerAbilities : Node2D
         }
     }
 
-    private void SwitchAbility(Mode currentMode)
+    private void CancelAbility(Mode abilityType)
+    {
+        if (modeTypesDict[abilityType] == AbilityType.Fixed)
+        {
+            TimeToAbility = abilityCooldown;
+        }
+        else /* if (modeTypesDict[updatedMode] == AbilityType.Charge || modeTypesDict[updatedMode] == AbilityType.Variable) */
+        {
+            TimeToAbility = 0;
+        }
+
+        switch (abilityType)
+        {
+            case Mode.Melee:
+                // disable hitbox
+                Hitbox.Disabled = true;
+                Item.Animation = "MeleeIdle";
+                break;
+
+            case Mode.Ranged:
+                Item.Animation = "RangedIdle";
+                break;
+
+            case Mode.Projectile:
+                Item.Animation = "ProjectileIdle";
+                break;
+        }
+    }
+
+    private void SwitchAbility(Mode currentMode, bool invert = false)
     {
         Mode updatedMode;
 
-        if ((int)currentMode == Enum.GetValues(typeof(Mode)).Length - 1)
+        if (!invert)
         {
-            updatedMode = (Mode)0;
+            if ((int)currentMode == Enum.GetValues(typeof(Mode)).Length - 1)
+            {
+                updatedMode = (Mode)0;
+            }
+            else
+            {
+                updatedMode = (Mode)((int)currentMode + 1);
+            }
         }
         else
         {
-            updatedMode = (Mode)((int)currentMode + 1);
+            if ((int)currentMode == 0)
+            {
+                updatedMode = (Mode)(Enum.GetValues(typeof(Mode)).Length - 1);
+            }
+            else
+            {
+                updatedMode = (Mode)((int)currentMode - 1);
+            }
         }
 
         abilityCooldown = modeCooldownsDict[updatedMode];
+        abilityAmmo = modeAmmoCountsDict[updatedMode];
 
         if (modeTypesDict[updatedMode] == AbilityType.Fixed)
         {
@@ -236,6 +314,7 @@ public partial class PlayerAbilities : Node2D
         }
 
         playerMode = updatedMode;
+        Hitbox.Disabled = true; // check that attack hitbox is not still active
 
         // GD.Print($"switched: playerMode {playerMode}, abilityCooldown {abilityCooldown}, TimeToAbility {TimeToAbility}");
     }
@@ -257,6 +336,7 @@ public partial class PlayerAbilities : Node2D
         Prop = GetNode<Node2D>("SlashBox");
         Hitbox = GetNode<CollisionShape2D>("SlashBox/Area2D/CollisionShape2D");
         Item = GetNode<AnimatedSprite2D>("SlashBox/AnimatedSprite2D");
+        ReloadTimer = GetNode<Timer>("ReloadTimer");
     }
 
     public override void _PhysicsProcess(double delta)
@@ -278,10 +358,24 @@ public partial class PlayerAbilities : Node2D
             Prop.Scale = new Vector2(0.9f, 0.9f);
         }
 
+        // check for reload
+        float maxAmmo = modeAmmoCountsDict[playerMode];
+        if (Input.IsActionJustPressed("reload") &&
+            maxAmmo != Mathf.Inf &&
+            abilityAmmo != maxAmmo)
+        {
+            FinishAbility(playerMode);
+            StartReload();
+        }
+
         // check for mode switch
         if (Input.IsActionJustPressed("switch_mode"))
         {
-            SwitchAbility(playerMode);
+            SwitchAbility(playerMode, false);
+        }
+        else if (Input.IsActionJustPressed("reverse_switch_mode"))
+        {
+            SwitchAbility(playerMode, true);
         }
 
         // check for lmb
@@ -296,15 +390,24 @@ public partial class PlayerAbilities : Node2D
         {
             FinishAbility(playerMode);
         }
-        
+
         HandleTimers();
 
         // GD.Print(TimeToAbility);
-        // GD.Print(Item.Animation);
+        // GD.Print(abilityAmmo);
+        // GD.Print("Time: ", ReloadTimer.TimeLeft, "; abilityAmmo: " + abilityAmmo);
+        GD.Print(Item.Animation);
         // GD.Print(Item.Frame);
         // GD.Print(!Hitbox.Disabled);
     }
+
+    private void _OnReloadTimerTimeout()
+    {
+        abilityAmmo = modeAmmoCountsDict[playerMode];
+        // reloading = false;
+    }
 }
+
 
 /*
 public class Ability

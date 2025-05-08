@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://d4l1u8787h8gs"]
+[gd_scene load_steps=6 format=3 uid="uid://d4l1u8787h8gs"]
 
 [ext_resource type="PackedScene" path="res://Scenes/GameplayScenes/SceneManager.tscn" id="1_hj7nb"]
 [ext_resource type="PackedScene" uid="uid://qol1hse0xq66" path="res://Scenes/PlayerScenes/Player.tscn" id="1_xvbl5"]
 [ext_resource type="PackedScene" uid="uid://cxbwufansu6vw" path="res://Scenes/BossScenes/BossSprayer.tscn" id="2_xvbl5"]
-[ext_resource type="PackedScene" uid="uid://bs26v0vn03dqb" path="res://Scenes/EnemyScenes/EnemyChase.tscn" id="3_h1tug"]
 [ext_resource type="PackedScene" uid="uid://6bteb3tb4ukm" path="res://Scenes/EnemyScenes/EnemyTurret.tscn" id="4_sjc8k"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xvbl5"]
@@ -29,17 +28,5 @@ z_index = -1
 position = Vector2(1133.25, 837.75)
 scale = Vector2(2267.5, 1676.5)
 texture = SubResource("PlaceholderTexture2D_xvbl5")
-
-[node name="EnemyChase" parent="." instance=ExtResource("3_h1tug")]
-position = Vector2(2222, 1462)
-
-[node name="EnemyChase2" parent="." instance=ExtResource("3_h1tug")]
-position = Vector2(435, 1476)
-
-[node name="EnemyChase3" parent="." instance=ExtResource("3_h1tug")]
-position = Vector2(1500, 520)
-
-[node name="EnemyChase4" parent="." instance=ExtResource("3_h1tug")]
-position = Vector2(352, 254)
 
 [node name="EnemyTurret" parent="." instance=ExtResource("4_sjc8k")]

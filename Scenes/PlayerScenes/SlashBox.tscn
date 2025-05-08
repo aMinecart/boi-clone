@@ -115,7 +115,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_k7cig")
 }],
-"loop": true,
+"loop": false,
 "name": &"ProjectileFire",
 "speed": 30.0
 }, {
@@ -163,7 +163,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"RangedFire",
-"speed": 1.6
+"speed": 4.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -191,7 +191,7 @@ z_index = 2
 position = Vector2(50, 0)
 scale = Vector2(0.9, 0.9)
 sprite_frames = SubResource("SpriteFrames_wbmef")
-animation = &"MeleeIdle"
+animation = &"ProjectileFire"
 autoplay = "MeleeIdle"
 
 [connection signal="area_entered" from="Area2D" to="Area2D" method="_OnArea2DAreaEntered"]

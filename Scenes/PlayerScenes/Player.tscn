@@ -338,6 +338,10 @@ BulletScene = ExtResource("3_5c7ln")
 
 [node name="SlashBox" parent="CharacterBody2D/AbilityController" instance=ExtResource("12_x7oe6")]
 
+[node name="ReloadTimer" type="Timer" parent="CharacterBody2D/AbilityController"]
+process_callback = 0
+one_shot = true
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
 sprite_frames = SubResource("SpriteFrames_x7oe6")
 animation = &"RunningSouth"
@@ -348,6 +352,7 @@ script = ExtResource("4_3r7wx")
 shape = SubResource("CapsuleShape2D_5c7ln")
 
 [node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["player"]]
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
 shape = SubResource("CapsuleShape2D_8acbg")
@@ -369,8 +374,9 @@ text = "4"
 scroll_active = false
 script = ExtResource("3_8b6wy")
 
-[node name="Timer" type="Timer" parent="CharacterBody2D"]
+[node name="AnimationTimer" type="Timer" parent="CharacterBody2D"]
 one_shot = true
 
+[connection signal="timeout" from="CharacterBody2D/AbilityController/ReloadTimer" to="CharacterBody2D/AbilityController" method="_OnReloadTimerTimeout"]
 [connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_OnArea2DAreaEntered"]
-[connection signal="timeout" from="CharacterBody2D/Timer" to="CharacterBody2D" method="_OnTimerTimeout"]
+[connection signal="timeout" from="CharacterBody2D/AnimationTimer" to="CharacterBody2D" method="_OnTimerTimeout"]
