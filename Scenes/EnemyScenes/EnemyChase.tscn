@@ -7,6 +7,8 @@
 radius = 64.0
 
 [node name="EnemyChase" type="Node2D"]
+z_index = 2
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_y2v7p")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
