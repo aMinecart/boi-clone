@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://qol1hse0xq66"]
+[gd_scene load_steps=51 format=3 uid="uid://qol1hse0xq66"]
 
 [ext_resource type="Script" uid="uid://bvuyeiiwusote" path="res://Scripts/PlayerScripts/PlayerAbilities.cs" id="1_5mlpa"]
 [ext_resource type="Script" uid="uid://c1dns0l2ikqax" path="res://Scripts/PlayerScripts/PlayerMovement.cs" id="1_svqju"]
@@ -330,19 +330,16 @@ z_index = 1
 zoom = Vector2(0.4, 0.4)
 position_smoothing_enabled = true
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D2" type="Camera2D" parent="."]
 zoom = Vector2(0.4, 0.4)
 position_smoothing_enabled = true
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
 script = ExtResource("1_svqju")
 
-<<<<<<< HEAD
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("CapsuleShape2D_5mlpa")
 
-=======
->>>>>>> refs/remotes/origin/main
 [node name="AbilityController" type="Node2D" parent="CharacterBody2D"]
 script = ExtResource("1_5mlpa")
 BulletScene = ExtResource("3_5c7ln")
@@ -365,12 +362,10 @@ anchors_preset = -1
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-
-offset_left = -27.0
-offset_top = -60.0
-offset_right = 2.0
-offset_bottom = -38.0
-
+offset_left = -47.0
+offset_top = -116.0
+offset_right = -18.0
+offset_bottom = -94.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(3, 3)
@@ -378,19 +373,9 @@ text = "4"
 scroll_active = false
 script = ExtResource("3_8b6wy")
 
-<<<<<<< HEAD
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-zoom = Vector2(0.4, 0.4)
-position_smoothing_enabled = true
-
 [node name="Timer" type="Timer" parent="CharacterBody2D"]
 wait_time = 2.0
 one_shot = true
 
 [connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_OnArea2DAreaEntered"]
 [connection signal="timeout" from="CharacterBody2D/Timer" to="CharacterBody2D" method="_on_timer_timeout"]
-
-
-=======
-[connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_OnArea2DAreaEntered"]
->>>>>>> refs/remotes/origin/main
