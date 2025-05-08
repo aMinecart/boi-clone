@@ -15,6 +15,7 @@
 
 [node name="SceneManager" parent="." instance=ExtResource("1_hj7nb")]
 
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(10, 10)
 texture = ExtResource("1_h1tug")

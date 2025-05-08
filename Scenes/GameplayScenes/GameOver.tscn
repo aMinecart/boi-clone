@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://de312clmwikcv"]
+[gd_scene load_steps=3 format=3 uid=""]
 
 [ext_resource type="Script" uid="uid://d0t8ux2hl36jy" path="res://Scripts/NavigationScripts/GameOverNavigation.cs" id="1_3jkhx"]
 [ext_resource type="PackedScene" uid="uid://6wheexgiwe4o" path="res://Scenes/GameplayScenes/SceneManager.tscn" id="2_dn8g4"]

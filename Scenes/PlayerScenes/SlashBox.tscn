@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://cpnoywavm8ts3" path="res://Sprites/WeaponSprites/laxer_rile_fire.png" id="4_j8ffn"]
 [ext_resource type="Texture2D" uid="uid://dxx6xfknynt4h" path="res://Sprites/WeaponSprites/lazer_rifle.png" id="5_qsd53"]
 
-[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_wc6qt"]
-points = PackedVector2Array(30, -65, 70, -65, 70, 65, 30, 65)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qsd53"]
+size = Vector2(40, 136)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j8ffn"]
 atlas = ExtResource("2_f4b3s")
@@ -177,11 +177,13 @@ animations = [{
 [node name="SlashBox" type="Node2D"]
 
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2(50, 0)
 collision_mask = 2
 script = ExtResource("1_wbmef")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("ConvexPolygonShape2D_wc6qt")
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_qsd53")
 disabled = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
