@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b01ig5d2kcn7f"]
+[gd_scene load_steps=3 format=3 uid="uid://b01ig5d2kcn7f"]
 
 [ext_resource type="Texture2D" uid="uid://bpvj48seh1rp1" path="res://img/rooms/square/square-toprightbottom.png" id="1_tttyq"]
+[ext_resource type="PackedScene" uid="uid://6bteb3tb4ukm" path="res://Scenes/EnemyScenes/EnemyTurret.tscn" id="2_ecgah"]
 
 [node name="Square_topbottomright" type="Node2D"]
 
@@ -38,3 +39,6 @@ polygon = PackedVector2Array(304, 0, 512, 0, 512, 208, 480, 208, 480, 32, 304, 3
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(480, 304, 512, 304, 512, 512, 304, 512, 304, 496, 480, 496)
+
+[node name="EnemyTurret" parent="." instance=ExtResource("2_ecgah")]
+position = Vector2(60, 263)

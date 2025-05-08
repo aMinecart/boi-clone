@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bjc4ohamfo0xv"]
+[gd_scene load_steps=3 format=3 uid="uid://bjc4ohamfo0xv"]
 
 [ext_resource type="Texture2D" uid="uid://bnk6esfisdabj" path="res://img/rooms/square/square-topbottom.png" id="1_lp44o"]
+[ext_resource type="PackedScene" uid="uid://bs26v0vn03dqb" path="res://Scenes/EnemyScenes/EnemyChase.tscn" id="2_6bby8"]
 
 [node name="Square_topbottom" type="Node2D"]
 
@@ -29,3 +30,9 @@ polygon = PackedVector2Array(0, 0, 208, 0, 208, 32, 16, 32, 16, 496, 208, 496, 2
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(304, 0, 304, 32, 480, 32, 480, 496, 304, 496, 304, 512, 512, 512, 512, 0)
+
+[node name="EnemyChase" parent="." instance=ExtResource("2_6bby8")]
+position = Vector2(88, 449)
+
+[node name="EnemyChase2" parent="." instance=ExtResource("2_6bby8")]
+position = Vector2(426, 80)

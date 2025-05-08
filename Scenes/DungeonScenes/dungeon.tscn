@@ -10,6 +10,6 @@ script = ExtResource("1_utjhn")
 
 [node name="Player" parent="." instance=ExtResource("2_8814h")]
 z_index = 1
-position = Vector2(208, 224)
+position = Vector2(654, 543)
 
 [node name="EnemyBulletParent" type="Node2D" parent="."]

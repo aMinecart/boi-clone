@@ -60,4 +60,4 @@ polygon = PackedVector2Array(192, 416, -16, 416, -16, 400, 160, 400, 160, 16, 19
 position = Vector2(264, 272)
 
 [node name="EnemyTurret" parent="." instance=ExtResource("3_0pode")]
-position = Vector2(256, 680)
+position = Vector2(88, 809)

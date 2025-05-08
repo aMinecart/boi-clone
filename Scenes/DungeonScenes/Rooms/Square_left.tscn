@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bip61bntvcndd"]
+[gd_scene load_steps=3 format=3 uid="uid://bip61bntvcndd"]
 
 [ext_resource type="Texture2D" uid="uid://hsesdnt4vn0t" path="res://img/rooms/square/square-left.png" id="1_rrh82"]
+[ext_resource type="PackedScene" uid="uid://6bteb3tb4ukm" path="res://Scenes/EnemyScenes/EnemyTurret.tscn" id="2_atm4w"]
 
 [node name="Square_left" type="Node2D"]
 
@@ -20,3 +21,27 @@ polygon = PackedVector2Array(0, 0, 512, 0, 512, 512, 0, 512, 0, 304, 16, 304, 16
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(0, 0, 512, 0, 512, 512, 0, 512, 0, 304, 16, 304, 16, 496, 480, 496, 480, 32, 16, 32, 16, 208, 0, 208)
+
+[node name="EnemyTurret" parent="." instance=ExtResource("2_atm4w")]
+position = Vector2(52, 451)
+
+[node name="EnemyTurret2" parent="." instance=ExtResource("2_atm4w")]
+position = Vector2(57, 75)
+
+[node name="EnemyTurret3" parent="." instance=ExtResource("2_atm4w")]
+position = Vector2(53, 355)
+
+[node name="EnemyTurret4" parent="." instance=ExtResource("2_atm4w")]
+position = Vector2(53, 161)
+
+[node name="EnemyTurret5" parent="." instance=ExtResource("2_atm4w")]
+position = Vector2(410, 454)
+
+[node name="EnemyTurret6" parent="." instance=ExtResource("2_atm4w")]
+position = Vector2(408, 369)
+
+[node name="EnemyTurret7" parent="." instance=ExtResource("2_atm4w")]
+position = Vector2(405, 74)
+
+[node name="EnemyTurret8" parent="." instance=ExtResource("2_atm4w")]
+position = Vector2(406, 154)
