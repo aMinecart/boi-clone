@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://qol1hse0xq66"]
+[gd_scene load_steps=52 format=3 uid="uid://qol1hse0xq66"]
 
 [ext_resource type="Script" uid="uid://bvuyeiiwusote" path="res://Scripts/PlayerScripts/PlayerAbilities.cs" id="1_5mlpa"]
 [ext_resource type="Script" uid="uid://c1dns0l2ikqax" path="res://Scripts/PlayerScripts/PlayerMovement.cs" id="1_svqju"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://lvpp3ihwjqw" path="res://Scripts/PlayerScripts/PlayerAnimation.cs" id="4_3r7wx"]
 [ext_resource type="Texture2D" uid="uid://538guq28ih6p" path="res://Sprites/Ronnie/Ronnie_back_facing walk.png" id="4_uvgt2"]
 [ext_resource type="Texture2D" uid="uid://yfqjes72y3bw" path="res://Sprites/Ronnie/Ronnie_Back_Right walk.png" id="5_5mlpa"]
+[ext_resource type="Script" uid="uid://cnfjkilw3u3em" path="res://Scripts/PlayerScripts/AmmoLabel.cs" id="5_8acbg"]
 [ext_resource type="Texture2D" uid="uid://chajltubnpj1n" path="res://Sprites/Ronnie/Ronnie_back_left walk.png" id="6_x7oe6"]
 [ext_resource type="Texture2D" uid="uid://c34jpo4w34e3t" path="res://Sprites/Ronnie/Ronnie_front_facing walk.png" id="7_5c7ln"]
 [ext_resource type="Texture2D" uid="uid://chx53c5wqhpjp" path="res://Sprites/Ronnie/Ronnie_Front_Right walk.png" id="8_8acbg"]
@@ -342,6 +343,16 @@ BulletScene = ExtResource("3_5c7ln")
 process_callback = 0
 one_shot = true
 
+[node name="AmmoLabel" type="RichTextLabel" parent="CharacterBody2D/AbilityController"]
+z_index = 3
+offset_left = 26.0
+offset_top = -140.0
+offset_right = 37.0
+offset_bottom = -117.0
+scale = Vector2(5, 5)
+text = "∞"
+script = ExtResource("5_8acbg")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
 sprite_frames = SubResource("SpriteFrames_x7oe6")
 animation = &"RunningSouth"
@@ -357,7 +368,8 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
 shape = SubResource("CapsuleShape2D_8acbg")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CharacterBody2D"]
+[node name="HealthLabel" type="RichTextLabel" parent="CharacterBody2D"]
+z_index = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

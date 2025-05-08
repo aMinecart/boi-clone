@@ -34,6 +34,7 @@ public partial class PlayerAbilities : Node2D
     private int abilityLength = 12;
 
     private float abilityAmmo = Mathf.Inf;
+    private float[] ammoValues = [Mathf.Inf, 5, 7];
 
     /*
     private int meleeCooldown = 180;
@@ -287,7 +288,10 @@ public partial class PlayerAbilities : Node2D
         }
 
         abilityCooldown = modeCooldownsDict[updatedMode];
-        abilityAmmo = modeAmmoCountsDict[updatedMode];
+
+        ammoValues[(int)playerMode] = abilityAmmo; // record current mode's ammo count
+        abilityAmmo = ammoValues[(int)updatedMode]; // restore updated mode's ammo count
+        //abilityAmmo = modeAmmoCountsDict[updatedMode];
 
         if (modeTypesDict[updatedMode] == AbilityType.Fixed)
         {
@@ -331,6 +335,11 @@ public partial class PlayerAbilities : Node2D
         }
     }
 
+    public void UpdateGlobalVars()
+    {
+        PlayerVars.Instance.Ammo = abilityAmmo;
+    }
+
     public override void _Ready()
     {
         Prop = GetNode<Node2D>("SlashBox");
@@ -359,29 +368,30 @@ public partial class PlayerAbilities : Node2D
         }
 
         // check for reload
-        float maxAmmo = modeAmmoCountsDict[playerMode];
-        if (Input.IsActionJustPressed("reload") &&
-            maxAmmo != Mathf.Inf &&
-            abilityAmmo != maxAmmo)
+        // float maxAmmo = modeAmmoCountsDict[playerMode];
+        if (Input.IsActionJustPressed("reload") && abilityAmmo != modeAmmoCountsDict[playerMode]/* && maxAmmo != Mathf.Inf*/)
         {
-            FinishAbility(playerMode);
+            CancelAbility(playerMode);
             StartReload();
         }
 
-        // check for mode switch
-        if (Input.IsActionJustPressed("switch_mode"))
+        if (ReloadTimer.TimeLeft == 0)
         {
-            SwitchAbility(playerMode, false);
-        }
-        else if (Input.IsActionJustPressed("reverse_switch_mode"))
-        {
-            SwitchAbility(playerMode, true);
-        }
+            // check for mode switch
+            if (Input.IsActionJustPressed("switch_mode") && ReloadTimer.TimeLeft == 0)
+            {
+                SwitchAbility(playerMode, false);
+            }
+            else if (Input.IsActionJustPressed("reverse_switch_mode") && ReloadTimer.TimeLeft == 0)
+            {
+                SwitchAbility(playerMode, true);
+            }
 
-        // check for lmb
-        if (Input.IsActionJustPressed("ability"))
-        {
-            StartAbility(playerMode);
+            // check for lmb
+            if (Input.IsActionJustPressed("ability") && ReloadTimer.TimeLeft == 0)
+            {
+                StartAbility(playerMode);
+            }
         }
 
         // check if any abilities need to complete
@@ -391,11 +401,12 @@ public partial class PlayerAbilities : Node2D
             FinishAbility(playerMode);
         }
 
+        UpdateGlobalVars();
         HandleTimers();
 
         // GD.Print(TimeToAbility);
         // GD.Print(abilityAmmo);
-        // GD.Print("Time: ", ReloadTimer.TimeLeft, "; abilityAmmo: " + abilityAmmo);
+        GD.Print("Time: ", ReloadTimer.TimeLeft, "; abilityAmmo: " + abilityAmmo);
         GD.Print(Item.Animation);
         // GD.Print(Item.Frame);
         // GD.Print(!Hitbox.Disabled);
