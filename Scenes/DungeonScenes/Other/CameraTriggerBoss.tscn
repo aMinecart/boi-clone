@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://5lskv1y5epcc"]
+
+[ext_resource type="Script" uid="uid://cjbus8ipee5x5" path="res://Scripts/PlayerScripts/CameraTrigger.cs" id="1_t4e1g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j0qtj"]
+size = Vector2(5698, 6480)
+
+[node name="CameraTrigger" type="Area2D" groups=["follow"]]
+script = ExtResource("1_t4e1g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_j0qtj")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

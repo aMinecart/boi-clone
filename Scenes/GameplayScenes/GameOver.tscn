@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid=""]
+
+[ext_resource type="Script" uid="uid://d0t8ux2hl36jy" path="res://Scripts/NavigationScripts/GameOverNavigation.cs" id="1_3jkhx"]
+[ext_resource type="PackedScene" uid="uid://6wheexgiwe4o" path="res://Scenes/GameplayScenes/SceneManager.tscn" id="2_dn8g4"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3jkhx")
+
+[node name="SceneManager" parent="." instance=ExtResource("2_dn8g4")]
+
+[node name="PlayAgain" type="Button" parent="."]
+layout_mode = 0
+offset_left = 421.0
+offset_top = 298.0
+offset_right = 823.0
+offset_bottom = 413.0
+text = "Play Again
+"
+
+[node name="ReturnToMenu" type="Button" parent="."]
+layout_mode = 0
+offset_left = 421.0
+offset_top = 475.0
+offset_right = 823.0
+offset_bottom = 590.0
+text = "Return To Menu
+"
+
+[connection signal="button_up" from="PlayAgain" to="." method="_on_play_again_button_up"]
+[connection signal="button_up" from="ReturnToMenu" to="." method="_on_return_to_menu_button_up"]

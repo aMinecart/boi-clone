@@ -1,9 +1,9 @@
 using Godot;
 using System;
 
-public partial class BulletPeaScript : Node2D
+public partial class PlayerBulletPeaScript : Node2D
 {
-	[Export] private int SpeedStat { get; set; } = 200;
+	[Export] private int SpeedStat { get; set; } = 500;
 
 	private CharacterBody2D bulletBody;
 
@@ -22,14 +22,10 @@ public partial class BulletPeaScript : Node2D
 
 	private void _OnArea2DAreaEntered(Node2D area)
 	{
-		if (area.IsInGroup("player"))
+		if (area.IsInGroup("enemy"))
 		{
             CallDeferred(MethodName.Free);
+			GD.Print("gone and reduced to atoms");
         }
-	}
-
-	private void _on_timer_timeout()
-	{
-		CallDeferred("free");
 	}
 }

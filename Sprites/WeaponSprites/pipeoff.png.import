@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bt825qqkidyp2"
-path="res://.godot/imported/john-cena.JPG-dff6207fc0772cc67cf143bf43b850b6.ctex"
+uid="uid://bywqq3yvwqv2y"
+path="res://.godot/imported/pipeoff.png-86bbe63dba328b25022b2ce74c3d6910.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://john-cena.JPG"
-dest_files=["res://.godot/imported/john-cena.JPG-dff6207fc0772cc67cf143bf43b850b6.ctex"]
+source_file="res://Sprites/WeaponSprites/pipeoff.png"
+dest_files=["res://.godot/imported/pipeoff.png-86bbe63dba328b25022b2ce74c3d6910.ctex"]
 
 [params]
 

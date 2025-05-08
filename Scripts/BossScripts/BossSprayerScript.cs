@@ -15,6 +15,7 @@ public partial class BossSprayerScript : Node2D
     private bool playerInExclusionZone = false;
     private bool stateChangeReady = false;
     private int speedStat = 150;
+
     public enum BossState {
 	    Idle = 1,
         Shotgun = 2,
@@ -125,7 +126,9 @@ public partial class BossSprayerScript : Node2D
         {
             zoneTimer.Start(3);
         }
-        if(bossState != BossState.Idle) zoneTimer.Paused = true;
+
+        if (bossState != BossState.Idle)
+            zoneTimer.Paused = true;
     }
 
     private void Idle()
@@ -134,14 +137,24 @@ public partial class BossSprayerScript : Node2D
         leftGunBody.LookAt(PlayerVars.Instance.Position);
         rightGunBody.LookAt(PlayerVars.Instance.Position);
         ZoneMovement();
-        if(playerInInclusionZone && playerInExclusionZone && stateChangeReady) bossState = BossState.Shotgun;
-        else if(playerInInclusionZone && !playerInExclusionZone && stateChangeReady) bossState = BossState.SprayLeft;
-        else if(!playerInInclusionZone && !playerInExclusionZone && stateChangeReady) bossState = BossState.Funnel;
+
+        if(playerInInclusionZone && playerInExclusionZone && stateChangeReady)
+        {
+            bossState = BossState.Shotgun;
+        }
+        else if (playerInInclusionZone && !playerInExclusionZone && stateChangeReady)
+        {
+            bossState = BossState.SprayLeft;
+        }           
+        else if (!playerInInclusionZone && !playerInExclusionZone && stateChangeReady)
+        {
+            bossState = BossState.Funnel;
+        }
     }
 
     private void ShotGun()
     {
-        if(subState == BossSubstate.Startup)
+        if (subState == BossSubstate.Startup)
         {
             ResetVars(23, -2, 2);
             enemyBody.LookAt(PlayerVars.Instance.Position);
@@ -150,14 +163,15 @@ public partial class BossSprayerScript : Node2D
             enemyBody.Velocity = Godot.Vector2.FromAngle(enemyBody.Rotation);
             enemyBody.Velocity = enemyBody.Velocity.Normalized() * speedStat * -7;
             zoneTimer.Paused = true;
-            if(!playerInInclusionZone && !playerInExclusionZone){   
+
+            if (!playerInInclusionZone && !playerInExclusionZone){   
                 shotTimer.Start(0.09);
                 shotTimer.Paused = false;
                 enemyBody.Velocity = new Vector2(0, 0);
                 subState = BossSubstate.Active;
             }
         }
-        else if(subState == BossSubstate.Active)
+        else if (subState == BossSubstate.Active)
         {
             if(leftGunBody.RotationDegrees >= 60) leftGunRotationSpeed = -2;
             else if(leftGunBody.RotationDegrees <= -60) leftGunRotationSpeed = 2;
@@ -167,7 +181,7 @@ public partial class BossSprayerScript : Node2D
             rightGunBody.RotationDegrees += rightGunRotationSpeed;
             if(shotsFired >= shotsToFire) subState = BossSubstate.Recovery;
         }
-        else if(subState == BossSubstate.Recovery)
+        else if (subState == BossSubstate.Recovery)
         {
             shotTimer.Start(0.15);
             shotTimer.Paused = true;
@@ -181,12 +195,12 @@ public partial class BossSprayerScript : Node2D
 
     private void SprayLeft()
     {
-        if(subState == BossSubstate.Startup)
+        if (subState == BossSubstate.Startup)
         {
             ResetVars(0, -4, 0);
             enemyBody.Velocity = new Vector2(0, 0);
             leftGunBody.RotationDegrees += leftGunRotationSpeed;
-            if(leftGunBody.RotationDegrees <= -120)
+            if (leftGunBody.RotationDegrees <= -120)
             {
                 leftGunRotationSpeed = 2;
                 shotTimer.Start(0.15);
@@ -195,16 +209,16 @@ public partial class BossSprayerScript : Node2D
                 zoneTimer.Paused = true;
             }
         }
-        else if(subState == BossSubstate.Active)
+        else if (subState == BossSubstate.Active)
         {
             leftGunBody.RotationDegrees += leftGunRotationSpeed;
-            if(leftGunBody.RotationDegrees >= 45)
+            if (leftGunBody.RotationDegrees >= 45)
             {
                 shotTimer.Paused = true;
                 subState = BossSubstate.Recovery;
             }
         }
-        else if(subState == BossSubstate.Recovery)
+        else if (subState == BossSubstate.Recovery)
         {
             shotTimer.Start(0.15);
             shotTimer.Paused = true;
@@ -218,12 +232,12 @@ public partial class BossSprayerScript : Node2D
 
     private void SprayRight()
     {
-        if(subState == BossSubstate.Startup)
+        if (subState == BossSubstate.Startup)
         {
             ResetVars(0, 0, 4);
             enemyBody.Velocity = new Vector2(0, 0);
             rightGunBody.RotationDegrees += rightGunRotationSpeed;
-            if(rightGunBody.RotationDegrees >= 120)
+            if (rightGunBody.RotationDegrees >= 120)
             {
                 rightGunRotationSpeed = -2;
                 shotTimer.Start(0.15);
@@ -232,16 +246,16 @@ public partial class BossSprayerScript : Node2D
                 zoneTimer.Paused = true;
             }
         }
-        else if(subState == BossSubstate.Active)
+        else if (subState == BossSubstate.Active)
         {
             rightGunBody.RotationDegrees += rightGunRotationSpeed;
-            if(rightGunBody.RotationDegrees <= -45)
+            if (rightGunBody.RotationDegrees <= -45)
             {
                 shotTimer.Paused = true;
                 subState = BossSubstate.Recovery;
             }
         }
-        else if(subState == BossSubstate.Recovery)
+        else if (subState == BossSubstate.Recovery)
         {
             shotTimer.Start(0.25);
             shotTimer.Paused = true;
@@ -257,12 +271,12 @@ public partial class BossSprayerScript : Node2D
     {
         enemyBody.Velocity = Godot.Vector2.FromAngle(enemyBody.Rotation);
 		enemyBody.Velocity = enemyBody.Velocity.Normalized() * speedStat;
-        if(subState == BossSubstate.Startup)
+        if (subState == BossSubstate.Startup)
         {
             ResetVars(18, -4, 4);
             rightGunBody.RotationDegrees += rightGunRotationSpeed;
             leftGunBody.RotationDegrees += leftGunRotationSpeed;
-            if(rightGunBody.RotationDegrees >= 70 && leftGunBody.RotationDegrees <= -70)
+            if (rightGunBody.RotationDegrees >= 70 && leftGunBody.RotationDegrees <= -70)
             {
                 rightGunRotationSpeed = -1;
                 leftGunRotationSpeed = 1;
@@ -272,13 +286,13 @@ public partial class BossSprayerScript : Node2D
                 zoneTimer.Paused = true;
             }
         }
-        else if(subState == BossSubstate.Active)
+        else if (subState == BossSubstate.Active)
         {
             leftGunBody.RotationDegrees += leftGunRotationSpeed;
             rightGunBody.RotationDegrees += rightGunRotationSpeed;
-            if(shotsFired >= shotsToFire) subState = BossSubstate.Recovery;
+            if (shotsFired >= shotsToFire) subState = BossSubstate.Recovery;
         }
-        else if(subState == BossSubstate.Recovery)
+        else if (subState == BossSubstate.Recovery)
         {
             shotTimer.Start(0.15);
             shotTimer.Paused = true;
@@ -375,4 +389,12 @@ public partial class BossSprayerScript : Node2D
             ZoneDetection();
         }
 	}
+
+    private void _OnBossBodyAreaEntered(Node2D area)
+    {
+        if (area.IsInGroup("playerAttack"))
+        {
+            CallDeferred(MethodName.Free);
+        }
+    }
 }

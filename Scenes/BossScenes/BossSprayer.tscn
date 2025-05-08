@@ -6,8 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://hgvc131jv57x" path="res://Sprites/BossSprites/BossSprayerSubTurretSprite.png" id="4_q7wju"]
 [ext_resource type="Texture2D" uid="uid://dr8rne6kiiqru" path="res://Sprites/BossSprites/BossSprayerMainTurretSprite.png" id="5_5cmbk"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_i0chq"]
-radius = 128.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_peng0"]
+radius = 159.0
+height = 410.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0wpst"]
 radius = 429.094
@@ -23,19 +24,23 @@ BulletScene = ExtResource("2_0wpst")
 [node name="EnemyBody" type="CharacterBody2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="EnemyBody"]
+z_index = 1
 rotation = 3.14159
 scale = Vector2(2, 2)
 texture = ExtResource("3_peng0")
 
-[node name="BossBody" type="Area2D" parent="EnemyBody"]
+[node name="BossBody" type="Area2D" parent="EnemyBody" groups=["enemy"]]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyBody/BossBody"]
-shape = SubResource("CircleShape2D_i0chq")
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_peng0")
 
 [node name="LeftGunBody" type="CharacterBody2D" parent="EnemyBody"]
 position = Vector2(181, 35)
 
 [node name="LeftGunSprite" type="Sprite2D" parent="EnemyBody/LeftGunBody"]
+z_index = 3
 rotation = 3.14159
 scale = Vector2(2, 2)
 texture = ExtResource("4_q7wju")
@@ -43,6 +48,7 @@ texture = ExtResource("4_q7wju")
 [node name="RightGunBody" type="CharacterBody2D" parent="EnemyBody"]
 
 [node name="RightGunSprite" type="Sprite2D" parent="EnemyBody/RightGunBody"]
+z_index = 3
 rotation = 3.14159
 scale = Vector2(2, 2)
 texture = ExtResource("5_5cmbk")
@@ -68,6 +74,7 @@ autostart = true
 wait_time = 5.0
 autostart = true
 
+[connection signal="area_entered" from="EnemyBody/BossBody" to="." method="_OnBossBodyAreaEntered"]
 [connection signal="area_entered" from="EnemyBody/ExclusionZone" to="." method="_on_exclusion_zone_area_entered"]
 [connection signal="area_exited" from="EnemyBody/ExclusionZone" to="." method="_on_exclusion_zone_area_exited"]
 [connection signal="area_entered" from="EnemyBody/InclusionZone" to="." method="_on_inclusion_zone_area_entered"]

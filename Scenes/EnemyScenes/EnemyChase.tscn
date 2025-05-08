@@ -3,13 +3,15 @@
 [ext_resource type="Script" uid="uid://yjxdi7wf3erc" path="res://Scripts/EnemyScripts/EnemyChaseScript.cs" id="1_y2v7p"]
 [ext_resource type="Texture2D" uid="uid://cu7847yxj5qd3" path="res://Sprites/EnemySprites/EnemyChaserSprite.png" id="2_y2v7p"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1bxdk"]
-radius = 64.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y2v7p"]
+radius = 46.0
+height = 182.0
 
 [node name="EnemyChase" type="Node2D"]
 z_index = 2
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_y2v7p")
+speedStat = 200
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 
@@ -18,10 +20,20 @@ rotation = 1.5708
 texture = ExtResource("2_y2v7p")
 hframes = 2
 
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(-24, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_y2v7p")
+
 [node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["enemy"]]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
-shape = SubResource("CircleShape2D_1bxdk")
+position = Vector2(14, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_y2v7p")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("CircleShape2D_1bxdk")
+
+[connection signal="area_entered" from="CharacterBody2D/Area2D" to="." method="_OnArea2DAreaEntered"]

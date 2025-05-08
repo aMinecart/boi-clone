@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://6bteb3tb4ukm"]
+[gd_scene load_steps=10 format=3 uid="uid://6bteb3tb4ukm"]
 
 [ext_resource type="Script" uid="uid://dc2whj8m1snmd" path="res://Scripts/EnemyScripts/EnemyTurretScript.cs" id="1_vph2m"]
 [ext_resource type="PackedScene" uid="uid://b8wuhehsksnih" path="res://Scenes/BulletScenes/BulletPea.tscn" id="2_ot47j"]
@@ -6,7 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://dhwvs230otwgy" path="res://Sprites/EnemySprites/EnemyTurretHeadIdleSprite.png" id="4_xe17u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vph2m"]
-radius = 64.0
+radius = 91.0494
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bclcf"]
+radius = 56.0803
 
 [sub_resource type="AnimationRootNode" id="AnimationRootNode_bclcf"]
 
@@ -22,21 +25,25 @@ _data = {
 [node name="EnemyTurret" type="Node2D"]
 z_index = 2
 scale = Vector2(0.5, 0.5)
+
 script = ExtResource("1_vph2m")
 BulletScene = ExtResource("2_ot47j")
 
 [node name="SpriteBase" type="Sprite2D" parent="."]
+z_index = 1
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("3_bclcf")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 
 [node name="SpriteHead" type="Sprite2D" parent="CharacterBody2D"]
+z_index = 3
 rotation = 4.71239
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("4_xe17u")
 
-[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
+[node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["enemy"]]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
 shape = SubResource("CircleShape2D_vph2m")
@@ -57,4 +64,5 @@ libraries = {
 &"": SubResource("AnimationLibrary_cwbnw")
 }
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="CharacterBody2D/Area2D" to="." method="_OnArea2DAreaEntered"]
+[connection signal="timeout" from="Timer" to="." method="_OnTimerTimeout"]
