@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkhry3pt6anjo"]
+
+[ext_resource type="Script" uid="uid://bymelt8hbwoet" path="res://Scripts/DungeonScripts/Dungeon.cs" id="1_utjhn"]
+[ext_resource type="PackedScene" uid="uid://qol1hse0xq66" path="res://Scenes/PlayerScenes/Player.tscn" id="2_8814h"]
+
+[node name="Dungeon" type="Node2D"]
+script = ExtResource("1_utjhn")
+
+[node name="RoomParent" type="Node" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("2_8814h")]
+z_index = 1
+position = Vector2(654, 543)
+
+[node name="EnemyBulletParent" type="Node2D" parent="."]
