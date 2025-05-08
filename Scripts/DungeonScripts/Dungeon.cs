@@ -19,24 +19,30 @@ namespace boiclone.Scripts.DungeonScripts
 	public partial class Dungeon : Room
 	{
 		private readonly List<PackedScene> _loadedRooms = [];
-		private readonly RandomNumberGenerator _rng = new();
+        private readonly List<PackedScene> _loadedBossRooms = [];
+        private readonly RandomNumberGenerator _rng = new();
 		private int _roomCounter = 0;
+		private bool _needToAddBossRoom = true;
+		private Vector2 _lastRoomPosition = Vector2.Zero;
 
-		/// <summary>
-		/// Inits random
-		/// Sets the class lists to the scenes from the given links
-		/// Begins the recursion algorith to make the dungeon
-		/// </summary>
-		public override void _Ready()
+        /// <summary>
+        /// Inits random
+        /// Sets the class lists to the scenes from the given links
+        /// Begins the recursion algorith to make the dungeon
+        /// </summary>
+        public override void _Ready()
 		{
 			_rng.Randomize();
 
 			SetScenesFromFolder("res://Scenes/DungeonScenes/Rooms/", _loadedRooms);
+            SetScenesFromFolder("res://Scenes/DungeonScenes/BossRooms/", _loadedBossRooms);
 
             BeginGrowDungeon(position: Vector2.Zero, depthC: 15, scale: new Vector2(3.5f, 3.5f),
 				roomName: "Square_all");
 			SwapDeadEndRooms();
-		}
+
+            GetNode<Node2D>("Player").GlobalPosition = _lastRoomPosition + new Vector2(500, 500);
+        }
 
 		/// <summary>sets passed list to all scenes from the specified path</summary>
 		private static void SetScenesFromFolder(string folderPath, List<PackedScene> scenes)
@@ -81,8 +87,8 @@ namespace boiclone.Scripts.DungeonScripts
 		/// <summary>Recursion algorithm to add connecting rooms to the dungeon</summary>
 		private bool GrowDungeon(Vector2 position, int depthC, string prevDoorName, Vector2 scale)
 		{
-			if (depthC == 0 || GetRoomWithEntrance(depthC, prevDoorName) is not (Room room, Door entrance))
-				return false;
+            if (depthC == 0 || GetRoomWithEntrance(depthC, prevDoorName) is not (Room room, Door entrance))
+                return false;
 
 			room.Scale = scale;
 			position -= entrance.Position * room.Scale;
@@ -104,15 +110,19 @@ namespace boiclone.Scripts.DungeonScripts
 					door.Name = "deadEnd";
 			}
 
-			return true;
+			_lastRoomPosition = position;
+
+            return true;
 		}
 
 		/// <summary>get a working scene and its entrance door</summary>
 		/// <returns>room and door or null if no possible options are found</returns>
 		private (Room room, Door entrance)? GetRoomWithEntrance(int depthC, string prevDoorName)
 		{
-			List<Room> rooms = [.. _loadedRooms.Select(scene => scene.Instantiate<Room>())];
-			List<Room> shuffledRooms = [.. rooms.OrderBy(_ => _rng.Randf())];
+			List<Room> rooms = [.. (_needToAddBossRoom ? _loadedBossRooms : _loadedRooms)
+				.Select(scene => scene.Instantiate<Room>())];
+            _needToAddBossRoom = false;
+            List<Room> shuffledRooms = [.. rooms.OrderBy(_ => _rng.Randf())];
 
 			foreach (Room room in shuffledRooms)
 			{
