@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://cheqkynl7wggf"]
+
+[ext_resource type="Texture2D" uid="uid://lpx0u0qkxk4m" path="res://img/rooms/bossrooms/bossroom-top.png" id="1_8045e"]
+[ext_resource type="PackedScene" uid="uid://cxbwufansu6vw" path="res://Scenes/BossScenes/BossSprayer.tscn" id="2_tfrwn"]
+
+[node name="BossRoom_all" type="Node2D"]
+
+[node name="topDoor" type="Marker2D" parent="."]
+position = Vector2(512, 0)
+rotation = 3.14159
+
+[node name="room" type="Sprite2D" parent="."]
+position = Vector2(512, 512)
+texture = ExtResource("1_8045e")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="StaticBody2D"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
+polygon = PackedVector2Array(0, 0, 464, 0, 464, 32, 16, 32, 16, 1008, 992, 1008, 992, 32, 560, 32, 560, 0, 1024, 0, 1024, 1024, 0, 1024)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(0, 0, 464, 0, 464, 32, 16, 32, 16, 1008, 992, 1008, 992, 32, 560, 32, 560, 0, 1024, 0, 1024, 1024, 0, 1024)
+
+[node name="BossSprayer" parent="." instance=ExtResource("2_tfrwn")]
+position = Vector2(512, 512)
