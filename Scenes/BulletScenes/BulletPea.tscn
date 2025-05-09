@@ -24,7 +24,8 @@ rotation = 3.14159
 scale = Vector2(10, 10)
 texture = ExtResource("2_8p8ju")
 
-[node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["enemy"]]
+[node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["enemyAttack"]]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
 shape = SubResource("CircleShape2D_s7kpb")
