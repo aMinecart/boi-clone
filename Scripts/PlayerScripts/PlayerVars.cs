@@ -6,7 +6,6 @@ public partial class PlayerVars : Node
 
 	public Vector2 Position { get; set; }
 	public float Health { get; set; }
-	public float Ammo { get; set; }
 
 	public Vector2 CamPos { get; set; }
 

@@ -5,11 +5,11 @@
 [ext_resource type="Texture2D" uid="uid://b40l7fgsun7rb" path="res://Sprites/EnemySprites/EnemyTurretBaseSprite.png" id="3_bclcf"]
 [ext_resource type="Texture2D" uid="uid://dhwvs230otwgy" path="res://Sprites/EnemySprites/EnemyTurretHeadIdleSprite.png" id="4_xe17u"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_bclcf"]
-radius = 56.0803
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_vph2m"]
 radius = 91.0494
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bclcf"]
+radius = 56.0803
 
 [sub_resource type="AnimationRootNode" id="AnimationRootNode_bclcf"]
 
@@ -42,13 +42,13 @@ rotation = 4.71239
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("4_xe17u")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-shape = SubResource("CircleShape2D_bclcf")
-
 [node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["enemy"]]
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+shape = SubResource("CircleShape2D_vph2m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("CircleShape2D_vph2m")
 
 [node name="Timer" type="Timer" parent="."]
