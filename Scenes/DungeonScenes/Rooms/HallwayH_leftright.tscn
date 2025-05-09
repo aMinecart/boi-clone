@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://chi85f5ryyrv7"]
+
+[ext_resource type="Texture2D" uid="uid://6obb1vtslaje" path="res://img/rooms/hallways/hallway-topbottom.png" id="1_5rxl1"]
+
+[node name="HallwayH_leftright" type="Node2D"]
+
+[node name="rightDoor" type="Marker2D" parent="."]
+position = Vector2(512, 96)
+rotation = 3.14159
+
+[node name="leftDoor" type="Marker2D" parent="."]
+position = Vector2(0, 96)
+rotation = 3.14159
+
+[node name="room" type="Sprite2D" parent="."]
+position = Vector2(256, 96)
+rotation = 1.5708
+texture = ExtResource("1_5rxl1")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 0, 48, 16, 48, 16, 16, 480, 16, 480, 48, 512, 48, 512, 0)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 144, 16, 144, 16, 160, 480, 160, 480, 144, 512, 144, 512, 192, 0, 192)
