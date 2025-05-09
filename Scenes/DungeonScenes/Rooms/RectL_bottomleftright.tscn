@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=3 uid="uid://qjmfnautdg7t"]
+
+[ext_resource type="Texture2D" uid="uid://riaaa1k2pb4r" path="res://img/rooms/rectangle-l/rectangle-l-rightbottomleft.png" id="1_0hdk2"]
+[ext_resource type="PackedScene" uid="uid://bs26v0vn03dqb" path="res://Scenes/EnemyScenes/EnemyChase.tscn" id="2_ivcx0"]
+[ext_resource type="PackedScene" uid="uid://6bteb3tb4ukm" path="res://Scenes/EnemyScenes/EnemyTurret.tscn" id="3_5a6qm"]
+
+[node name="RectL_bottomleftright" type="Node2D"]
+
+[node name="leftDoor" type="Marker2D" parent="."]
+position = Vector2(0, 448)
+
+[node name="rightDoor" type="Marker2D" parent="."]
+position = Vector2(512, 448)
+
+[node name="bottomDoor" type="Marker2D" parent="."]
+position = Vector2(256, 896)
+
+[node name="room" type="Sprite2D" parent="."]
+position = Vector2(256, 448)
+texture = ExtResource("1_0hdk2")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="StaticBody2D"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
+polygon = PackedVector2Array(0, 0, 512, 0, 512, 400, 480, 400, 480, 32, 16, 32, 16, 400, 0, 400)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
+polygon = PackedVector2Array(0, 496, 16, 496, 16, 880, 208, 880, 208, 896, 0, 896)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
+polygon = PackedVector2Array(480, 496, 512, 496, 512, 896, 304, 896, 304, 880, 480, 880)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(0, 0, 512, 0, 512, 400, 480, 400, 480, 32, 16, 32, 16, 400, 0, 400)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(0, 496, 16, 496, 16, 880, 208, 880, 208, 896, 0, 896)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(480, 496, 512, 496, 512, 896, 304, 896, 304, 880, 480, 880)
+
+[node name="EnemyChase" parent="." instance=ExtResource("2_ivcx0")]
+position = Vector2(118, 119)
+
+[node name="EnemyChase2" parent="." instance=ExtResource("2_ivcx0")]
+position = Vector2(385, 119)
+
+[node name="EnemyTurret" parent="." instance=ExtResource("3_5a6qm")]
+position = Vector2(132, 771)
+
+[node name="EnemyTurret2" parent="." instance=ExtResource("3_5a6qm")]
+position = Vector2(380, 776)
