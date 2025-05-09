@@ -234,9 +234,9 @@ public partial class PlayerMovement : CharacterBody2D
 
     public override void _Ready()
     {
-		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		sprite = GetNode<AnimatedSprite2D>("PlayerSprite");
 		timer = GetNode<Timer>("AnimationTimer");
-        hurtbox = GetNode<Area2D>("Area2D").GetNode<CollisionShape2D>("CollisionShape2D");
+        hurtbox = GetNode<CollisionShape2D>("PlayerArea/PlayerHurtbox");
     }
 
     public override void _PhysicsProcess(double delta)

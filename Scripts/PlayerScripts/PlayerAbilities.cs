@@ -24,6 +24,9 @@ public partial class PlayerAbilities : Node2D
     private CollisionShape2D Hitbox { get; set; }
     private AnimatedSprite2D Item { get; set; }
 
+    private Polygon2D Beam { get; set; }
+
+    private AnimatedSprite2D ReloadBar { get; set; }
     private Timer ReloadTimer { get; set; }
 
     private Mode playerMode = Mode.Melee;
@@ -33,14 +36,9 @@ public partial class PlayerAbilities : Node2D
     private int abilityCooldown = 30; // match to modeCooldownsDict value for playerMode variable
     private int abilityLength = 12;
 
-    private float abilityAmmo = Mathf.Inf;
-    private float[] ammoValues = [Mathf.Inf, 5, 7];
+    private float abilityAmmo = Mathf.Inf; // match to modeAmmoCountsDict value for playerMode variable
+    private float[] ammoValues = [Mathf.Inf, 5, 7];// match to modeCooldownsDict values (Modes)0, (Modes)1, and (Modes)2
 
-    /*
-    private int meleeCooldown = 180;
-    private int rangeCooldown = 300;    
-    private int projectileCooldown = 120;
-    */
 
     private readonly Dictionary<Mode, AbilityType> modeTypesDict = new() {
         { Mode.Melee, AbilityType.Fixed },
@@ -51,13 +49,13 @@ public partial class PlayerAbilities : Node2D
     private readonly Dictionary<Mode, int> modeCooldownsDict = new() {
         { Mode.Melee, 30 },
         { Mode.Ranged, 120 },
-        { Mode.Projectile, 15 }
+        { Mode.Projectile, 45 }
     };
 
     private readonly Dictionary<Mode, float> modeReloadTimesDict = new() {
         { Mode.Melee, 0 },
-        { Mode.Ranged, 3 },
-        { Mode.Projectile, 1.5f }
+        { Mode.Ranged, 4 },
+        { Mode.Projectile, 3f }
     };
 
     private readonly Dictionary<Mode, float> modeAmmoCountsDict = new() {
@@ -88,46 +86,9 @@ public partial class PlayerAbilities : Node2D
         return hits;
     }
 
-    /*private bool IsAttacking()
-    {
-        if (modeTypesDict[playerMode] == AbilityType.Fixed)
-        {
-            return TimeToAbility <= 0;
-        }
-        else
-        {
-            return TimeToAbility >= abilityCooldown;
-        }
-    }*/
-
-    private void StartReload()
-    {
-        ReloadTimer.Start(modeReloadTimesDict[playerMode]);
-        //reloading = true;
-    }
-
     private void FireRanged()
     {
         PhysicsDirectSpaceState2D spaceState = GetWorld2D().DirectSpaceState;
-
-        /*
-        var query = PhysicsRayQueryParameters2D.Create(GlobalPosition, GetGlobalMousePosition());
-        query.CollideWithAreas = true;
-
-        var collisionInfo = spaceState.IntersectRay(query);
-        if (collisionInfo == null)
-        {
-            break;
-        }
-
-        Node2D collision = (Node2D)collisionInfo["collider"];
-        if (collision.GetParent() == null)
-        {
-            break;
-        }
-
-        collision.GetParent().CallDeferred(MethodName.Free);
-        */
 
         PhysicsRayQueryParameters2D query = PhysicsRayQueryParameters2D.Create(GlobalPosition, GetGlobalMousePosition(), collisionMask: 2);
         query.CollideWithAreas = true;
@@ -135,13 +96,17 @@ public partial class PlayerAbilities : Node2D
         var collisions = IntersectRays(query, spaceState);
         foreach (var collision in collisions)
         {
-            // GD.Print((Node2D)collision["collider"]);
             Node2D collider = (Node2D)collision["collider"];
 
             collider.GetParent()?.GetParent()?.Free();
         }
 
-        // GD.Print("Hitscan fired");
+        Polygon2D laser = (Polygon2D)Beam.Duplicate();
+        laser.GlobalTransform = Beam.GlobalTransform;
+        laser.Visible = true;
+
+        laser.ProcessMode = ProcessModeEnum.Inherit;
+        GetTree().GetRoot().AddChild(laser);
     }
 
     private void FireProjectile()
@@ -152,8 +117,16 @@ public partial class PlayerAbilities : Node2D
 
         GetTree().GetRoot().GetNode("TestScene/EnemyBulletParent").AddChild(bullet);
     }
-    
-    private void StartAbility(Mode abilityType)
+
+    private void StartReload()
+    {
+        float reloadTime = modeReloadTimesDict[playerMode];
+        ReloadTimer.Start(reloadTime);
+        ReloadBar.Animation = "Active";
+        ReloadBar.SpeedScale = ReloadBar.SpriteFrames.GetFrameCount("Active") / reloadTime;
+    }
+
+    private void StartAbility(Mode ability)
     {
         if (modeTypesDict[playerMode] == AbilityType.Fixed)
         {
@@ -169,7 +142,7 @@ public partial class PlayerAbilities : Node2D
             TimeToAbility = 0;
         }
 
-        switch (abilityType)
+        switch (ability)
         {
             case Mode.Melee:
                 // enable hitbox for abilityCooldown frames
@@ -197,7 +170,7 @@ public partial class PlayerAbilities : Node2D
         }
     }
 
-    private void FinishAbility(Mode abilityType)
+    private void FinishAbility(Mode ability)
     {
         if (modeTypesDict[playerMode] == AbilityType.Charge && TimeToAbility < abilityCooldown)
         {
@@ -206,7 +179,7 @@ public partial class PlayerAbilities : Node2D
             return;
         }
 
-        switch (abilityType)
+        switch (ability)
         {
             case Mode.Melee:
                 // disable hitbox
@@ -222,6 +195,7 @@ public partial class PlayerAbilities : Node2D
                     abilityAmmo--;
                 }
 
+                TimeToAbility = 0;
                 Item.Animation = "RangedIdle";
                 break;
 
@@ -231,9 +205,9 @@ public partial class PlayerAbilities : Node2D
         }
     }
 
-    private void CancelAbility(Mode abilityType)
+    private void CancelAbility(Mode ability)
     {
-        if (modeTypesDict[abilityType] == AbilityType.Fixed)
+        if (modeTypesDict[ability] == AbilityType.Fixed)
         {
             TimeToAbility = abilityCooldown;
         }
@@ -242,7 +216,7 @@ public partial class PlayerAbilities : Node2D
             TimeToAbility = 0;
         }
 
-        switch (abilityType)
+        switch (ability)
         {
             case Mode.Melee:
                 // disable hitbox
@@ -291,7 +265,7 @@ public partial class PlayerAbilities : Node2D
 
         ammoValues[(int)playerMode] = abilityAmmo; // record current mode's ammo count
         abilityAmmo = ammoValues[(int)updatedMode]; // restore updated mode's ammo count
-        //abilityAmmo = modeAmmoCountsDict[updatedMode];
+        // abilityAmmo = modeAmmoCountsDict[updatedMode];
 
         if (modeTypesDict[updatedMode] == AbilityType.Fixed)
         {
@@ -319,17 +293,17 @@ public partial class PlayerAbilities : Node2D
 
         playerMode = updatedMode;
         Hitbox.Disabled = true; // check that attack hitbox is not still active
-
-        // GD.Print($"switched: playerMode {playerMode}, abilityCooldown {abilityCooldown}, TimeToAbility {TimeToAbility}");
     }
 
     private void HandleTimers()
     {
-        if (modeTypesDict[playerMode] == AbilityType.Fixed)
+        AbilityType abilityMode = modeTypesDict[playerMode];
+
+        if (abilityMode == AbilityType.Fixed && TimeToAbility > 0)
         {
             TimeToAbility--;
         }
-        else
+        else if (abilityMode == AbilityType.Charge && Input.IsActionPressed("use_ability"))
         {
             TimeToAbility++;
         }
@@ -343,18 +317,16 @@ public partial class PlayerAbilities : Node2D
     public override void _Ready()
     {
         Prop = GetNode<Node2D>("SlashBox");
-        Hitbox = GetNode<CollisionShape2D>("SlashBox/Area2D/CollisionShape2D");
-        Item = GetNode<AnimatedSprite2D>("SlashBox/AnimatedSprite2D");
+        Hitbox = GetNode<CollisionShape2D>("SlashBox/ItemArea/ItemHitbox");
+        Item = GetNode<AnimatedSprite2D>("SlashBox/ItemSprite");
+        Beam = GetNode<Polygon2D>("SlashBox/Beamer");
+        ReloadBar = GetNode<AnimatedSprite2D>("ReloadBar");
         ReloadTimer = GetNode<Timer>("ReloadTimer");
+
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        /* Item.Animation = playerMode.ToString() + (IsAttacking() ? "Idle" : "Fire");*/
-
-        // change position of prop
-        // Prop.Position = GetLocalMousePosition().Normalized() * 100;
-
         // change rotation of prop to follow the player's mouse
         Prop.Rotation = GetLocalMousePosition().Angle();
 
@@ -368,34 +340,34 @@ public partial class PlayerAbilities : Node2D
         }
 
         // check for reload
-        // float maxAmmo = modeAmmoCountsDict[playerMode];
         if (Input.IsActionJustPressed("reload") && abilityAmmo != modeAmmoCountsDict[playerMode]/* && maxAmmo != Mathf.Inf*/)
         {
             CancelAbility(playerMode);
             StartReload();
         }
 
+        // enable starting/switching abilities while not reloading
         if (ReloadTimer.TimeLeft == 0)
         {
             // check for mode switch
-            if (Input.IsActionJustPressed("switch_mode") && ReloadTimer.TimeLeft == 0)
+            if (Input.IsActionJustPressed("switch_mode"))
             {
                 SwitchAbility(playerMode, false);
             }
-            else if (Input.IsActionJustPressed("reverse_switch_mode") && ReloadTimer.TimeLeft == 0)
+            else if (Input.IsActionJustPressed("reverse_switch_mode"))
             {
                 SwitchAbility(playerMode, true);
             }
 
-            // check for lmb
-            if (Input.IsActionJustPressed("ability") && ReloadTimer.TimeLeft == 0)
+            // check for ability input
+            if (Input.IsActionJustPressed("use_ability"))
             {
                 StartAbility(playerMode);
             }
         }
 
         // check if any abilities need to complete
-        if ((modeTypesDict[playerMode] == AbilityType.Charge && Input.IsActionJustReleased("ability")) ||
+        if ((modeTypesDict[playerMode] == AbilityType.Charge && Input.IsActionJustReleased("use_ability")) ||
             (modeTypesDict[playerMode] == AbilityType.Fixed && TimeToAbility <= abilityCooldown - abilityLength))
         {
             FinishAbility(playerMode);
@@ -404,27 +376,15 @@ public partial class PlayerAbilities : Node2D
         UpdateGlobalVars();
         HandleTimers();
 
-        // GD.Print(TimeToAbility);
-        // GD.Print(abilityAmmo);
-        GD.Print("Time: ", ReloadTimer.TimeLeft, "; abilityAmmo: " + abilityAmmo);
-        GD.Print(Item.Animation);
-        // GD.Print(Item.Frame);
-        // GD.Print(!Hitbox.Disabled);
+        GD.Print(TimeToAbility);
+        // GD.Print($"Animation: {Item.Animation}; Frame: {Item.Frame}");
     }
 
     private void _OnReloadTimerTimeout()
     {
         abilityAmmo = modeAmmoCountsDict[playerMode];
-        // reloading = false;
+
+        ReloadBar.Animation = "Idle";
+        ReloadBar.SpeedScale = 1;
     }
 }
-
-
-/*
-public class Ability
-{
-    public Mode Type {  get; set; }
-    public bool ChargeRequired { get; set; }
-    public int Cooldown { get; set; }
-}
-*/
