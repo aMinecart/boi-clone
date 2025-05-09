@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://c34jpo4w34e3t" path="res://Sprites/Ronnie/Ronnie_front_facing walk.png" id="7_5c7ln"]
 [ext_resource type="Texture2D" uid="uid://chx53c5wqhpjp" path="res://Sprites/Ronnie/Ronnie_Front_Right walk.png" id="8_8acbg"]
 [ext_resource type="Texture2D" uid="uid://byjst7afj67x4" path="res://Sprites/Ronnie/Ronnie_Front_left walk.png" id="9_f4f65"]
+[ext_resource type="Texture2D" uid="uid://o80upw71yiyv" path="res://img/fogofwar.png" id="11_5mlpa"]
 [ext_resource type="PackedScene" uid="uid://c2w7oca7bnd8b" path="res://Scenes/PlayerScenes/SlashBox.tscn" id="12_x7oe6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3ddsk"]
@@ -504,12 +505,15 @@ height = 168.0
 
 [node name="Player" type="Node2D"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D2" type="Camera2D" parent="."]
 zoom = Vector2(0.4, 0.4)
 position_smoothing_enabled = true
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
 script = ExtResource("1_svqju")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CapsuleShape2D_5mlpa")
 
 [node name="AbilityController" type="Node2D" parent="CharacterBody2D"]
 script = ExtResource("1_5mlpa")
@@ -560,10 +564,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -82.0
-offset_top = -140.0
-offset_right = -72.0
-offset_bottom = -118.0
+
+offset_left = -47.0
+offset_top = -116.0
+offset_right = -18.0
+offset_bottom = -94.0
+
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(5, 5)
@@ -577,3 +583,17 @@ one_shot = true
 [connection signal="timeout" from="CharacterBody2D/AbilityController/ReloadTimer" to="CharacterBody2D/AbilityController" method="_OnReloadTimerTimeout"]
 [connection signal="area_entered" from="CharacterBody2D/PlayerArea" to="CharacterBody2D" method="_OnArea2DAreaEntered"]
 [connection signal="timeout" from="CharacterBody2D/AnimationTimer" to="CharacterBody2D" method="_OnTimerTimeout"]
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D/Camera2D"]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("11_5mlpa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("RectangleShape2D_o4r8k")
+
+[node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["player"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+shape = SubResource("RectangleShape2D_o4r8k")
+
+[connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="OnArea2DAreaEntered"]

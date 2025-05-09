@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4q5r5hu3eyp4"]
+
+[ext_resource type="Texture2D" uid="uid://cc0vqigq02d0g" path="res://img/rooms/rectangle-l/rectangle-l-toprightleft.png" id="1_dty2p"]
+
+[node name="RectL_topleftright" type="Node2D"]
+
+[node name="leftDoor" type="Marker2D" parent="."]
+position = Vector2(0, 448)
+
+[node name="rightDoor" type="Marker2D" parent="."]
+position = Vector2(512, 448)
+
+[node name="topDoor" type="Marker2D" parent="."]
+position = Vector2(256, 0)
+
+[node name="room" type="Sprite2D" parent="."]
+position = Vector2(256, 448)
+texture = ExtResource("1_dty2p")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="StaticBody2D"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
+polygon = PackedVector2Array(0, 0, 208, 0, 208, 32, 16, 32, 16, 400, 0, 400)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
+polygon = PackedVector2Array(304, 0, 304, 32, 480, 32, 480, 400, 512, 400, 512, 0)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
+polygon = PackedVector2Array(0, 496, 0, 896, 512, 896, 512, 496, 480, 496, 480, 880, 16, 880, 16, 496)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(0, 0, 208, 0, 208, 32, 16, 32, 16, 400, 0, 400)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(304, 0, 304, 32, 480, 32, 480, 400, 512, 400, 512, 0)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(0, 496, 0, 896, 512, 896, 512, 496, 480, 496, 480, 880, 16, 880, 16, 496)

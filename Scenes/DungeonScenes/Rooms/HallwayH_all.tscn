@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://1dq7vvnubayn"]
+
+[ext_resource type="Texture2D" uid="uid://b31ycpgktyy64" path="res://img/rooms/hallways/hallway-all.png" id="1_2t6k8"]
+
+[node name="HallwayH_all" type="Node2D"]
+
+[node name="rightDoor" type="Marker2D" parent="."]
+position = Vector2(512, 96)
+rotation = 3.14159
+
+[node name="leftDoor" type="Marker2D" parent="."]
+position = Vector2(0, 96)
+rotation = 3.14159
+
+[node name="topDoor" type="Marker2D" parent="."]
+position = Vector2(256, 0)
+rotation = 3.14159
+
+[node name="bottomDoor" type="Marker2D" parent="."]
+position = Vector2(256, 192)
+rotation = 3.14159
+
+[node name="room" type="Sprite2D" parent="."]
+position = Vector2(256, 96)
+rotation = 1.5708
+texture = ExtResource("1_2t6k8")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 208, 0, 208, 16, 16, 16, 16, 48, 0, 48)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(304, 0, 304, 16, 480, 16, 480, 48, 512, 48, 512, 0)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 144, 0, 192, 208, 192, 208, 160, 16, 160, 16, 144)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(304, 192, 304, 160, 480, 160, 480, 144, 512, 144, 512, 192)
