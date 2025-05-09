@@ -1,13 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://d4l1u8787h8gs"]
+[gd_scene load_steps=7 format=3 uid="uid://d4l1u8787h8gs"]
 
-[ext_resource type="Texture2D" uid="uid://cbneq3t3d3uvu" path="res://coconut.jpg" id="1_h1tug"]
-[ext_resource type="PackedScene" uid="uid://6wheexgiwe4o" path="res://Scenes/GameplayScenes/SceneManager.tscn" id="1_hj7nb"]
-[ext_resource type="PackedScene" uid="uid://qol1hse0xq66" path="res://Scenes/PlayerScenes/Player.tscn" id="6_6aovs"]
-[ext_resource type="PackedScene" uid="uid://bdf51t68vsj6j" path="res://Scenes/DungeonScenes/Other/CameraTriggerRectW.tscn" id="6_ais6o"]
-[ext_resource type="PackedScene" uid="uid://b4ro5d0wjsjta" path="res://Scenes/DungeonScenes/Other/CameraTriggerSquare.tscn" id="7_or55y"]
-[ext_resource type="PackedScene" uid="uid://csv43hm225ua6" path="res://Scenes/PlayerScenes/PlayerCamera.tscn" id="7_sbii8"]
-[ext_resource type="PackedScene" uid="uid://5lskv1y5epcc" path="res://Scenes/DungeonScenes/Other/CameraTriggerBoss.tscn" id="8_172bs"]
-[ext_resource type="PackedScene" uid="uid://bcoedgxbucpnt" path="res://Scenes/DungeonScenes/Other/CameraTriggerRectL.tscn" id="8_ais6o"]
+[ext_resource type="PackedScene" path="res://Scenes/GameplayScenes/SceneManager.tscn" id="1_hj7nb"]
+[ext_resource type="PackedScene" uid="uid://qol1hse0xq66" path="res://Scenes/PlayerScenes/Player.tscn" id="1_xvbl5"]
+[ext_resource type="PackedScene" uid="uid://cxbwufansu6vw" path="res://Scenes/BossScenes/BossSprayer.tscn" id="2_xvbl5"]
+[ext_resource type="PackedScene" uid="uid://bs26v0vn03dqb" path="res://Scenes/EnemyScenes/EnemyChase.tscn" id="3_h1tug"]
+[ext_resource type="PackedScene" uid="uid://6bteb3tb4ukm" path="res://Scenes/EnemyScenes/EnemyTurret.tscn" id="4_sjc8k"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xvbl5"]
 
@@ -15,34 +12,34 @@
 
 [node name="SceneManager" parent="." instance=ExtResource("1_hj7nb")]
 
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(10, 10)
-texture = ExtResource("1_h1tug")
+[node name="Player" parent="." instance=ExtResource("1_xvbl5")]
+position = Vector2(417, 749)
 
 [node name="EnemyBulletParent" type="Node2D" parent="."]
 z_index = 2
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="BossSprayer" parent="." instance=ExtResource("2_xvbl5")]
+position = Vector2(1805, 724)
+
+[node name="BossSprayer2" parent="." instance=ExtResource("2_xvbl5")]
+position = Vector2(1165, 728)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -1
 position = Vector2(1133.25, 837.75)
 scale = Vector2(2267.5, 1676.5)
 texture = SubResource("PlaceholderTexture2D_xvbl5")
 
-[node name="Player" parent="." instance=ExtResource("6_6aovs")]
-position = Vector2(3088, 1214)
+[node name="EnemyChase" parent="." instance=ExtResource("3_h1tug")]
+position = Vector2(2222, 1462)
 
-[node name="PlayerCamera" parent="." instance=ExtResource("7_sbii8")]
-zoom = Vector2(0.4, 0.4)
+[node name="EnemyChase2" parent="." instance=ExtResource("3_h1tug")]
+position = Vector2(435, 1476)
 
-[node name="CameraTrigger" parent="." instance=ExtResource("8_ais6o")]
-position = Vector2(50, 549)
+[node name="EnemyChase3" parent="." instance=ExtResource("3_h1tug")]
+position = Vector2(1500, 520)
 
-[node name="CameraTrigger2" parent="." instance=ExtResource("6_ais6o")]
-position = Vector2(573, 1520)
+[node name="EnemyChase4" parent="." instance=ExtResource("3_h1tug")]
+position = Vector2(352, 254)
 
-[node name="CameraTrigger3" parent="." instance=ExtResource("7_or55y")]
-position = Vector2(2323, 1512)
-
-[node name="CameraTrigger4" parent="." instance=ExtResource("8_172bs")]
-position = Vector2(29, -3319)
+[node name="EnemyTurret" parent="." instance=ExtResource("4_sjc8k")]

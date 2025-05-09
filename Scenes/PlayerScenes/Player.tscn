@@ -325,15 +325,12 @@ height = 168.0
 
 [node name="Player" type="Node2D"]
 
-[node name="Camera2D2" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.4, 0.4)
 position_smoothing_enabled = true
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
 script = ExtResource("1_svqju")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-shape = SubResource("CapsuleShape2D_5mlpa")
 
 [node name="AbilityController" type="Node2D" parent="CharacterBody2D"]
 script = ExtResource("1_5mlpa")
@@ -361,12 +358,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-
-offset_left = -47.0
-offset_top = -116.0
-offset_right = -18.0
-offset_bottom = -94.0
-
+offset_left = -82.0
+offset_top = -140.0
+offset_right = -72.0
+offset_bottom = -118.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(5, 5)
@@ -379,4 +374,3 @@ one_shot = true
 
 [connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_OnArea2DAreaEntered"]
 [connection signal="timeout" from="CharacterBody2D/Timer" to="CharacterBody2D" method="_OnTimerTimeout"]
-

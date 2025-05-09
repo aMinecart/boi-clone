@@ -24,7 +24,6 @@ public partial class PlayerMovement : CharacterBody2D
 	// the direction the user currently wants to move the player in
 	private Vector2 InputDirection { get; set; }
     private AnimatedSprite2D sprite;
-    private CollisionShape2D collisionShape;
 	private Timer timer;
 
 
