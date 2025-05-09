@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://owcotla22lh1"]
+[gd_scene load_steps=3 format=3 uid="uid://cntyyyafveboe"]
 
 [ext_resource type="Script" uid="uid://dnnes6dx3ncko" path="res://Scripts/NavigationScripts/MainMenuNavigation.cs" id="1_3ohu0"]
-[ext_resource type="PackedScene" path="res://Scenes/GameplayScenes/SceneManager.tscn" id="2_l2hwp"]
+[ext_resource type="PackedScene" uid="uid://btu8qioav3lqk" path="res://Scenes/GameplayScenes/SceneManager.tscn" id="2_l2hwp"]
 
 [node name="Control" type="Control"]
 layout_mode = 3

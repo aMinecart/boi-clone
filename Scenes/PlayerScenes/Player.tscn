@@ -1,18 +1,18 @@
 [gd_scene load_steps=51 format=3 uid="uid://qol1hse0xq66"]
 
 [ext_resource type="Script" uid="uid://bvuyeiiwusote" path="res://Scripts/PlayerScripts/PlayerAbilities.cs" id="1_5mlpa"]
-[ext_resource type="Script" uid="uid://c1dns0l2ikqax" path="res://Scripts/PlayerScripts/PlayerMovement.cs" id="1_svqju"]
+[ext_resource type="Script" uid="uid://c1dns0l2ikqax" path="res://Scripts/PlayerScripts/PlayerMovement.cs" id="2_svqju"]
 [ext_resource type="Texture2D" uid="uid://g73htj2fyw43" path="res://Sprites/Ronnie/ronnie sprite sheet.png" id="3_3r7wx"]
-[ext_resource type="PackedScene" uid="uid://c4ktudnqh62bt" path="res://Scenes/BulletScenes/PlayerBulletPea.tscn" id="3_5c7ln"]
-[ext_resource type="Script" uid="uid://8wh3aoowbidm" path="res://Scripts/PlayerScripts/HealthLabel.cs" id="3_8b6wy"]
 [ext_resource type="Script" uid="uid://lvpp3ihwjqw" path="res://Scripts/PlayerScripts/PlayerAnimation.cs" id="4_3r7wx"]
-[ext_resource type="Texture2D" uid="uid://538guq28ih6p" path="res://Sprites/Ronnie/Ronnie_back_facing walk.png" id="4_uvgt2"]
 [ext_resource type="Texture2D" uid="uid://yfqjes72y3bw" path="res://Sprites/Ronnie/Ronnie_Back_Right walk.png" id="5_5mlpa"]
 [ext_resource type="Texture2D" uid="uid://chajltubnpj1n" path="res://Sprites/Ronnie/Ronnie_back_left walk.png" id="6_x7oe6"]
 [ext_resource type="Texture2D" uid="uid://c34jpo4w34e3t" path="res://Sprites/Ronnie/Ronnie_front_facing walk.png" id="7_5c7ln"]
 [ext_resource type="Texture2D" uid="uid://chx53c5wqhpjp" path="res://Sprites/Ronnie/Ronnie_Front_Right walk.png" id="8_8acbg"]
 [ext_resource type="Texture2D" uid="uid://byjst7afj67x4" path="res://Sprites/Ronnie/Ronnie_Front_left walk.png" id="9_f4f65"]
+[ext_resource type="PackedScene" uid="uid://c4ktudnqh62bt" path="res://Scenes/BulletScenes/PlayerBulletPea.tscn" id="10_5h4sd"]
+[ext_resource type="Script" uid="uid://8wh3aoowbidm" path="res://Scripts/PlayerScripts/HealthLabel.cs" id="11_8b6wy"]
 [ext_resource type="PackedScene" uid="uid://c2w7oca7bnd8b" path="res://Scenes/PlayerScenes/SlashBox.tscn" id="12_x7oe6"]
+[ext_resource type="Texture2D" uid="uid://538guq28ih6p" path="res://Sprites/Ronnie/Ronnie_back_facing walk.png" id="13_uvgt2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o4r8k"]
 atlas = ExtResource("3_3r7wx")
@@ -39,19 +39,19 @@ atlas = ExtResource("3_3r7wx")
 region = Rect2(0, 640, 64, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xvm0g"]
-atlas = ExtResource("4_uvgt2")
+atlas = ExtResource("13_uvgt2")
 region = Rect2(160, 0, 160, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ywh87"]
-atlas = ExtResource("4_uvgt2")
+atlas = ExtResource("13_uvgt2")
 region = Rect2(0, 0, 160, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f6eds"]
-atlas = ExtResource("4_uvgt2")
+atlas = ExtResource("13_uvgt2")
 region = Rect2(480, 0, 160, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_457o4"]
-atlas = ExtResource("4_uvgt2")
+atlas = ExtResource("13_uvgt2")
 region = Rect2(320, 0, 160, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3c3lm"]
@@ -325,16 +325,16 @@ height = 168.0
 
 [node name="Player" type="Node2D"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D2" type="Camera2D" parent="."]
 zoom = Vector2(0.4, 0.4)
 position_smoothing_enabled = true
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
-script = ExtResource("1_svqju")
+script = ExtResource("2_svqju")
 
 [node name="AbilityController" type="Node2D" parent="CharacterBody2D"]
 script = ExtResource("1_5mlpa")
-BulletScene = ExtResource("3_5c7ln")
+BulletScene = ExtResource("10_5h4sd")
 
 [node name="SlashBox" parent="CharacterBody2D/AbilityController" instance=ExtResource("12_x7oe6")]
 
@@ -358,16 +358,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -82.0
-offset_top = -140.0
-offset_right = -72.0
-offset_bottom = -118.0
+offset_left = -47.0
+offset_top = -116.0
+offset_right = -18.0
+offset_bottom = -94.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(5, 5)
 text = "4"
 scroll_active = false
-script = ExtResource("3_8b6wy")
+script = ExtResource("11_8b6wy")
 
 [node name="Timer" type="Timer" parent="CharacterBody2D"]
 one_shot = true
