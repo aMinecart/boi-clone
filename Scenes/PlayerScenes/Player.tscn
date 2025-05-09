@@ -14,10 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://byjst7afj67x4" path="res://Sprites/Ronnie/Ronnie_Front_left walk.png" id="9_f4f65"]
 [ext_resource type="PackedScene" uid="uid://c2w7oca7bnd8b" path="res://Scenes/PlayerScenes/SlashBox.tscn" id="12_x7oe6"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5mlpa"]
-radius = 23.0
-height = 134.0
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_o4r8k"]
 atlas = ExtResource("3_3r7wx")
 region = Rect2(0, 320, 64, 160)
@@ -319,16 +315,15 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uvgt2"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5c7ln"]
 radius = 30.0
-height = 158.0
+height = 146.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8acbg"]
+radius = 34.0
+height = 168.0
 
 [node name="Player" type="Node2D"]
-z_index = 1
-
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.4, 0.4)
-position_smoothing_enabled = true
 
 [node name="Camera2D2" type="Camera2D" parent="."]
 zoom = Vector2(0.4, 0.4)
@@ -336,9 +331,6 @@ position_smoothing_enabled = true
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
 script = ExtResource("1_svqju")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-shape = SubResource("CapsuleShape2D_5mlpa")
 
 [node name="AbilityController" type="Node2D" parent="CharacterBody2D"]
 script = ExtResource("1_5mlpa")
@@ -352,30 +344,44 @@ animation = &"RunningSouth"
 autoplay = "IdleSoutheast"
 script = ExtResource("4_3r7wx")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CapsuleShape2D_5c7ln")
+
 [node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["player"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
-shape = SubResource("CapsuleShape2D_uvgt2")
+shape = SubResource("CapsuleShape2D_8acbg")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CharacterBody2D"]
-anchors_preset = -1
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+<<<<<<< HEAD
 offset_left = -47.0
 offset_top = -116.0
 offset_right = -18.0
 offset_bottom = -94.0
+=======
+offset_left = -82.0
+offset_top = -140.0
+offset_right = -72.0
+offset_bottom = -118.0
+>>>>>>> main
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(3, 3)
+scale = Vector2(5, 5)
 text = "4"
 scroll_active = false
 script = ExtResource("3_8b6wy")
 
 [node name="Timer" type="Timer" parent="CharacterBody2D"]
-wait_time = 2.0
 one_shot = true
 
 [connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_OnArea2DAreaEntered"]
+<<<<<<< HEAD
 [connection signal="timeout" from="CharacterBody2D/Timer" to="CharacterBody2D" method="_on_timer_timeout"]
+=======
+[connection signal="timeout" from="CharacterBody2D/Timer" to="CharacterBody2D" method="_OnTimerTimeout"]
+>>>>>>> main
