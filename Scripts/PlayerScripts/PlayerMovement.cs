@@ -223,21 +223,15 @@ public partial class PlayerMovement : CharacterBody2D
 
 	public void IFramesFlash()
 	{
-		if (!Vulnerable)
-        {
-            sprite.Visible = !sprite.Visible; // toggle sprite visibility every frame to create a flash
-        }
-		else if (Vulnerable && !sprite.Visible)
-        {
-            sprite.Visible = true;
-        }
+		if(!Vulnerable)sprite.Visible = !sprite.Visible;
+		else if(Vulnerable && !sprite.Visible)sprite.Visible = true;
 	}
 
     public override void _Ready()
     {
-		sprite = GetNode<AnimatedSprite2D>("PlayerSprite");
-		timer = GetNode<Timer>("AnimationTimer");
-        hurtbox = GetNode<CollisionShape2D>("PlayerArea/PlayerHurtbox");
+		sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		timer = GetNode<Timer>("Timer");
+        hurtbox = GetNode<Area2D>("Area2D").GetNode<CollisionShape2D>("CollisionShape2D");
     }
 
     public override void _PhysicsProcess(double delta)
@@ -279,12 +273,12 @@ public partial class PlayerMovement : CharacterBody2D
 
     private void _OnArea2DAreaEntered(Node2D area)
 	{
-		if (area.IsInGroup("enemyAttack") && Vulnerable)
+		if (area.IsInGroup("enemy") && Vulnerable)
 		{
 			Health--;
 			if (Health <= 0)
 			{
-				CallDeferred(MethodName.Free);
+				CallDeferred("free");
 				SceneManager.instance.ChangeScene(eSceneNames.GameOver);
 			}
 			else
