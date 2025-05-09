@@ -17,7 +17,6 @@ radius = 429.094
 radius = 705.0
 
 [node name="BossSprayer" type="Node2D"]
-z_index = 3
 script = ExtResource("1_ewqls")
 BulletScene = ExtResource("2_0wpst")
 
