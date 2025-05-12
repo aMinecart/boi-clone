@@ -1,10 +1,10 @@
-[gd_scene load_steps=51 format=3 uid="uid://qol1hse0xq66"]
+[gd_scene load_steps=52 format=3 uid="uid://qol1hse0xq66"]
 
 [ext_resource type="Script" uid="uid://bvuyeiiwusote" path="res://Scripts/PlayerScripts/PlayerAbilities.cs" id="1_5mlpa"]
 [ext_resource type="Script" uid="uid://c1dns0l2ikqax" path="res://Scripts/PlayerScripts/PlayerMovement.cs" id="2_svqju"]
 [ext_resource type="Texture2D" uid="uid://g73htj2fyw43" path="res://Sprites/Ronnie/ronnie sprite sheet.png" id="3_3r7wx"]
 [ext_resource type="Script" uid="uid://lvpp3ihwjqw" path="res://Scripts/PlayerScripts/PlayerAnimation.cs" id="4_3r7wx"]
-[ext_resource type="Texture2D" uid="uid://yfqjes72y3bw" path="res://Sprites/Ronnie/Ronnie_Back_Right walk.png" id="5_5mlpa"]
+[ext_resource type="Texture2D" uid="uid://yfqjes72y3bw" path="res://Sprites/Ronnie/Ronnie_Back_Right walk.png" id="5_6sdnv"]
 [ext_resource type="Texture2D" uid="uid://chajltubnpj1n" path="res://Sprites/Ronnie/Ronnie_back_left walk.png" id="6_x7oe6"]
 [ext_resource type="Texture2D" uid="uid://c34jpo4w34e3t" path="res://Sprites/Ronnie/Ronnie_front_facing walk.png" id="7_5c7ln"]
 [ext_resource type="Texture2D" uid="uid://chx53c5wqhpjp" path="res://Sprites/Ronnie/Ronnie_Front_Right walk.png" id="8_8acbg"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://8wh3aoowbidm" path="res://Scripts/PlayerScripts/HealthLabel.cs" id="11_8b6wy"]
 [ext_resource type="PackedScene" uid="uid://c2w7oca7bnd8b" path="res://Scenes/PlayerScenes/SlashBox.tscn" id="12_x7oe6"]
 [ext_resource type="Texture2D" uid="uid://538guq28ih6p" path="res://Sprites/Ronnie/Ronnie_back_facing walk.png" id="13_uvgt2"]
+[ext_resource type="Texture2D" uid="uid://o80upw71yiyv" path="res://img/fogofwar.png" id="14_7wlpd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o4r8k"]
 atlas = ExtResource("3_3r7wx")
@@ -55,23 +56,23 @@ atlas = ExtResource("13_uvgt2")
 region = Rect2(320, 0, 160, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3c3lm"]
-atlas = ExtResource("5_5mlpa")
+atlas = ExtResource("5_6sdnv")
 region = Rect2(0, 0, 160, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lvbha"]
-atlas = ExtResource("5_5mlpa")
+atlas = ExtResource("5_6sdnv")
 region = Rect2(160, 0, 160, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g5rsv"]
-atlas = ExtResource("5_5mlpa")
+atlas = ExtResource("5_6sdnv")
 region = Rect2(320, 0, 160, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vx3e2"]
-atlas = ExtResource("5_5mlpa")
+atlas = ExtResource("5_6sdnv")
 region = Rect2(480, 0, 160, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6rkx3"]
-atlas = ExtResource("5_5mlpa")
+atlas = ExtResource("5_6sdnv")
 region = Rect2(640, 0, 160, 160)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gmljq"]
@@ -325,10 +326,6 @@ height = 168.0
 
 [node name="Player" type="Node2D"]
 
-[node name="Camera2D2" type="Camera2D" parent="."]
-zoom = Vector2(0.4, 0.4)
-position_smoothing_enabled = true
-
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
 script = ExtResource("2_svqju")
 
@@ -371,6 +368,14 @@ script = ExtResource("11_8b6wy")
 
 [node name="Timer" type="Timer" parent="CharacterBody2D"]
 one_shot = true
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+zoom = Vector2(0.4, 0.4)
+position_smoothing_enabled = true
+
+[node name="CharacterBody2D_Camera2D#Sprite2D" type="Sprite2D" parent="CharacterBody2D/Camera2D"]
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("14_7wlpd")
 
 [connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_OnArea2DAreaEntered"]
 [connection signal="timeout" from="CharacterBody2D/Timer" to="CharacterBody2D" method="_OnTimerTimeout"]
