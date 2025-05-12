@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://c2w7oca7bnd8b"]
+[gd_scene load_steps=28 format=3 uid="uid://c2w7oca7bnd8b"]
 
 [ext_resource type="Script" uid="uid://m4d7ugwpv7ni" path="res://Scripts/PlayerScripts/Hitbox.cs" id="1_wbmef"]
 [ext_resource type="Texture2D" uid="uid://c4wbilhs6wfb8" path="res://Sprites/WeaponSprites/gun_fire.png" id="2_f4b3s"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://dw46vjs86p7m2" path="res://Sprites/WeaponSprites/gun_idle.png" id="3_3tdku"]
 [ext_resource type="Texture2D" uid="uid://cpnoywavm8ts3" path="res://Sprites/WeaponSprites/laxer_rile_fire.png" id="4_j8ffn"]
 [ext_resource type="Texture2D" uid="uid://dxx6xfknynt4h" path="res://Sprites/WeaponSprites/lazer_rifle.png" id="5_qsd53"]
+[ext_resource type="Texture2D" uid="uid://djieybi6m61qx" path="res://Sprites/WeaponSprites/beamer.png" id="7_fldk7"]
+[ext_resource type="Script" uid="uid://tcfbi5igpu2r" path="res://Scripts/PlayerScripts/Beamer.cs" id="8_pqqnv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qsd53"]
 size = Vector2(40, 136)
@@ -161,9 +163,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_o63gi")
 }],
-"loop": false,
+"loop": true,
 "name": &"RangedFire",
-"speed": 1.6
+"speed": 4.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -176,22 +178,35 @@ animations = [{
 
 [node name="SlashBox" type="Node2D"]
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="ItemArea" type="Area2D" parent="."]
 position = Vector2(50, 0)
 collision_mask = 2
 script = ExtResource("1_wbmef")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="ItemHitbox" type="CollisionShape2D" parent="ItemArea"]
 position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_qsd53")
 disabled = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="ItemSprite" type="AnimatedSprite2D" parent="."]
 z_index = 2
 position = Vector2(50, 0)
 scale = Vector2(0.9, 0.9)
 sprite_frames = SubResource("SpriteFrames_wbmef")
-animation = &"MeleeIdle"
+animation = &"RangedFire"
 autoplay = "MeleeIdle"
 
-[connection signal="area_entered" from="Area2D" to="Area2D" method="_OnArea2DAreaEntered"]
+[node name="Beamer" type="Polygon2D" parent="."]
+process_mode = 4
+visible = false
+texture_repeat = 2
+position = Vector2(2095, -3)
+scale = Vector2(10, 1)
+texture = ExtResource("7_fldk7")
+texture_scale = Vector2(10, 1)
+polygon = PackedVector2Array(-200, -12, -200, 12, 200, 12, 200, -12)
+uv = PackedVector2Array(0, 0, 0, 24, 400, 24, 400, 0)
+polygons = [PackedInt32Array(0, 1, 2, 3)]
+script = ExtResource("8_pqqnv")
+
+[connection signal="area_entered" from="ItemArea" to="ItemArea" method="_OnArea2DAreaEntered"]

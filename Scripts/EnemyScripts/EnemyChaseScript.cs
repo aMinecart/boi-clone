@@ -3,38 +3,38 @@ using System;
 
 public partial class EnemyChaseScript : Node2D
 {
-    private CharacterBody2D enemyBody;
-    [Export] private int speedStat = 500;
+	private CharacterBody2D enemyBody;
+	[Export] private int speedStat = 500;
 
-    public override void _Ready()
-    {
-        base._Ready();
-        enemyBody = GetNode<CharacterBody2D>("CharacterBody2D");
-    }
-
-    private void TurnToPlayer()
-    {
-        enemyBody.LookAt(PlayerVars.Instance.Position);
-    }
-
-    private void SetVelocity()
-    {
-        enemyBody.Velocity = Godot.Vector2.FromAngle(enemyBody.Rotation);
-		enemyBody.Velocity = enemyBody.Velocity.Normalized() * speedStat;
-    }
-
-    public override void _PhysicsProcess(double delta)
+	public override void _Ready()
 	{
-        TurnToPlayer();
-        SetVelocity();
-        enemyBody.MoveAndSlide();
+		base._Ready();
+		enemyBody = GetNode<CharacterBody2D>("CharacterBody2D");
 	}
 
-    private void _OnArea2DAreaEntered(Node2D area)
-    {
-        if (area.IsInGroup("playerAttack"))
-        {
-            CallDeferred(MethodName.Free);
-        }
-    }
+	private void TurnToPlayer()
+	{
+		enemyBody.LookAt(PlayerVars.Instance.Position);
+	}
+
+	private void SetVelocity()
+	{
+		enemyBody.Velocity = Godot.Vector2.FromAngle(enemyBody.Rotation);
+		enemyBody.Velocity = enemyBody.Velocity.Normalized() * speedStat;
+	}
+
+	public override void _PhysicsProcess(double delta)
+	{
+		TurnToPlayer();
+		SetVelocity();
+		enemyBody.MoveAndSlide();
+	}
+
+	private void _OnArea2DAreaEntered(Node2D area)
+	{
+		if (area.IsInGroup("playerAttack"))
+		{
+			CallDeferred(MethodName.Free);
+		}
+	}
 }

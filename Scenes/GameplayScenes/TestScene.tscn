@@ -1,14 +1,16 @@
-[gd_scene load_steps=11 format=3 uid="uid://d4l1u8787h8gs"]
+[gd_scene load_steps=13 format=3 uid="uid://d4l1u8787h8gs"]
 
 [ext_resource type="Texture2D" uid="uid://cbneq3t3d3uvu" path="res://coconut.jpg" id="1_h1tug"]
-[ext_resource type="PackedScene" uid="uid://btu8qioav3lqk" path="res://Scenes/GameplayScenes/SceneManager.tscn" id="1_hj7nb"]
+[ext_resource type="PackedScene" path="res://Scenes/GameplayScenes/SceneManager.tscn" id="1_hj7nb"]
 [ext_resource type="PackedScene" uid="uid://qol1hse0xq66" path="res://Scenes/PlayerScenes/Player.tscn" id="1_xvbl5"]
 [ext_resource type="PackedScene" uid="uid://bdf51t68vsj6j" path="res://Scenes/DungeonScenes/Other/CameraTriggerRectW.tscn" id="6_ais6o"]
 [ext_resource type="PackedScene" uid="uid://b4ro5d0wjsjta" path="res://Scenes/DungeonScenes/Other/CameraTriggerSquare.tscn" id="7_or55y"]
-[ext_resource type="PackedScene" uid="uid://csv43hm225ua6" path="res://Scenes/PlayerScenes/PlayerCamera.tscn" id="7_sbii8"]
+[ext_resource type="PackedScene" path="res://Scenes/PlayerScenes/PlayerCamera.tscn" id="7_sbii8"]
 [ext_resource type="PackedScene" uid="uid://5lskv1y5epcc" path="res://Scenes/DungeonScenes/Other/CameraTriggerBoss.tscn" id="8_172bs"]
 [ext_resource type="PackedScene" uid="uid://bcoedgxbucpnt" path="res://Scenes/DungeonScenes/Other/CameraTriggerRectL.tscn" id="8_ais6o"]
 [ext_resource type="PackedScene" uid="uid://cxbwufansu6vw" path="res://Scenes/BossScenes/BossSprayer.tscn" id="9_or55y"]
+[ext_resource type="PackedScene" uid="uid://bs26v0vn03dqb" path="res://Scenes/EnemyScenes/EnemyChase.tscn" id="10_lgw7b"]
+[ext_resource type="PackedScene" uid="uid://6bteb3tb4ukm" path="res://Scenes/EnemyScenes/EnemyTurret.tscn" id="11_82htr"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xvbl5"]
 
@@ -45,10 +47,17 @@ position = Vector2(573, 1520)
 position = Vector2(2323, 1512)
 
 [node name="CameraTrigger4" parent="." instance=ExtResource("8_172bs")]
-position = Vector2(29, -3319)
+position = Vector2(0, -2000)
+scale = Vector2(0.719999, 0.64)
 
 [node name="BossSprayer" parent="." instance=ExtResource("9_or55y")]
 position = Vector2(1273, 42)
 
 [node name="BossSprayer2" parent="." instance=ExtResource("9_or55y")]
 position = Vector2(1154, 900)
+
+[node name="EnemyChase" parent="." instance=ExtResource("10_lgw7b")]
+position = Vector2(25, 790)
+
+[node name="EnemyTurret" parent="." instance=ExtResource("11_82htr")]
+position = Vector2(155, 238)
