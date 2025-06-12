@@ -20,11 +20,8 @@ public partial class EnemyTurretScript : Node2D
 		base._Ready();
 		enemyBody = GetNode<CharacterBody2D>("CharacterBody2D");
 		
-		enemyBulletParent = GetTree().GetRoot().GetNode<Node2D>("Dungeon/EnemyBulletParent");
-		if (enemyBulletParent is null)
-		{
-			enemyBulletParent = GetTree().GetRoot().GetNode<Node2D>("TestScene/EnemyBulletParent");
-		}
+		enemyBulletParent = GetTree().GetRoot().GetNodeOrNull<Node2D>("Dungeon/EnemyBulletParent");
+		enemyBulletParent ??= GetTree().GetRoot().GetNode<Node2D>("TestScene/EnemyBulletParent");
 	}
 
 	public override void _PhysicsProcess(double delta)

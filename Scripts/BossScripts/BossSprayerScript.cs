@@ -316,11 +316,8 @@ public partial class BossSprayerScript : Node2D
 		overrideTimer = GetNode<Timer>("OverrideTimer");
 		shotTimer.Paused = true;
 		
-		enemyBulletParent = GetTree().GetRoot().GetNode<Node2D>("Dungeon/EnemyBulletParent");
-		if (enemyBulletParent is null)
-		{
-			enemyBulletParent = GetTree().GetRoot().GetNode<Node2D>("TestScene/EnemyBulletParent");
-		}
+		enemyBulletParent = GetTree().GetRoot().GetNodeOrNull<Node2D>("Dungeon/EnemyBulletParent");
+		enemyBulletParent ??= GetTree().GetRoot().GetNode<Node2D>("TestScene/EnemyBulletParent");
 	}
 
 	public override void _PhysicsProcess(double delta)
