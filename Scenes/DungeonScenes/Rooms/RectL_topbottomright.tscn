@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cvsv2vu8gv4ty"]
+[gd_scene load_steps=3 format=3 uid="uid://cvsv2vu8gv4ty"]
 
 [ext_resource type="Texture2D" uid="uid://b8nwu1quiq8du" path="res://img/rooms/rectangle-l/rectangle-l-toprightbottom.png" id="1_6xfip"]
+[ext_resource type="PackedScene" uid="uid://bcoedgxbucpnt" path="res://Scenes/DungeonScenes/Other/CameraTriggerRectL.tscn" id="2_bjsub"]
 
 [node name="RectL_topbottomright" type="Node2D"]
 
@@ -19,7 +20,7 @@ texture = ExtResource("1_6xfip")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
-[node name="Area2D" type="Area2D" parent="StaticBody2D"]
+[node name="Area2D" type="Area2D" parent="StaticBody2D" groups=["obstacle"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
 polygon = PackedVector2Array(0, 0, 208, 0, 208, 32, 16, 32, 16, 880, 208, 880, 208, 896, 0, 896)
@@ -38,3 +39,6 @@ polygon = PackedVector2Array(304, 0, 304, 32, 480, 32, 480, 400, 512, 400, 512, 
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(480, 496, 512, 496, 512, 896, 304, 896, 304, 880, 480, 880)
+
+[node name="CameraTrigger" parent="." instance=ExtResource("2_bjsub")]
+position = Vector2(0, -1)

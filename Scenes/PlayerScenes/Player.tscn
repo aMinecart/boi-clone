@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://qol1hse0xq66"]
+[gd_scene load_steps=77 format=3 uid="uid://qol1hse0xq66"]
 
 [ext_resource type="Script" uid="uid://bvuyeiiwusote" path="res://Scripts/PlayerScripts/PlayerAbilities.cs" id="1_5mlpa"]
 [ext_resource type="Script" uid="uid://c1dns0l2ikqax" path="res://Scripts/PlayerScripts/PlayerMovement.cs" id="2_svqju"]
@@ -13,7 +13,6 @@
 [ext_resource type="Script" uid="uid://8wh3aoowbidm" path="res://Scripts/PlayerScripts/HealthLabel.cs" id="11_8b6wy"]
 [ext_resource type="PackedScene" uid="uid://c2w7oca7bnd8b" path="res://Scenes/PlayerScenes/SlashBox.tscn" id="12_x7oe6"]
 [ext_resource type="Texture2D" uid="uid://538guq28ih6p" path="res://Sprites/Ronnie/Ronnie_back_facing walk.png" id="13_uvgt2"]
-[ext_resource type="Texture2D" uid="uid://o80upw71yiyv" path="res://img/fogofwar.png" id="14_7wlpd"]
 [ext_resource type="Script" uid="uid://cnfjkilw3u3em" path="res://Scripts/PlayerScripts/AmmoLabel.cs" id="15_8acbg"]
 [ext_resource type="Texture2D" uid="uid://dimt36utrm0h6" path="res://Sprites/Ronnie/bar.png" id="16_f4f65"]
 
@@ -570,14 +569,6 @@ script = ExtResource("11_8b6wy")
 
 [node name="AnimationTimer" type="Timer" parent="CharacterBody2D"]
 one_shot = true
-
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-zoom = Vector2(0.4, 0.4)
-position_smoothing_enabled = true
-
-[node name="CharacterBody2D_Camera2D#Sprite2D" type="Sprite2D" parent="CharacterBody2D/Camera2D"]
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("14_7wlpd")
 
 [connection signal="timeout" from="CharacterBody2D/AbilityController/ReloadTimer" to="CharacterBody2D/AbilityController" method="_OnReloadTimerTimeout"]
 [connection signal="area_entered" from="CharacterBody2D/PlayerArea" to="CharacterBody2D" method="_OnArea2DAreaEntered"]

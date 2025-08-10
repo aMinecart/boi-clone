@@ -6,6 +6,7 @@
 size = Vector2(1544, 692)
 
 [node name="CameraTrigger" type="Area2D" groups=["lock"]]
+scale = Vector2(0.541, 0.66)
 script = ExtResource("1_bmapq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

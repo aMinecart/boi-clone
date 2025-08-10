@@ -24,6 +24,7 @@ _data = {
 
 [node name="EnemyTurret" type="Node2D"]
 z_index = 1
+scale = Vector2(0.28, 0.28)
 script = ExtResource("1_vph2m")
 BulletScene = ExtResource("2_ot47j")
 

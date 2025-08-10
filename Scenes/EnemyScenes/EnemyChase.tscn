@@ -9,7 +9,9 @@ height = 182.0
 
 [node name="EnemyChase" type="Node2D"]
 z_index = 1
+scale = Vector2(0.28, 0.28)
 script = ExtResource("1_y2v7p")
+speedStat = 200
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 

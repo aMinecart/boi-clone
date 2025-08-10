@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bkhry3pt6anjo"]
+[gd_scene load_steps=5 format=3 uid="uid://bkhry3pt6anjo"]
 
 [ext_resource type="Script" uid="uid://bymelt8hbwoet" path="res://Scripts/DungeonScripts/Dungeon.cs" id="1_utjhn"]
 [ext_resource type="PackedScene" uid="uid://qol1hse0xq66" path="res://Scenes/PlayerScenes/Player.tscn" id="2_8814h"]
+[ext_resource type="PackedScene" uid="uid://btu8qioav3lqk" path="res://Scenes/GameplayScenes/SceneManager.tscn" id="3_lncl2"]
+[ext_resource type="PackedScene" uid="uid://csv43hm225ua6" path="res://Scenes/PlayerScenes/PlayerCamera.tscn" id="4_q63o0"]
 
 [node name="Dungeon" type="Node2D"]
 script = ExtResource("1_utjhn")
@@ -10,6 +12,12 @@ script = ExtResource("1_utjhn")
 
 [node name="Player" parent="." instance=ExtResource("2_8814h")]
 z_index = 1
-position = Vector2(654, 543)
+position = Vector2(565, 376)
 
 [node name="EnemyBulletParent" type="Node2D" parent="."]
+z_index = 2
+
+[node name="SceneManager" parent="." instance=ExtResource("3_lncl2")]
+
+[node name="PlayerCamera" parent="." instance=ExtResource("4_q63o0")]
+position = Vector2(2307, 2615)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dlmlbty7g4u1n"]
+[gd_scene load_steps=4 format=3 uid="uid://dlmlbty7g4u1n"]
 
 [ext_resource type="Texture2D" uid="uid://dmu82x3q8b3ky" path="res://img/rooms/square/square-bottomleft.png" id="1_kqh3m"]
 [ext_resource type="PackedScene" uid="uid://bs26v0vn03dqb" path="res://Scenes/EnemyScenes/EnemyChase.tscn" id="2_3kud7"]
+[ext_resource type="PackedScene" uid="uid://db8wescl8hfh0" path="res://Scenes/DungeonScenes/Other/CameraTriggerSquare.tscn" id="3_kv7di"]
 
 [node name="Square_bottomleft" type="Node2D"]
 
@@ -17,7 +18,7 @@ texture = ExtResource("1_kqh3m")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
-[node name="Area2D" type="Area2D" parent="StaticBody2D"]
+[node name="Area2D" type="Area2D" parent="StaticBody2D" groups=["obstacle"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
 polygon = PackedVector2Array(16, 304, 16, 496, 208, 496, 208, 512, 0, 512, 0, 304)
@@ -33,3 +34,6 @@ polygon = PackedVector2Array(0, 0, 512, 0, 512, 512, 304, 512, 304, 496, 480, 49
 
 [node name="EnemyChase" parent="." instance=ExtResource("2_3kud7")]
 position = Vector2(422, 82)
+
+[node name="CameraTrigger" parent="." instance=ExtResource("3_kv7di")]
+position = Vector2(257, 262)

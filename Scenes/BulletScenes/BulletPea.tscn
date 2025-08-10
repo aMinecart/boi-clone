@@ -7,7 +7,9 @@
 radius = 64.1249
 
 [node name="BulletPea" type="Node2D"]
+z_index = 3
 script = ExtResource("1_ux8wq")
+SpeedStat = 630
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 scale = Vector2(0.25, 0.25)

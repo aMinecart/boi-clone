@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bip61bntvcndd"]
+[gd_scene load_steps=4 format=3 uid="uid://bip61bntvcndd"]
 
 [ext_resource type="Texture2D" uid="uid://hsesdnt4vn0t" path="res://img/rooms/square/square-left.png" id="1_rrh82"]
 [ext_resource type="PackedScene" uid="uid://6bteb3tb4ukm" path="res://Scenes/EnemyScenes/EnemyTurret.tscn" id="2_atm4w"]
+[ext_resource type="PackedScene" uid="uid://db8wescl8hfh0" path="res://Scenes/DungeonScenes/Other/CameraTriggerSquare.tscn" id="3_qvg0j"]
 
 [node name="Square_left" type="Node2D"]
 
@@ -14,7 +15,7 @@ texture = ExtResource("1_rrh82")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
-[node name="Area2D" type="Area2D" parent="StaticBody2D"]
+[node name="Area2D" type="Area2D" parent="StaticBody2D" groups=["obstacle"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D/Area2D"]
 polygon = PackedVector2Array(0, 0, 512, 0, 512, 512, 0, 512, 0, 304, 16, 304, 16, 496, 480, 496, 480, 32, 16, 32, 16, 208, 0, 208)
@@ -45,3 +46,6 @@ position = Vector2(405, 74)
 
 [node name="EnemyTurret8" parent="." instance=ExtResource("2_atm4w")]
 position = Vector2(406, 154)
+
+[node name="CameraTrigger" parent="." instance=ExtResource("3_qvg0j")]
+position = Vector2(257, 262)
